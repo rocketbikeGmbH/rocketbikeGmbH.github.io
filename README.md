@@ -8,10 +8,11 @@ Node.js installieren
 
 Visual Studio für die installation der Anwendung als administrator starten.
 im Terminal:.
-npm install.
-npm i @angular/cli -g
 
-theoretisch kann die Anwendung dann direkt danach gestartet werden mit:. ng serve
+'npm install'
+'npm i @angular/cli -g'
+
+theoretisch kann die Anwendung dann direkt danach gestartet werden mit:. 'ng serve'
 
 
 
