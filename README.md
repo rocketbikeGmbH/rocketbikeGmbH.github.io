@@ -2,6 +2,19 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.11.
 
+## Installation:
+VS Studio Code installieren
+Node.js installieren
+
+Visual Studio für die installation der Anwendung als administrator starten
+im Terminal:
+npm install
+npm i @angular/cli -g
+
+theoretisch kann die Anwendung dann direkt danach gestartet werden mit: ng serve
+
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
