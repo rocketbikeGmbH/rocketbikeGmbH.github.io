@@ -6,12 +6,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 VS Studio Code installieren
 Node.js installieren
 
-Visual Studio für die installation der Anwendung als administrator starten
-im Terminal:
-npm install
+Visual Studio für die installation der Anwendung als administrator starten.
+im Terminal:.
+npm install.
 npm i @angular/cli -g
 
-theoretisch kann die Anwendung dann direkt danach gestartet werden mit: ng serve
+theoretisch kann die Anwendung dann direkt danach gestartet werden mit:. ng serve
 
 
 
