@@ -1,1 +1,28 @@
 <p>absatzplanung works!</p>
+
+
+
+        <form class="example-form">
+        <mat-label>Absatzplan P1</mat-label>
+        <mat-form-field class="example-full-width" appearance="fill">
+        <input matInput type="number" name="Vabsatzplan_p1" [(ngModel)]="Vabsatzplan_p1"/>
+        </mat-form-field>
+    
+  
+        <mat-label>Absatzplan P2</mat-label>
+        <mat-form-field class="example-full-width" appearance="fill">
+        <input matInput type="number" name="Vabsatzplan_p2" [(ngModel)]="Vabsatzplan_p2"/>
+        </mat-form-field>
+
+        <mat-label>Absatzplan P3</mat-label>
+        <mat-form-field class="example-full-width" appearance="fill">
+        <input matInput type="number" name="Vabsatzplan_p3" [(ngModel)]="Vabsatzplan_p3"/>
+         </mat-form-field>
+        </form>
+        
+   
+<button mat-raised-button (click)="speichern()">Speichern</button>
+
+
+
+
