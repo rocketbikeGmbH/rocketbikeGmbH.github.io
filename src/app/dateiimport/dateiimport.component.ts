@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {parse} from 'fast-xml-parser';
+import { Observable } from 'rxjs';
+import {Store} from "@ngrx/store";
+import {addImportXml} from "../store/import.actions";
 
 @Component({
   selector: 'app-dateiimport',
@@ -11,7 +14,11 @@ export class DateiimportComponent implements OnInit {
   fileName = '';
   fileContentAsJson = '';
 
-  constructor() {}
+  xmlImport$: Observable<Object>;
+
+  constructor(private store: Store<{ xmlImport: Object }>) {
+    this.xmlImport$ = store.select('xmlImport');
+  }
 
   // @ts-ignore
   onFileSelected({target}) {
@@ -30,8 +37,10 @@ export class DateiimportComponent implements OnInit {
 
       reader.readAsText(file);
       reader.onload = () =>  {
-        this.fileContentAsJson = parse(reader.result as string, options);
-        console.log(this.fileContentAsJson);
+        const xmlDataAsJson = parse(reader.result as string, options);
+        this.store.dispatch(addImportXml(xmlDataAsJson));
+        console.log(this.xmlImport$);
+        this.fileContentAsJson = JSON.stringify(xmlDataAsJson);
       };
       console.log(this.fileName);
     }

@@ -18,7 +18,10 @@ import { FormsModule } from '@angular/forms';
 import {NgForm} from '@angular/forms';
 import { MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
-
+import { StoreModule } from '@ngrx/store';
+import { importReducer } from './store/import.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,13 @@ import {MatInputModule} from '@angular/material/input';
     MatIconModule,
     MatFormFieldModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    StoreModule.forRoot({ import: importReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
