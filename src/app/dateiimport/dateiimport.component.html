@@ -1,1 +1,9 @@
-<p>dateiimport works!</p>
+<input type="file" class="file-input" accept="text/xml" (change)="onFileSelected($event)" #fileUpload>
+<div class="file-upload">
+  {{fileName || "No file uploaded yet."}}
+  <button mat-mini-fab color="primary" class="upload-btn"
+          (click)="fileUpload.click()">
+    <mat-icon>attach_file</mat-icon>
+  </button>
+  {{ fileContentAsJson }}
+</div>
