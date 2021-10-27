@@ -12,12 +12,10 @@ import { LosgroessenplanungComponent } from './losgroessenplanung/losgroessenpla
 import { MengenplanungComponent } from './mengenplanung/mengenplanung.component';
 import { ProgrammplanungComponent } from './programmplanung/programmplanung.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule} from '@angular/material/icon';
-import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import {NgForm} from '@angular/forms';
-import { MatCardModule} from '@angular/material/card';
-import {MatInputModule} from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 import { StoreModule } from '@ngrx/store';
 import { importReducer } from './store/import.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -33,7 +31,7 @@ import { environment } from '../environments/environment';
     KapazitaetsplanungComponent,
     LosgroessenplanungComponent,
     MengenplanungComponent,
-    ProgrammplanungComponent
+    ProgrammplanungComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +41,7 @@ import { environment } from '../environments/environment';
     MatFormFieldModule,
     FormsModule,
     MatCardModule,
-    StoreModule.forRoot({ import: importReducer }),
+    StoreModule.forRoot({ importModel: importReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -51,6 +49,6 @@ import { environment } from '../environments/environment';
     }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
