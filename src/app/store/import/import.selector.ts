@@ -1,5 +1,5 @@
 import {createSelector} from "@ngrx/store";
-import {ImportModel} from "../model/import.model";
+import {ImportModel} from "../../model/import.model";
 import {ImportState} from "./import.reducer";
 
 export const selectImportXml = createSelector(

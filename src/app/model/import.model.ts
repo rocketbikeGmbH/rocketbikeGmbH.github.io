@@ -5,6 +5,10 @@
 //   }
 // }
 
+export interface ImportModel {
+  results?: Results | undefined;
+}
+
 export interface Results {
   forecast: {};
   warehousestock: {};
@@ -20,8 +24,4 @@ export interface Results {
   _game: string;
   _group: string;
   _period: string;
-}
-
-export interface ImportModel {
-  results?: Results | undefined ;
 }

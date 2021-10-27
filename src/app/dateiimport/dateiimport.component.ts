@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { parse } from 'fast-xml-parser';
 import { select, Store } from '@ngrx/store';
-import { addImportXml } from '../store/import.actions';
-import { ImportState } from '../store/import.reducer';
-import { selectImportResults, selectImportXml } from '../store/import.selector';
+import { addImportXml } from '../store/import/import.actions';
+import { ImportState } from '../store/import/import.reducer';
+import { selectImportForecast, selectImportResults, selectImportXml } from '../store/import/import.selector';
 
 @Component({
   selector: 'app-dateiimport',
@@ -15,6 +15,7 @@ export class DateiimportComponent {
   fileContentAsJson = '';
   xmlImport$ = this.store.pipe(select(selectImportXml));
   results$ = this.store.pipe(select(selectImportResults));
+  forecast$ = this.store.pipe(select(selectImportForecast));
 
   constructor(private store: Store<ImportState>) {}
 
@@ -35,7 +36,7 @@ export class DateiimportComponent {
         this.store.dispatch(addImportXml(xmlDataAsJson));
 
         let data: {} | undefined = undefined;
-        this.results$.forEach((i) => (data = i));
+        this.forecast$.subscribe((i) => (data = i));
         this.fileContentAsJson = JSON.stringify(data);
       };
       console.log(this.fileName);
