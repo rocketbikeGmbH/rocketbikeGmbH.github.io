@@ -1,1 +1,64 @@
-<p>programmplanung works!</p>
+<p>... in progress ...</p>
+
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+    <!-- Artikelnummer -->
+    <ng-container matColumnDef="artikelnummer">
+      <th mat-header-cell *matHeaderCellDef> Artikelnummer </th>
+      <td mat-cell *matCellDef="let element"> {{element.artikelnummer}} </td>
+    </ng-container>
+  
+    <!-- Aktueller Lagerbestand -->
+    <ng-container matColumnDef="aktueller_lagerbestand">
+      <th mat-header-cell *matHeaderCellDef> Aktueller Lagerbestand </th>
+      <td mat-cell *matCellDef="let element"> {{element.aktueller_lagerbestand}} </td>
+    </ng-container>
+  
+    <!-- In Bearbeitung -->
+    <ng-container matColumnDef="in_bearbeitung">
+      <th mat-header-cell *matHeaderCellDef> In Bearbeitung </th>
+      <td mat-cell *matCellDef="let element"> {{element.in_bearbeitung}} </td>
+    </ng-container>
+  
+    <!-- In Warteschlange -->
+    <ng-container matColumnDef="in_warteschlange">
+      <th mat-header-cell *matHeaderCellDef> In Warteschlange </th>
+      <td mat-cell *matCellDef="let element"> {{element.in_warteschlange}} </td>
+    </ng-container>
+
+    <!-- Geplanter Endbestand -->
+    <ng-container matColumnDef="geplanter_endbestand">
+      <th mat-header-cell *matHeaderCellDef> Geplanter Endbestand </th>
+      <td mat-cell *matCellDef="let element"> 
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>Geben Sie Ihre Daten ein:</mat-label>
+            <input matInput type="number" [(ngModel)]= element.geplanter_endbestand >
+            <button *ngIf="element.geplanter_endbestand" matSuffix mat-icon-button aria-label="Clear" (click)="element.geplanter_endbestand=''">
+              <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <!-- Vertriebswunsch  -->
+    <ng-container matColumnDef="vertriebswunsch">
+        <th mat-header-cell *matHeaderCellDef> Vertriebswunsch </th>
+        <td mat-cell *matCellDef="let element"> {{element.vertriebswunsch}} </td>
+      </ng-container>
+ 
+    <!-- Direktverkauf  -->
+    <ng-container matColumnDef="direktverkauf">
+        <th mat-header-cell *matHeaderCellDef> Direktverkauf </th>
+        <td mat-cell *matCellDef="let element"> {{element.direktverkauf}} </td>
+      </ng-container>      
+
+    <!-- Produktionsauftraege  -->
+    <ng-container matColumnDef="produktionsauftraege">
+        <th mat-header-cell *matHeaderCellDef> Produktionsaufträge </th>
+        <td mat-cell *matCellDef="let element"> {{element.produktionsauftraege}} </td>
+      </ng-container> 
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

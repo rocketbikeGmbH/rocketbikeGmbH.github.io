@@ -14,6 +14,7 @@ import { ProgrammplanungComponent } from './programmplanung/programmplanung.comp
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatTableModule} from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -43,6 +44,7 @@ import { exportReducer } from './store/export/export.reducer';
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
+    MatTableModule,
     FormsModule,
     MatCardModule,
     MatInputModule,
