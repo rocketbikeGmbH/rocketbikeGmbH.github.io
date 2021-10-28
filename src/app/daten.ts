@@ -5,9 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class Daten  {
 
-    absatzplan_p1 = 200;
-    absatzplan_p2 = 150;
-    absatzplan_p3 = 100;
+    absatzplan_p1 = 0;
+    absatzplan_p2 = 0;
+    absatzplan_p3 = 0;
+    next_period = 0;
 
 
     constructor(){}

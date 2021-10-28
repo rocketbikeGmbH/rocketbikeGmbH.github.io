@@ -13,6 +13,7 @@ export class AbsatzplanungComponent implements OnInit {
   Vabsatzplan_p1!: number;
   Vabsatzplan_p2!: number;
   Vabsatzplan_p3!: number;
+  next_period!: number;
 
 
   constructor(public D: Daten) {
@@ -24,6 +25,7 @@ export class AbsatzplanungComponent implements OnInit {
     this.Vabsatzplan_p1 = this.D.absatzplan_p1;
     this.Vabsatzplan_p2 = this.D.absatzplan_p2;
     this.Vabsatzplan_p3 = this.D.absatzplan_p3;
+    this.next_period = this.D.next_period;
   }
 
 
