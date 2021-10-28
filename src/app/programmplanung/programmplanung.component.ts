@@ -24,15 +24,13 @@ const ENDPRODUKT_DATEN: Endprodukte[] = [
   styleUrls: ['./programmplanung.component.scss']
 })
 
-
 export class ProgrammplanungComponent implements OnInit {
+
 
   // Tabelle
   displayedColumns: string[] = ['artikelnummer', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'vertriebswunsch', 'direktverkauf', 'produktionsauftraege'];
   dataSource = ENDPRODUKT_DATEN;
-  // Eingabefeld
   
-
   constructor() { 
   }
 
