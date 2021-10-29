@@ -47,10 +47,26 @@ export class KapazitaetsplanungComponent implements OnInit {
   displayedColumns: string[] = ['arbeitsplatz', 'kapa_new', 'ruest_new', 'kapa_old', 'ruest_old', 'kapa_gesamt','anzahl_schichten', 'ueberstunden_min_tag', 'zusatz_ueberstunden'];
   dataSource = ELEMENT_DATA;
   
-  //bedarf_m1: number;
+  bedarf_m1: number = 0;
+  bedarf_m2: number = 0;
+  bedarf_m3: number = 0;
+  bedarf_m4: number = 0;
+  bedarf_m6: number = 0;
+  bedarf_m7: number = 0;
+  bedarf_m8: number = 0;
+  bedarf_m9: number = 0;
+  bedarf_m10: number = 0;
+  bedarf_m11: number = 0;
+  bedarf_m12: number = 0;
+  bedarf_m13: number = 0;
+  bedarf_m14: number = 0;
+  bedarf_m15: number = 0;
+
   constructor() { }
 
   ngOnInit(): void {
+
+    
 
     
 
