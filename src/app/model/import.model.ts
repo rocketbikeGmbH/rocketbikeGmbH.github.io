@@ -10,7 +10,11 @@ export interface ImportModel {
 }
 
 export interface Results {
-  forecast: {};
+  forecast: {
+    p1: number;
+    p2: number;
+    p3: number;
+  };
   warehousestock: {
     article: {
       id: string;
@@ -22,7 +26,8 @@ export interface Results {
     };
   };
   inwardstockmovement: {};
-  futureinwardstockmovement: {};
+  futureinwardstockmovement: {
+  };
   idletimecosts: {};
   waitinglistworkstations: {};
   waitingliststock: {};
