@@ -16,3 +16,13 @@ export const selectImportForecast = createSelector(
   (state: ImportState) => state.importModel,
   (importModel:  ImportModel) => importModel.results?.forecast
 );
+
+export const selectImportWarehousestock = createSelector(
+  (state: ImportState) => state.importModel,
+  (importModel:  ImportModel) => importModel.results?.warehousestock
+);
+
+export const selectImportArticle = createSelector(
+  (state: ImportState) => state.importModel,
+  (importModel:  ImportModel) => importModel.results?.warehousestock?.article
+);

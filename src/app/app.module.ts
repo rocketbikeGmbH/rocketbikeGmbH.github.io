@@ -24,6 +24,9 @@ import { importReducer } from './store/import/import.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { exportReducer } from './store/export/export.reducer';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
+import {MatTable, MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { exportReducer } from './store/export/export.reducer';
     MatInputModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatDividerModule,
+    MatListModule,
+    MatTableModule,
     StoreModule.forRoot({ importModel: importReducer,  exportModel: exportReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

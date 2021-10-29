@@ -11,7 +11,16 @@ export interface ImportModel {
 
 export interface Results {
   forecast: {};
-  warehousestock: {};
+  warehousestock: {
+    article: {
+      id: string;
+      amount: number;
+      startamount: number;
+      pct: number;
+      price: number;
+      stockvalue: number;
+    };
+  };
   inwardstockmovement: {};
   futureinwardstockmovement: {};
   idletimecosts: {};
@@ -25,3 +34,34 @@ export interface Results {
   _group: string;
   _period: string;
 }
+
+export interface warehousestock {
+  article: {
+      id: string;
+      amount: number;
+      startamount: number;
+      pct: number;
+      price: number;
+      stockvalue: number;
+  };
+}
+
+export interface article {
+  id: string;
+  amount: number;
+  startamount: number;
+  pct: number;
+  price: number;
+  stockvalue: number;
+
+}
+
+export interface forecast {
+  p1: number;
+  p2: number;
+  p3: number;
+}
+
+
+
+
