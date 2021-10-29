@@ -45,7 +45,6 @@ export class KapazitaetsplanungComponent implements OnInit {
   //  <input matInput type="number" name="Vabsatzplan_p1" [(ngModel)]="Vabsatzplan_p1"/>
 
   displayedColumns: string[] = ['arbeitsplatz', 'kapa_new', 'ruest_new', 'kapa_old', 'ruest_old', 'kapa_gesamt','anzahl_schichten', 'ueberstunden_min_tag', 'zusatz_ueberstunden'];
-  //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol','test'];
   dataSource = ELEMENT_DATA;
   
   //bedarf_m1: number;
