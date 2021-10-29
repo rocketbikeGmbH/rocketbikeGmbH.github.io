@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Daten } from '../daten';
 import { select, Store } from '@ngrx/store';
-import { selectImportResults } from '../store/import/import.selector';
+import { selectImportIdleTimeCosts, selectImportResults } from '../store/import/import.selector';
 import { ImportState } from '../store/import/import.reducer';
 //import { Kapaelement } from '../model/import.model';
 import { productionlist } from '../model/export.model';
 import { idletimecosts } from '../model/import.model';
+
 
 export interface Kapaelement {
   arbeitsplatz: number;
@@ -37,6 +37,9 @@ const ELEMENT_DATA: Kapaelement[] = [
   styleUrls: ['./kapazitaetsplanung.component.scss']
 })
 export class KapazitaetsplanungComponent implements OnInit {
+
+
+  idletimecosts$ = this.store.pipe(select(selectImportIdleTimeCosts));
 
 
   displayedColumns: string[] = ['arbeitsplatz', 'kapa_new', 'ruest_new', 'kapa_old', 'ruest_old', 'kapa_gesamt','anzahl_schichten', 'ueberstunden_min_tag', 'zusatz_ueberstunden'];
@@ -71,9 +74,14 @@ export class KapazitaetsplanungComponent implements OnInit {
   ruest_dauer_m15:number = 15;
 
 
-  constructor() { }
+  constructor(private store: Store<ImportState>) { }
 
   ngOnInit(): void {
+
+    let data: any | idletimecosts;
+        this.idletimecosts$.subscribe((i) => (data= i));
+        console.log("Kapa Plan")
+        console.log(data)
 
     // Neuen Kapa bedarf berechnen OHNE Rüstzeit
 
@@ -91,6 +99,7 @@ export class KapazitaetsplanungComponent implements OnInit {
     // sum_m13 = (E10+E11+E12+E13+E14+E15) * 2
     // sum_m14 = E16 * 3
     // sum_m15 = (E17+E26) * 3
+
 
     // Anzahl Rüstevents aus vorperiode übernehmen
 
@@ -117,7 +126,6 @@ export class KapazitaetsplanungComponent implements OnInit {
 
 
   }
-
 
 
 

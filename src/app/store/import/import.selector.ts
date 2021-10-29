@@ -26,3 +26,8 @@ export const selectImportArticle = createSelector(
   (state: ImportState) => state.importModel,
   (importModel:  ImportModel) => importModel.results?.warehousestock?.article
 );
+
+export const selectImportIdleTimeCosts = createSelector(
+  (state: ImportState) => state.importModel,
+  (importModel:  ImportModel) => importModel.results?.idletimecosts
+);

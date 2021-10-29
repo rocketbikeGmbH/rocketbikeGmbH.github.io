@@ -15,7 +15,7 @@ export const initialState: ImportModel = {
     },
     warehousestock: {
       article:{
-        id: "",
+        id: 0,
         amount: 0,
         startamount: 0,
         pct: 0,
@@ -85,9 +85,9 @@ export const initialState: ImportModel = {
     completedorders: {},
     cycletimes: {},
     result: {},
-    _game: "",
-    _group: "",
-    _period: "",
+    _game: 0,
+    _group: 0,
+    _period: 0,
   },
 };
 

@@ -17,7 +17,7 @@ export interface Results {
   };
   warehousestock: {
     article: {
-      id: string;
+      id: number;
       amount: number;
       startamount: number;
       pct: number;
@@ -35,14 +35,14 @@ export interface Results {
   completedorders: {};
   cycletimes: {};
   result: {};
-  _game: string;
-  _group: string;
-  _period: string;
+  _game: number;
+  _group: number;
+  _period: number;
 }
 
 export interface warehousestock {
   article: {
-      id: string;
+      id: number;
       amount: number;
       startamount: number;
       pct: number;
@@ -52,7 +52,7 @@ export interface warehousestock {
 }
 
 export interface article {
-  id: string;
+  id: number;
   amount: number;
   startamount: number;
   pct: number;
