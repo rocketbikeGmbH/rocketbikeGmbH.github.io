@@ -16,19 +16,12 @@ export interface Results {
     p3: number;
   };
   warehousestock: {
-    article: {
-      id: number;
-      amount: number;
-      startamount: number;
-      pct: number;
-      price: number;
-      stockvalue: number;
-    };
+    article: Array<article>;
   };
   inwardstockmovement: {};
   futureinwardstockmovement: {
   };
-  idletimecosts: {};
+  idletimecosts: idletimecosts;
   waitinglistworkstations: {};
   waitingliststock: {};
   ordersinwork: {};
@@ -41,14 +34,7 @@ export interface Results {
 }
 
 export interface warehousestock {
-  article: {
-      id: number;
-      amount: number;
-      startamount: number;
-      pct: number;
-      price: number;
-      stockvalue: number;
-  };
+  article: Array<article>;
 }
 
 export interface article {
@@ -78,14 +64,7 @@ export interface futureinwardstockmovement{
 }
 
 export interface idletimecosts{
-  workplace: {
-    id: number;
-    setupevents: number;
-    idletime: number;
-    wageidltimecosts: number;
-    wagecosts: number;
-    machineidletimecosts: number;
-  }
+  workplace: Array<idle_workplace>,
   sum:{
     setupevents: number;
     idletime: number;
@@ -95,20 +74,24 @@ export interface idletimecosts{
   }
 }
 
+export interface idle_workplace {
+  id: number;
+  setupevents: number;
+  idletime: number;
+  wageidltimecosts: number;
+  wagecosts: number;
+  machineidletimecosts: number;
+}
+
 export interface waitinglistworkstations{
-  worklplace:{
-    id: number;
-    timeneed: number;
-    waitinglist:{
-      period: number;
-      order: number;
-      firstbatch: number;
-      lastbatch:number;
-      item: number;
-      amount: number;
-      timeneed: number
-    }
-  }
+  worklplace: Array<waiting_workplace>;  
+}
+
+
+export interface waiting_workplace{
+  id: number;
+  timeneed: number;
+  waitinglist: Array<waitinglist>
 }
 
   export interface waitingliststock{
@@ -117,8 +100,22 @@ export interface waitinglistworkstations{
      }
   }
 
+  export interface waitinglist{
+    period: number;
+    order: number;
+    firstbatch: number;
+    lastbatch:number;
+    item: number;
+    amount: number;
+    timeneed: number
+  }
+
   export interface ordersinwork{
-    worklpace:{
+    workplace: Array<orders_workplace>;
+  }
+
+  export interface orders_workplace{
+    
       id:number;
       period: number;
       order: number;
@@ -126,7 +123,7 @@ export interface waitinglistworkstations{
       item:number;
       amount: number;
       timeneed:number;
-    }
+    
   }
 
 

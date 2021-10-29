@@ -26,6 +26,8 @@ const ELEMENT_DATA: Kapaelement[] = [
   {arbeitsplatz: 2, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
   {arbeitsplatz: 3, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
   {arbeitsplatz: 4, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 4, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+
 
 ];
 
@@ -78,10 +80,10 @@ export class KapazitaetsplanungComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let data: any | idletimecosts;
+    let data: idletimecosts | undefined;
         this.idletimecosts$.subscribe((i) => (data= i));
         console.log("Kapa Plan")
-        console.log(data)
+        console.log(data?.workplace[1])
 
     // Neuen Kapa bedarf berechnen OHNE Rüstzeit
 

@@ -14,35 +14,35 @@ export const initialState: ImportModel = {
       p3: 0,
     },
     warehousestock: {
-      article:{
+      article:[{
         id: 0,
         amount: 0,
         startamount: 0,
         pct: 0,
         price: 0,
         stockvalue: 0,
-      },
+      }],
       
     },
     inwardstockmovement: {},
     futureinwardstockmovement: {
-      order: {
+      order: [{
         orderperiod: 0,
         id: 0,
         mode: 0,
         article: 0,
         amount: 0,
-      }
+      }]
     },
     idletimecosts: {
-      workplace: {
+      workplace:[{
         id: 0,
         setupevents: 0,
         idletime: 0,
         wageidltimecosts: 0,
         wagecosts: 0,
         machineidletimecosts: 0,
-      },
+      }],
       sum:{
         setupevents: 0,
         idletime: 0,
@@ -55,7 +55,7 @@ export const initialState: ImportModel = {
       worklplace:{
         id: 0,
         timeneed: 0,
-        waitinglist:{
+        waitinglist:[{
           period: 0,
           order: 0,
           firstbatch: 0,
@@ -63,16 +63,16 @@ export const initialState: ImportModel = {
           item: 0,
           amount: 0,
           timeneed: 0,
-                }
+                }]
       }
     },
     waitingliststock: {
-      missingpart: {
+      missingpart: [{
         id: 0,
-      }
+      }]
     },
     ordersinwork: {
-      worklpace:{
+      worklpace:[{
         id:0,
         period: 0,
         order: 0,
@@ -80,7 +80,7 @@ export const initialState: ImportModel = {
         item:0,
         amount: 0,
         timeneed:0,
-      }
+      }]
     },
     completedorders: {},
     cycletimes: {},
