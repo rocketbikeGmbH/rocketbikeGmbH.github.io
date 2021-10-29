@@ -49,20 +49,20 @@ let ruest_dauern: ruest_dauer[] = [
 
 
 let ELEMENT_DATA: Kapaelement[] = [
-  {arbeitsplatz: 1, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 2, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 3, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 4, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 6, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 7, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 8, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 9, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 10, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 11, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 12, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 13, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 14, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
-  {arbeitsplatz: 15, kapa_new: 100, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 1, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 2, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 3, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 4, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 6, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 7, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 8, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 9, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 10, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 11, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 12, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 13, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 14, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
+  {arbeitsplatz: 15, kapa_new: 0, ruest_new: 1, kapa_old: 2, ruest_old: 2, kapa_gesamt: 3, anzahl_schichten: 2, ueberstunden_min_tag: 2, zusatz_ueberstunden: 2},
 ];
 
 
@@ -80,6 +80,7 @@ export class KapazitaetsplanungComponent implements OnInit {
 
   displayedColumns: string[] = ['arbeitsplatz', 'kapa_new', 'ruest_new', 'kapa_old', 'ruest_old', 'kapa_gesamt','anzahl_schichten', 'ueberstunden_min_tag', 'zusatz_ueberstunden'];
   dataSource = ELEMENT_DATA;
+  ruest_dauern = ruest_dauern;
   idlewerte: idle[] = [];
 
   
@@ -110,6 +111,8 @@ export class KapazitaetsplanungComponent implements OnInit {
         console.log("Kapa Plan")
         console.log(data?.workplace[1])
 
+
+    // Rüstvorgänge der letzten Periode auslesen
   let kopie = {} as idle;
   data!.workplace.forEach(d =>{
 
@@ -119,6 +122,18 @@ export class KapazitaetsplanungComponent implements OnInit {
       }
     })
   })
+
+  // NEW Rüstzeit berechnen
+  this.dataSource.forEach(d =>{
+    this.ruest_dauern.forEach(r =>{
+      if(d.arbeitsplatz == r.id){
+        d.ruest_new = d.ruest_new * r.dauer
+      }
+    })
+  })
+
+
+
 
 
 
