@@ -31,3 +31,15 @@ export const selectImportIdleTimeCosts = createSelector(
   (state: ImportState) => state.importModel,
   (importModel:  ImportModel) => importModel.results?.idletimecosts
 );
+
+export const selectImportOrdersInWork = createSelector(
+  (state: ImportState) => state.importModel,
+  (importModel:  ImportModel) => importModel.results?.ordersinwork
+);
+
+export const selectWaitingListWorkstations = createSelector(
+  (state: ImportState) => state.importModel,
+  (importModel:  ImportModel) => importModel.results?.waitinglistworkstations
+);
+
+

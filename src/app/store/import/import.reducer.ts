@@ -52,7 +52,7 @@ export const initialState: ImportModel = {
       }
     },
     waitinglistworkstations: {
-      worklplace:{
+      workplace:[{
         id: 0,
         timeneed: 0,
         waitinglist:[{
@@ -64,7 +64,7 @@ export const initialState: ImportModel = {
           amount: 0,
           timeneed: 0,
                 }]
-      }
+      }]
     },
     waitingliststock: {
       missingpart: [{
@@ -72,7 +72,7 @@ export const initialState: ImportModel = {
       }]
     },
     ordersinwork: {
-      worklpace:[{
+      workplace:[{
         id:0,
         period: 0,
         order: 0,
