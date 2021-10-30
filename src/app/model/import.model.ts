@@ -22,9 +22,13 @@ export interface Results {
   futureinwardstockmovement: {
   };
   idletimecosts: idletimecosts;
-  waitinglistworkstations: {};
+  waitinglistworkstations: {
+    workplace: Array<waiting_workplace>;
+  };
   waitingliststock: {};
-  ordersinwork: {};
+  ordersinwork: {
+    workplace: Array<orders_workplace>;
+  };
   completedorders: {};
   cycletimes: {};
   result: {};
@@ -44,7 +48,6 @@ export interface article {
   pct: number;
   price: number;
   stockvalue: number;
-
 }
 
 export interface forecast {
@@ -84,14 +87,14 @@ export interface idle_workplace {
 }
 
 export interface waitinglistworkstations{
-  worklplace: Array<waiting_workplace>;  
+  workplace: Array<waiting_workplace>;  
 }
 
 
 export interface waiting_workplace{
   id: number;
   timeneed: number;
-  waitinglist: Array<waitinglist>
+  waitinglist: Array<waitinglist>;
 }
 
   export interface waitingliststock{
@@ -115,7 +118,6 @@ export interface waiting_workplace{
   }
 
   export interface orders_workplace{
-    
       id:number;
       period: number;
       order: number;
@@ -123,7 +125,6 @@ export interface waiting_workplace{
       item:number;
       amount: number;
       timeneed:number;
-    
   }
 
 
