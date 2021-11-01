@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ExportModel, sellwish } from '../../model/export.model';
+import { ExportModel, Sellwish } from '../../model/export.model';
 
 export const addExportXml = createAction(
   '[Dateiexport Component] Add XML_EXPORT',
@@ -7,5 +7,5 @@ export const addExportXml = createAction(
 );
 
 export const addSellwish = createAction(
-  '[Dateiexport Component] ADD Sellwish', (props<{ sellwish: sellwish}>())
+  '[Dateiexport Component] ADD Sellwish', (props<{ sellwish: Sellwish}>())
 );
