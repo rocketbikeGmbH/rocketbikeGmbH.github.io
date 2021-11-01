@@ -1,12 +1,12 @@
 export interface Qualitycontrol {
-  type: string;
-  losequantity: number;
-  delay: number;
+  attr_type: string;
+  attr_losequantity: number;
+  attr_delay: number;
 }
 
 export interface Item {
-  article: number;
-  quantity: number;
+  attr_article: number;
+  attr_quantity: number;
 }
 
 export interface Sellwish {
@@ -14,10 +14,10 @@ export interface Sellwish {
 }
 
 export interface Item2 {
-  article: number;
-  quantity: number;
-  price: number;
-  penalty: number;
+  attr_article: number;
+  attr_quantity: number;
+  attr_price: number;
+  attr_penalty: number;
 }
 
 export interface Selldirect {
@@ -25,9 +25,9 @@ export interface Selldirect {
 }
 
 export interface Order {
-  article: number;
-  quantity: number;
-  modus: number;
+  attr_article: number;
+  attr_quantity: number;
+  attr_modus: number;
 }
 
 export interface Orderlist {
@@ -35,8 +35,8 @@ export interface Orderlist {
 }
 
 export interface Production {
-  article: number;
-  quantity: number;
+  attr_article: number;
+  attr_quantity: number;
 }
 
 export interface Productionlist {
@@ -44,9 +44,9 @@ export interface Productionlist {
 }
 
 export interface Workingtime {
-  station: number;
-  shift: number;
-  overtime: number;
+  attr_station: number;
+  attr_shift: number;
+  attr_overtime: number;
 }
 
 export interface Workingtimelist {
