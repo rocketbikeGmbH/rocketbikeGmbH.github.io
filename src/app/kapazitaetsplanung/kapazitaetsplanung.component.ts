@@ -136,7 +136,7 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     
 
-   let i:number = 0;
+    let i:number = 0;
     waiting_workstations!.workplace.forEach((workplace: waiting_workplace) =>{
          
          this.temp_workplace.id = workplace.id;
@@ -144,7 +144,7 @@ export class KapazitaetsplanungComponent implements OnInit {
         this.temp_workplace.waitinglist = [];
 
 
-        if(!(workplace.waitinglist === undefined)){
+        if(!(workplace.waitinglist == undefined)){
           this.temp_workplace.waitinglist = workplace.waitinglist;
           // this.workplace.waitinglist.push(worklpace.waitinglist);
         }
@@ -170,7 +170,7 @@ export class KapazitaetsplanungComponent implements OnInit {
   }
   
 
-      async kapa_old_berechnen() {
+      kapa_old_berechnen() {
 
             console.log("kapa_old_berechnen_start")
 
@@ -222,22 +222,22 @@ export class KapazitaetsplanungComponent implements OnInit {
 
       console.log("STAMMWERTE_berechnen_start")
     // Anzahl Rüstevents aus vorperiode übernehmen. (Zwischenspeichern in ruest_new und dann noch multiplizieren mit durschnittliche Dauer des Rüstvorgangs)
-          let data: idletimecosts | undefined;
-          this.idletimecosts$.subscribe((i) => (data= i));
-          data!.workplace.forEach(d =>{
+          let idlelist: idletimecosts | undefined;
+          this.idletimecosts$.subscribe((i) => (idlelist= i));
+          idlelist!.workplace.forEach(idleItem =>{
 
-            this.dataSource.forEach(e =>{
-              if(e.arbeitsplatz == d.id){
-                e.ruest_new = d.setupevents;
+            this.dataSource.forEach(data =>{
+              if(data.arbeitsplatz == idleItem.id){
+                data.ruest_new = idleItem.setupevents;
               }
             })
          })
 
           // Neue Rüstzeit berechnen
-        this.dataSource.forEach(d =>{
-            this.ruest_dauern.forEach(r =>{
-              if(d.arbeitsplatz == r.id){
-                d.ruest_new = d.ruest_new * r.dauer
+        this.dataSource.forEach(data =>{
+            this.ruest_dauern.forEach(ruest_zeit =>{
+              if(data.arbeitsplatz == ruest_zeit.id){
+                data.ruest_new = data.ruest_new * ruest_zeit.dauer
               }
             })
         })
