@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { selectImportIdleTimeCosts, selectImportResults, selectWaitingListWorkstations } from '../store/import/import.selector';
 import { ImportState } from '../store/import/import.reducer';
 //import { Kapaelement } from '../model/import.model';
-import { productionlist } from '../model/export.model';
+import { Productionlist } from '../model/export.model';
 import { idletimecosts, waitinglistworkstations, waiting_workplace, waitinglist } from '../model/import.model';
 import { not } from '@angular/compiler/src/output/output_ast';
 import { async } from 'rxjs';
