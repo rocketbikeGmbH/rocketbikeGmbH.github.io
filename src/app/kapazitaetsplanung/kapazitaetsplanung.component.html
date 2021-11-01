@@ -28,7 +28,7 @@
           <!-- Symbol Column -->
           <ng-container matColumnDef="kapa_old">
             <th mat-header-cell *matHeaderCellDef> Warteschlange Kapazitätbedarf </th>
-            <td mat-cell *matCellDef="let element"> {{element.ruest_old}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.kapa_old}} </td>
           </ng-container>
 
                     <!-- Symbol Column -->
@@ -57,11 +57,10 @@
 
                         <!-- Symbol Column -->
                     <ng-container matColumnDef="zusatz_ueberstunden">
-                      <th mat-header-cell *matHeaderCellDef> Zusätzliche Überstunden Min </th>
+                      <th mat-header-cell *matHeaderCellDef> Zusätzliche Minuten pro Tag </th>
                       <td mat-cell *matCellDef="let element"> 
                         <mat-form-field class="example-form-field" appearance="fill">
-                          <input matInput type="number" [(ngModel)]= element.zusatz_ueberstunden >
-                          
+                          <input  matInput type="number" [(ngModel)]= element.zusatz_ueberstunden >
                       </mat-form-field>
                       </td>
                     </ng-container>

@@ -65,13 +65,13 @@ export class DateiimportComponent {
        let data: any | warehousestock;
         this.warehouse$.subscribe((i) => (data= i));
 
-        console.log("jetzt")
-        console.log(data.article)
+        //console.log("jetzt")
+        //console.log(data.article)
 
         let art: any| article;
-        console.log("artikel")
+        //console.log("artikel")
         this.article$.subscribe((i) => (art = i))
-        console.log(art)
+        //console.log(art)
 
 
 
