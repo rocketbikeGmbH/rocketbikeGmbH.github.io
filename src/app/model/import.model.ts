@@ -1,10 +1,3 @@
-// export class ImportModel {
-//   results: {}
-//   constructor(results?: {}) {
-//     this.results = results || {};
-//   }
-// }
-
 export interface ImportModel {
   results?: Results | undefined;
 }
@@ -87,7 +80,7 @@ export interface idle_workplace {
 }
 
 export interface waitinglistworkstations{
-  workplace: Array<waiting_workplace>;  
+  workplace: Array<waiting_workplace>;
 }
 
 
