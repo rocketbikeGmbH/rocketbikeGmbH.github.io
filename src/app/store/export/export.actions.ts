@@ -10,6 +10,6 @@ export const addInput = createAction(
   '[Dateiexport Component] ADD Input', (props<{ input: Input }>())
 );
 
-export const addSellwish2 = createAction(
+export const addSellwish = createAction(
   '[Dateiexport Component] ADD Sellwish', (props<{ sellwish: Sellwish }>())
 );

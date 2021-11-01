@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { addExportXml, addInput } from './export.actions';
+import { addExportXml, addInput, addSellwish } from './export.actions';
 import { ExportModel } from '../../model/export.model';
 
 export interface ExportState {
@@ -64,7 +64,7 @@ const _exportReducer = createReducer(
   initialState,
   on(addExportXml, (state, { exportModel }) => exportModel),
   on(addInput, (state, { input }) => ({input: input})),
-  //on(addSellwish2, (state, {sellwish}) => ({...state, input: {sellwish: sellwish}}))
+  on(addSellwish, (state, {sellwish}) => ({ input: {...state.input, sellwish: sellwish}}))
 );
 
 export function exportReducer(state: ExportModel | undefined, action: Action) {
