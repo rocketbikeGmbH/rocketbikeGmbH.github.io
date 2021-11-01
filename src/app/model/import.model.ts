@@ -85,7 +85,7 @@ export interface waitinglistworkstations{
 
 
 export interface waiting_workplace{
-  id: number;
+  id: number | undefined;
   timeneed: number;
   waitinglist: Array<waitinglist>;
 }
