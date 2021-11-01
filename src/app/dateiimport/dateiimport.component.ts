@@ -4,7 +4,6 @@ import { select, Store } from '@ngrx/store';
 import { addImportXml } from '../store/import/import.actions';
 import { ImportState } from '../store/import/import.reducer';
 import { selectImportArticle, selectImportForecast, selectImportResults, selectImportWarehousestock, selectImportXml } from '../store/import/import.selector';
-import { Daten } from '../daten';
 import { warehousestock } from '../model/import.model';
 import { article } from '../model/import.model';
 
@@ -22,7 +21,7 @@ export class DateiimportComponent {
   forecast$ = this.store.pipe(select(selectImportForecast));
   warehouse$ = this.store.pipe(select(selectImportWarehousestock));
   article$ = this.store.pipe(select(selectImportArticle));
-  
+
 
   constructor(private store: Store<ImportState>) {}
 
@@ -54,7 +53,7 @@ export class DateiimportComponent {
         //this.forecast$.subscribe((i) => (data = i));
 
         //this.fileContentAsJson = JSON.stringify(data);
-        
+
         //var obj = JSON.parse(data)
         //console.log(data);
 
@@ -62,24 +61,24 @@ export class DateiimportComponent {
 
         //console.log(obj.p1)
 
-       let data: any | warehousestock;
-        this.warehouse$.subscribe((i) => (data= i));
+       let warehousestock: undefined | warehousestock;
+        this.warehouse$.subscribe((i) => (warehousestock= i));
 
-        //console.log("jetzt")
-        //console.log(data.article)
+        console.log("jetzt")
+        console.log(warehousestock?.article)
 
-        let art: any| article;
-        //console.log("artikel")
+        let art: undefined | Array<article>;
+        console.log("artikel")
         this.article$.subscribe((i) => (art = i))
-        //console.log(art)
+        console.log(art)
 
 
 
         //this.fileContentAsJson = JSON.stringify(data);
-        
+
         //var obj = JSON.parse(JSON.stringify(data));
 
-        //gibt von Array an Stelle 0 den Wert aus 
+        //gibt von Array an Stelle 0 den Wert aus
        // console.log(obj.article[0].amount)
 
         //console.log(obj.article.id['4'].amount)
@@ -88,14 +87,14 @@ export class DateiimportComponent {
         //console.log(data);
 
 
-        
-        
-        
+
+
+
       };
       //console.log(this.fileName);
-      
-      
-      
+
+
+
 
      // this.zahltest = this.fileContentAsJson.
     }
