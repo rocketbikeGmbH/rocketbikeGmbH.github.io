@@ -136,33 +136,54 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     
 
-    let i:number = 0;
-    waiting_workstations!.workplace.forEach((workplace: waiting_workplace) =>{
+  //   let i:number = 0;
+  //   waiting_workstations!.workplace.forEach((workplace: waiting_workplace) =>{
          
-         this.temp_workplace.id = workplace.id;
-        this.temp_workplace.timeneed = workplace.timeneed;
-        this.temp_workplace.waitinglist = [];
+  //        this.temp_workplace.id = workplace.id;
+  //       this.temp_workplace.timeneed = workplace.timeneed;
+  //       this.temp_workplace.waitinglist = [];
 
 
-        if(!(workplace.waitinglist == undefined)){
-          this.temp_workplace.waitinglist = workplace.waitinglist;
-          // this.workplace.waitinglist.push(workplace.waitinglist);
-        }
+  //       if(!(workplace.waitinglist == undefined)){
+  //         this.temp_workplace.waitinglist = workplace.waitinglist;
+
+  //         // for(i = 0; {
+  //         //   this.temp_workplace.waitinglist.push(e);
+  //         // })
+  //         // this.workplace.waitinglist.push(workplace.waitinglist);
+  //       }
 
        
-       this.waiting_workplace.push(this.temp_workplace);
+  //      this.waiting_workplace.push(this.temp_workplace);
 
-        console.log("NEU ANGELEGTER DATENSATZ")
-        //console.log(this.waiting_workplace);
-        console.log(this.waiting_workplace[i].id)
-        console.log(this.waiting_workplace[i].timeneed)
-        console.log(this.waiting_workplace[i].waitinglist)
+  //       console.log("NEU ANGELEGTER DATENSATZ")
+  //       console.log(this.waiting_workplace);
+  //       console.log(this.waiting_workplace[i].id)
+  //       console.log(this.waiting_workplace[i].timeneed)
+  //       console.log(this.waiting_workplace[i].waitinglist)
 
 
-      //console.log("laenge")
-      //console.log(this.waiting_workplace.length)
-      i = i +1
-    })
+  //     //console.log("laenge")
+  //     //console.log(this.waiting_workplace.length)
+  //     i = i +1
+  //   })
+
+      for(let i=0; i<16; i++){
+
+        this.temp_workplace.id = waiting_workstations!.workplace[i].id;
+        this.temp_workplace.timeneed = waiting_workstations!.workplace[i].timeneed;
+        this.temp_workplace.waitinglist = waiting_workstations!.workplace[i].waitinglist;
+        this.temp_workplace.waitinglist = [];
+
+                 if(!(waiting_workstations!.workplace[i].waitinglist == undefined)){
+                     this.temp_workplace.waitinglist = waiting_workstations!.workplace[i].waitinglist;
+                   }
+
+        this.waiting_workplace.push(this.temp_workplace);
+        console.log("NEW")
+        console.log(this.waiting_workplace);
+
+      }
 
   }
   
