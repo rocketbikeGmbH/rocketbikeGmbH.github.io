@@ -146,12 +146,9 @@ export class KapazitaetsplanungComponent implements OnInit {
 
         if(!(workplace.waitinglist == undefined)){
           this.temp_workplace.waitinglist = workplace.waitinglist;
-          // this.workplace.waitinglist.push(worklpace.waitinglist);
+          // this.workplace.waitinglist.push(workplace.waitinglist);
         }
 
-       // console.log(this..id)
-        //console.log(this.workplace.timeneed)
-        //console.log(this.workplace.waitinglist)
        
        this.waiting_workplace.push(this.temp_workplace);
 
