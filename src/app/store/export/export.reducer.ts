@@ -1,5 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { addExportXml, addInput, addSellwish } from './export.actions';
+import {
+  addExportXml,
+  addInput,
+  addOrderlist, addProductionlist,
+  addQualitycontrol,
+  addSelldirect,
+  addSellwish,
+  addSellwishItem, addWorkingtimelist
+} from './export.actions';
 import { ExportModel } from '../../model/export.model';
 
 export interface ExportState {
@@ -64,7 +72,13 @@ const _exportReducer = createReducer(
   initialState,
   on(addExportXml, (state, { exportModel }) => exportModel),
   on(addInput, (state, { input }) => ({input: input})),
-  on(addSellwish, (state, {sellwish}) => ({ input: {...state.input, sellwish: sellwish}}))
+  on(addSellwish, (state, { sellwish }) => ({ input: {...state.input, sellwish: sellwish}})),
+  on(addSellwishItem, (state, { item }) => ({input: {...state.input, sellwish: { item: [...state.input.sellwish.item, item]}}})),
+  on(addSelldirect, (state, { selldirect }) => ({ input: {...state.input, selldirect: selldirect}})),
+  on(addOrderlist, (state, { orderlist }) => ({ input: {...state.input, orderlist: orderlist}})),
+  on(addQualitycontrol, (state, { qualitycontrol }) => ({ input: {...state.input, qualitycontrol: qualitycontrol}})),
+  on(addProductionlist, (state, { productionlist }) => ({ input: {...state.input, productionlist: productionlist}})),
+  on(addWorkingtimelist, (state, {workingtimelist}) => ({ input: {...state.input, workingtimelist: workingtimelist}})),
 );
 
 export function exportReducer(state: ExportModel | undefined, action: Action) {
