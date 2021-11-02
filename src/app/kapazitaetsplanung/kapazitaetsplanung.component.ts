@@ -1,19 +1,13 @@
 import {
   Component,
-  Input,
-  OnChanges,
   OnInit,
-  SimpleChange,
-  SimpleChanges,
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import {
   selectImportIdleTimeCosts,
-  selectImportResults,
   selectWaitingListWorkstations,
 } from '../store/import/import.selector';
 import { ImportState } from '../store/import/import.reducer';
-//import { Kapaelement } from '../model/import.model';
 import { Productionlist } from '../model/export.model';
 import {
   idletimecosts,
@@ -21,8 +15,7 @@ import {
   waiting_workplace,
   waitinglist,
 } from '../model/import.model';
-import { not } from '@angular/compiler/src/output/output_ast';
-import { async } from 'rxjs';
+
 
 export interface Kapaelement {
   arbeitsplatz: number;
@@ -63,165 +56,200 @@ let ruest_dauern: ruest_dauer[] = [
   { id: 15, dauer: 15 },
 ];
 
-export interface sum_gesamt {
+export interface summe_maschine {
   id: number;
-  sum: number;
+  summe: number;
+  produkte: produkt_bearbeitung[];
 }
+
+export interface produkt_bearbeitung{
+  id: number;
+  zeit: number;
+}
+
+// let list_summe_maschine: summe_maschine[] = [
+//   { id: 1, summe: 0, produkte: [{id: 49, zeit: 54,29] },
+//   { id: 2, summe: 0,produkte: [50,55,30] },
+//   { id: 3, summe: 0,produkte: [51,56,31] },
+//   { id: 4, summe: 0,produkte: [49,54,29] },
+//   { id: 6, summe: 0,produkte: [49,54,29] },
+//   { id: 7, summe: 0,produkte: [49,54,29] },
+//   { id: 8, summe: 0,produkte: [49,54,29] },
+//   { id: 9, summe: 0,produkte: [49,54,29] },
+//   { id: 10, summe: 0,produkte: [49,54,29] },
+//   { id: 11, summe: 0,produkte: [49,54,29] },
+//   { id: 12, summe: 0,produkte: [49,54,29] },
+//   { id: 13, summe: 0,produkte: [49,54,29] },
+//   { id: 14, summe: 0,produkte: [49,54,29] },
+//   { id: 15, summe: 0,produkte: [49,54,29] },
+// ]
+// sum_m1 = (E49+E54+E29) * 6
+    // sum_m2 = (E50+E55+E30) * 5
+    // sum_m3 = E51 * 5 + (E56+31) * 6
+    // sum_m4 = E1 * 6 + (E2+E3) * 7
+    // sum_m6 = E16 * 2 + (E18+E19+E20) * 3
+    // sum_m7 = (E10+E11+E12+E13+E14+E15+E18+E19+E20+E26) *2
+    // sum_m8 = (E10+E13) + (E11+E12+E14+E15) * 2 + (E18+E19+E20) * 3
+    // sum_m9 = (E18+E19+E20) * 2 + (E10+E11+E12+E13+E14+E15) * 3
+    // sum_m10 = (E4+E5+E6+E7+E8+E9) * 4
+    // sum_m11 = (E4+E5+E6+E7+E8+E9) * 3
+    // sum_m12 = (E10+E11+E12+E13+E14+E15) * 3
+    // sum_m13 = (E10+E11+E12+E13+E14+E15) * 2
+    // sum_m14 = E16 * 3
+    // sum_m15 = (E17+E26) * 3
 
 let ELEMENT_DATA: Kapaelement[] = [
   {
     arbeitsplatz: 1,
-    kapa_new: 5000,
+    kapa_new: 2700,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 2,
-    kapa_new: 0,
+    kapa_new: 2250,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 3,
-    kapa_new: 0,
+    kapa_new: 2500,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 4,
-    kapa_new: 0,
+    kapa_new: 2950,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 6,
-    kapa_new: 0,
+    kapa_new: 2270,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 7,
-    kapa_new: 0,
+    kapa_new: 3598,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 8,
-    kapa_new: 0,
+    kapa_new: 2740,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 9,
-    kapa_new: 0,
+    kapa_new: 3600,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
-  {
-    arbeitsplatz: 10,
-    kapa_new: 0,
+  { arbeitsplatz: 10, 
+    kapa_new: 3600, 
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
-  },
+    zusatz_ueberstunden: 0,},
   {
     arbeitsplatz: 11,
-    kapa_new: 0,
+    kapa_new: 2700,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 12,
-    kapa_new: 0,
+    kapa_new: 2700,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 13,
-    kapa_new: 0,
+    kapa_new: 1800,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 14,
-    kapa_new: 0,
+    kapa_new: 1380,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
   {
     arbeitsplatz: 15,
-    kapa_new: 0,
+    kapa_new: 2697,
     ruest_new: 1,
     kapa_old: 0,
-    ruest_old: 2,
+    ruest_old: 0,
     kapa_gesamt: 0,
     anzahl_schichten: 1,
     ueberstunden_min_tag: 0,
-    zusatz_ueberstunden: 2,
+    zusatz_ueberstunden: 0,
   },
 ];
 
@@ -250,22 +278,36 @@ export class KapazitaetsplanungComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   ruest_dauern = ruest_dauern;
   idlewerte: idle[] = [];
-  sum_gesamt: sum_gesamt[] = [];
+  summe_maschine: summe_maschine[] = [];
   waiting_workplace: waiting_workplace[] = [];
   waitinglist: waitinglist[] = [];
+  productionlist: Productionlist | undefined;
 
-  temp_workplace: waiting_workplace = {
-    id: 0,
-    timeneed: 0,
-    waitinglist: this.waitinglist,
-  };
 
   constructor(private store: Store<ImportState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initialisieren();
+    this.Bedarf_und_Schichten_berechnen();
+    
+  }
 
   initialisieren() {
     // Neuen Kapa bedarf berechnen OHNE Rüstzeit
+
+    // this.productionlist?.production.forEach(product =>{
+
+    //     this.summe_maschine.forEach(maschine =>{
+
+    //         if(product.article in [49,54,29]){maschine.summe = maschine.summe + product.quantity * 6}
+
+    //         if(product.article in [49,54,29]){maschine.summe = maschine.summe + product.quantity * 6}
+
+           
+    //     })
+
+
+    // })
 
     // sum_m1 = (E49+E54+E29) * 6
     // sum_m2 = (E50+E55+E30) * 5
@@ -285,15 +327,9 @@ export class KapazitaetsplanungComponent implements OnInit {
     // Waiting List auslesen
     let waiting_workstations: waitinglistworkstations | undefined;
     this.waitinglistworkstations$.subscribe((i) => (waiting_workstations = i));
-    console.log('WAITINGWORKSTATIONS');
-    console.log(waiting_workstations?.workplace);
 
     waiting_workstations!.workplace.forEach((workplace: waiting_workplace) => {
-      const temp_workplace: waiting_workplace = {
-        id: 0,
-        timeneed: 0,
-        waitinglist: [],
-      };
+      const temp_workplace: waiting_workplace = {id: 0, timeneed: 0, waitinglist: [],};
 
       temp_workplace.id = workplace.id;
       temp_workplace.timeneed = workplace.timeneed;
@@ -303,56 +339,32 @@ export class KapazitaetsplanungComponent implements OnInit {
         if (Array.isArray(wt)) {
           temp_workplace.waitinglist.push(...wt);
         } else {
-          temp_workplace.waitinglist.push(
-            // @ts-ignore
-            wt
-          );
+          temp_workplace.waitinglist.push(wt);
         }
       }
 
       this.waiting_workplace.push(temp_workplace);
     });
-  }
 
-  kapa_old_berechnen() {
-    console.log('kapa_old_berechnen_start');
 
+    // Kapa_old aus Warteschlange berechnen - die in nächster Periode benötigt wird
     this.dataSource.forEach((element) => {
       for (let i = 0; i < 14; i++) {
-        console.log(this.waiting_workplace[i].id);
-        console.log(this.waiting_workplace[i].timeneed);
-        console.log(this.waiting_workplace[i].waitinglist);
-        console.log('arbeitsplatz' + element.arbeitsplatz);
-        console.log('i' + i);
+        // console.log(this.waiting_workplace[i].id);
+        // console.log(this.waiting_workplace[i].timeneed);
+        // console.log(this.waiting_workplace[i].waitinglist);
+        // console.log('arbeitsplatz' + element.arbeitsplatz);
+        // console.log('i' + i);
 
         if (element.arbeitsplatz == this.waiting_workplace[i].id) {
-          console.log('ID IDENTISCH');
+          //console.log('ID IDENTISCH');
           element.kapa_old = this.waiting_workplace[i].timeneed;
-          console.log(element.kapa_old);
+         // console.log(element.kapa_old);
           break;
         }
       }
     });
 
-    console.log('kapa_old_berechnen_ENDE');
-
-    // console.log(this.waiting_workplace[6].id)
-  }
-
-  //  this.waiting_workplace.forEach(element =>{
-  //    console.log("id " + element.id)
-  //    console.log("timeneed " + element.timeneed)
-  //    console.log(element.waitinglist)
-  //  })
-
-  // //   console.log("wl" + wl.waitinglist)
-  //     // wl.waitinglist.forEach(wll =>{
-  //     //   console.log('wll:' + wll)
-  //     //   //this.waitinglist.push(wll);
-  //     // })
-
-  stammwerte_berechnen() {
-    console.log('STAMMWERTE_berechnen_start');
     // Anzahl Rüstevents aus vorperiode übernehmen. (Zwischenspeichern in ruest_new und dann noch multiplizieren mit durschnittliche Dauer des Rüstvorgangs)
     let idlelist: idletimecosts | undefined;
     this.idletimecosts$.subscribe((i) => (idlelist = i));
@@ -373,9 +385,41 @@ export class KapazitaetsplanungComponent implements OnInit {
       });
     });
 
-    // Alte Kapa aus Warteschlange berechnen
 
     // Alte Rüstzeit aus Warteschlange berechnen
+
+    // anzahl an Rüstevents aus Vorperiode zwischenspeichern in ruest_old
+    idlelist!.workplace.forEach((idleItem) => {
+      this.dataSource.forEach((data) => {
+        if (data.arbeitsplatz == idleItem.id) {
+          data.ruest_old = idleItem.setupevents;
+        }
+      });
+    });
+
+    this.dataSource.forEach(data =>{
+      this.ruest_dauern.forEach((ruest_zeit) => {
+        if(data.arbeitsplatz == ruest_zeit.id && data.kapa_old != 0 && data.kapa_new != 0) {
+          data.ruest_old = Math.ceil(Number((data.kapa_old/data.kapa_new)*data.ruest_old)) * ruest_zeit.dauer
+        }
+        
+        if(data.arbeitsplatz == ruest_zeit.id && data.kapa_old != 0 && data.kapa_new == 0){
+          data.ruest_old = Math.ceil(Number((ruest_zeit.dauer/data.kapa_old)*data.ruest_old)) * ruest_zeit.dauer
+        }
+
+        if(data.arbeitsplatz == ruest_zeit.id && data.kapa_old == 0){
+          data.ruest_old = 0;
+        }
+        
+
+
+      });
+    })
+  }
+
+      
+
+  Bedarf_und_Schichten_berechnen() {
 
     // Gesamtbedarf berechnen
     this.dataSource.forEach((d) => {
@@ -384,7 +428,7 @@ export class KapazitaetsplanungComponent implements OnInit {
         Number(d.ruest_new) +
         Number(d.kapa_old) +
         Number(d.ruest_old) +
-        Number(d.zusatz_ueberstunden) * 5;
+        Number(d.zusatz_ueberstunden *5) ;
     });
 
     // Anzahl an Schichten + Überstunden Minuten ermitteln
@@ -419,11 +463,11 @@ export class KapazitaetsplanungComponent implements OnInit {
     });
   }
 
-  // Gewünschte Extra Zeit addieren auf Kapa_Gesamt (mit 5 multiplizieren!)
 
   speichern() {
-    this.initialisieren();
-    this.kapa_old_berechnen();
-    this.stammwerte_berechnen();
+    this.Bedarf_und_Schichten_berechnen();
   }
+
+
+
 }
