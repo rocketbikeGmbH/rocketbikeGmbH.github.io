@@ -295,19 +295,19 @@ export class KapazitaetsplanungComponent implements OnInit {
   initialisieren() {
     // Neuen Kapa bedarf berechnen OHNE Rüstzeit
 
-    this.productionlist?.production.forEach(product =>{
+    // this.productionlist?.production.forEach(product =>{
 
-        this.summe_maschine.forEach(maschine =>{
+    //     this.summe_maschine.forEach(maschine =>{
 
-            if(product.article in [49,54,29]){maschine.summe = maschine.summe + product.quantity * 6}
+    //         if(product.article in [49,54,29]){maschine.summe = maschine.summe + product.quantity * 6}
 
-            if(product.article in [49,54,29]){maschine.summe = maschine.summe + product.quantity * 6}
+    //         if(product.article in [49,54,29]){maschine.summe = maschine.summe + product.quantity * 6}
 
            
-        })
+    //     })
 
 
-    })
+    // })
 
     // sum_m1 = (E49+E54+E29) * 6
     // sum_m2 = (E50+E55+E30) * 5
@@ -339,10 +339,7 @@ export class KapazitaetsplanungComponent implements OnInit {
         if (Array.isArray(wt)) {
           temp_workplace.waitinglist.push(...wt);
         } else {
-          temp_workplace.waitinglist.push(
-            // @ts-ignore
-            wt
-          );
+          temp_workplace.waitinglist.push(wt);
         }
       }
 
