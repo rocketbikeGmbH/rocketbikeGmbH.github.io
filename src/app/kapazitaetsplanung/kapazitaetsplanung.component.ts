@@ -349,7 +349,8 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     // Kapa_old aus Warteschlange berechnen - die in nächster Periode benötigt wird
     this.dataSource.forEach((element) => {
-      for (let i = 0; i < 14; i++) {
+
+      for (let i = 0; i < this.waiting_workplace.length; i++) {
         // console.log(this.waiting_workplace[i].id);
         // console.log(this.waiting_workplace[i].timeneed);
         // console.log(this.waiting_workplace[i].waitinglist);
@@ -357,9 +358,7 @@ export class KapazitaetsplanungComponent implements OnInit {
         // console.log('i' + i);
 
         if (element.arbeitsplatz == this.waiting_workplace[i].id) {
-          //console.log('ID IDENTISCH');
           element.kapa_old = this.waiting_workplace[i].timeneed;
-         // console.log(element.kapa_old);
           break;
         }
       }
