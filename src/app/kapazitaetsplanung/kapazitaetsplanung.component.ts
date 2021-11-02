@@ -56,6 +56,24 @@ let ruest_dauern: ruest_dauer[] = [
   { id: 15, dauer: 15 },
 ];
 
+// let ruest_dauern: ruest_dauer[] = [
+//   { id: 1, dauer: 20 },
+//   { id: 2, dauer: 27 },
+//   { id: 3, dauer: 20 },
+//   { id: 4, dauer: 27 },
+//   { id: 6, dauer: 15 },
+//   { id: 7, dauer: 23 },
+//   { id: 8, dauer: 18 },
+//   { id: 9, dauer: 16 },
+//   { id: 10, dauer: 20 },
+//   { id: 11, dauer: 17 },
+//   { id: 12, dauer: 0 },
+//   { id: 13, dauer: 0 },
+//   { id: 14, dauer: 0 },
+//   { id: 15, dauer: 15 },
+// ];
+
+
 export interface summe_maschine {
   id: number;
   summe: number;
@@ -410,8 +428,6 @@ export class KapazitaetsplanungComponent implements OnInit {
           data.ruest_old = 0;
         }
         
-
-
       });
     })
   }
