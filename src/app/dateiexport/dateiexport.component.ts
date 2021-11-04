@@ -5,6 +5,7 @@ import { selectExportModel } from '../store/export/export.selector';
 import { ExportModel } from '../model/export.model';
 import { j2xParser } from 'fast-xml-parser';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { addSellwish } from '../store/export/export.actions';
 
 @Component({
   selector: 'app-dateiexport',
@@ -35,5 +36,7 @@ export class DateiexportComponent implements OnInit {
     this.downloadUrl = this.sanitizer.bypassSecurityTrustUrl(
       "data:text/xml;charset=UTF-8," + encodeURIComponent(xmlData)
     );
+
+    //this.store.dispatch(addSellwish())
   }
 }
