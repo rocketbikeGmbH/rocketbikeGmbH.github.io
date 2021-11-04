@@ -27,9 +27,9 @@ export interface Endprodukte {
 //TODO: Wie kann man den Array eleganter implementieren?
 // var endprodukt_daten: Array<Endprodukte>;
 var endprodukt_daten: Endprodukte[] = [
-  {artikelnummer: 0, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
-  {artikelnummer: 0, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
-  {artikelnummer: 0, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0}
+  {artikelnummer: 1, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
+  {artikelnummer: 2, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
+  {artikelnummer: 3, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0}
 ];
 
 
@@ -47,7 +47,9 @@ export class ProgrammplanungComponent implements OnInit {
   warehousestock$ = this.store.pipe(select(selectImportWarehousestock));
   ordersInWork$ = this.store.pipe(select(selectImportOrdersInWork));
   waitingListWorkstations$ = this.store.pipe(select(selectWaitingListWorkstations));
-
+  //SERGIO
+  total_waitinglist: waitinglist[] = [];
+  vorhanden: waitinglist[] = [];
 
   constructor(private store: Store<ImportState>) {
 
@@ -125,5 +127,45 @@ export class ProgrammplanungComponent implements OnInit {
       sum_bearbeitung = 0;
     };
     }
+
+    // SERGIO Code
+    let waiting_workstations: waitinglistworkstations | undefined;
+    this.waitingListWorkstations$.subscribe((i) => (waiting_workstations = i));
+
+    waiting_workstations!.workplace.forEach((workplace: waiting_workplace) => {
+      const temp_workplace: waiting_workplace = {id: 0, timeneed: 0, waitinglist: [],};
+
+      temp_workplace.id = workplace.id;
+      temp_workplace.timeneed = workplace.timeneed;
+      const wt = workplace.waitinglist;
+
+      if (!(workplace.waitinglist == undefined)) {
+        if (Array.isArray(wt)) {
+          this.total_waitinglist.push(...wt);
+        } else {
+          this.total_waitinglist.push(wt)
+        }
+      }
+
+    });
+
+    console.log("total waitlingist");
+    console.log(this.total_waitinglist)
+
+    this.dataSource.forEach(produkt =>{
+
+      this.total_waitinglist.forEach(waiting_item =>{
+
+        if(produkt.artikelnummer == waiting_item.item){
+
+         // if(this.vorhanden NOT CONTAINS waiting_item ) -> dann nicht pushen
+          produkt.in_warteschlange = waiting_item.amount;
+          this.vorhanden.push(waiting_item);
+        }
+      }
+        
+        )
+    })
+    
   }
 }

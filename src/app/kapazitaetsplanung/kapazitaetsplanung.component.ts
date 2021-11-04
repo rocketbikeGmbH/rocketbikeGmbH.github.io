@@ -8,6 +8,7 @@ import {
   selectWaitingListWorkstations,
 } from '../store/import/import.selector';
 import { ImportState } from '../store/import/import.reducer';
+import { ExportState } from '../store/export/export.reducer';
 import { Productionlist } from '../model/export.model';
 import {
   idletimecosts,
@@ -298,11 +299,11 @@ export class KapazitaetsplanungComponent implements OnInit {
   idlewerte: idle[] = [];
   summe_maschine: summe_maschine[] = [];
   waiting_workplace: waiting_workplace[] = [];
-  waitinglist: waitinglist[] = [];
+  total_waitinglist: waitinglist[] = [];
   productionlist: Productionlist | undefined;
 
 
-  constructor(private store: Store<ImportState>) {}
+  constructor(private store: Store<ImportState>,private exportstore: Store<ExportState>) {}
 
   ngOnInit(): void {
     this.initialisieren();
@@ -356,8 +357,10 @@ export class KapazitaetsplanungComponent implements OnInit {
       if (!(workplace.waitinglist == undefined)) {
         if (Array.isArray(wt)) {
           temp_workplace.waitinglist.push(...wt);
+          this.total_waitinglist.push(...wt);
         } else {
           temp_workplace.waitinglist.push(wt);
+          this.total_waitinglist.push(wt)
         }
       }
 
@@ -365,8 +368,14 @@ export class KapazitaetsplanungComponent implements OnInit {
     });
 
 
+    console.log("total waitlingist");
+    console.log(this.total_waitinglist)
+
+
+
     // Kapa_old aus Warteschlange berechnen - die in nächster Periode benötigt wird
     this.dataSource.forEach((element) => {
+
 
       for (let i = 0; i < this.waiting_workplace.length; i++) {
         // console.log(this.waiting_workplace[i].id);
@@ -377,6 +386,7 @@ export class KapazitaetsplanungComponent implements OnInit {
 
         if (element.arbeitsplatz == this.waiting_workplace[i].id) {
           element.kapa_old = this.waiting_workplace[i].timeneed;
+         
           break;
         }
       }
