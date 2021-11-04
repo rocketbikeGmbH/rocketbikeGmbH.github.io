@@ -75,8 +75,9 @@ export class ProgrammplanungComponent implements OnInit {
   }
 
   berechnungEndprodukte(data_warehousestock?: warehousestock | undefined,
-                        data_ordersinwork?:   ordersinwork | undefined,
-                        data_waitingListWorkstations?: waitinglistworkstations | undefined) {
+    data_ordersinwork?:   ordersinwork | undefined,
+    data_waitingListWorkstations?: waitinglistworkstations | undefined) {
+       
     var sum_bearbeitung: number = 0;
     if (typeof(data_warehousestock) === typeof(this.warehousestock$)){
       //Schleife berechnet die Werte für die drei Endproukte 
@@ -93,32 +94,6 @@ export class ProgrammplanungComponent implements OnInit {
       });
 
       endprodukt_daten[i].in_bearbeitung = sum_bearbeitung;
-
-      // data_waitingListWorkstations?.forEach(element => {
-      //   for (let waitingitem of element.waitinglist){
-      //      if (waitingitem.item === data_warehousestock!.article[i].id){
-      //        endprodukt_daten[i].in_warteschlange = waitingitem.amount;
-      //        break;
-      //      }
-      //    }
-      //  })
-
-      // for (let test of data_waitingListWorkstations)
-      console.log('waiting' + data_waitingListWorkstations);
-      // data_waitingListWorkstations?.waitinglist!.forEach(element => {
-      //   if (element.item = data_warehousestock!.article[i].id){
-      //     console.log('item:' + element.item);
-      //     console.log('asd' + data_warehousestock!.article[i].id);
-      //     endprodukt_daten[i].in_warteschlange = element.amount;
-      //   }
-      // })
-
-      for (let element in data_waitingListWorkstations){
-        // if (element.item = data_warehousestock!.article[i].id){
-          console.log('item:' + element);
-          console.log('asd' + data_warehousestock!.article[i].id);
-          // endprodukt_daten[i].in_warteschlange = element;
-      }
 
       endprodukt_daten[i].geplanter_endbestand = 1;
       endprodukt_daten[i].vertriebswunsch = 1;
@@ -158,14 +133,18 @@ export class ProgrammplanungComponent implements OnInit {
 
         if(produkt.artikelnummer == waiting_item.item){
 
-         // if(this.vorhanden NOT CONTAINS waiting_item ) -> dann nicht pushen
-          produkt.in_warteschlange = waiting_item.amount;
-          this.vorhanden.push(waiting_item);
+        var filter = (this.vorhanden.filter(waiting_i => waiting_i.period === waiting_item.period && waiting_i.firstbatch === waiting_item.firstbatch
+          && waiting_i.lastbatch === waiting_item.lastbatch && waiting_i.item === waiting_item.item && waiting_i.amount === waiting_item.amount 
+          && waiting_item.order === waiting_i.order));
+
+            if(filter.length === 0){
+            produkt.in_warteschlange = +produkt.in_warteschlange + +waiting_item.amount;
+            this.vorhanden.push(waiting_item);
+          };
         }
       }
-        
         )
     })
-    
+
   }
 }

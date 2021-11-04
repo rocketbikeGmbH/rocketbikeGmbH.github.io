@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import {MatStepperModule} from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
@@ -27,6 +28,8 @@ import { exportReducer } from './store/export/export.reducer';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatTable, MatTableModule} from '@angular/material/table';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+
 
 @NgModule({
   declarations: [
@@ -50,10 +53,12 @@ import {MatTable, MatTableModule} from '@angular/material/table';
     FormsModule,
     MatCardModule,
     MatInputModule,
+    MatStepperModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDividerModule,
     MatListModule,
+    CdkStepperModule,
     MatTableModule,
     StoreModule.forRoot({ importModel: importReducer,  exportModel: exportReducer }),
     StoreDevtoolsModule.instrument({
