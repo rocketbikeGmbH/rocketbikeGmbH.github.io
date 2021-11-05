@@ -11,14 +11,13 @@ import { selectProductionlist} from '../store/export/export.selector'
 import { ImportState } from '../store/import/import.reducer';
 import { ExportState } from '../store/export/export.reducer';
 import { addWorkingtimelist } from '../store/export/export.actions';
-import { Productionlist, Production, Workingtimelist, Workingtime } from '../model/export.model';
+import { Production, Workingtimelist, Workingtime } from '../model/export.model';
 import {
   idletimecosts,
   waitinglistworkstations,
   waiting_workplace,
   waitinglist,
 } from '../model/import.model';
-import { EMPTY } from 'rxjs';
 import { Daten } from '../daten';
 
 
@@ -208,8 +207,8 @@ let ELEMENT_DATA: Kapaelement[] = [
     ueberstunden_min_tag: 0,
     zusatz_ueberstunden: 0,
   },
-  { arbeitsplatz: 10, 
-    kapa_new: 0, 
+  { arbeitsplatz: 10,
+    kapa_new: 0,
     ruest_new: 1,
     kapa_old: 0,
     ruest_old: 0,
@@ -304,7 +303,7 @@ export class KapazitaetsplanungComponent implements OnInit {
   productionlist: Production[] = [];
   testproduktion = test_produktion;
   dataloaded: boolean = false;
-  
+
 
 
   constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten) {}
@@ -313,7 +312,7 @@ export class KapazitaetsplanungComponent implements OnInit {
     console.log(this.summe_maschine)
     this.initialisieren();
     this.Bedarf_und_Schichten_berechnen();
-    
+
   }
 
   initialisieren() {
@@ -328,11 +327,11 @@ export class KapazitaetsplanungComponent implements OnInit {
       this.productionlist.push(testdaten);
     })
 
-    if(this.d.data_loaded == true){}
+    if(this.d.data_loaded){}
     else{
       // Berechnen der benötigten Kapa
     this.dataSource.forEach(element =>{
-     
+
           for(let i = 0; i < this.productionlist.length; i++){
 
             // M1
@@ -343,7 +342,7 @@ export class KapazitaetsplanungComponent implements OnInit {
               if([50,55,30].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 2){
                 element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 5; }
 
-             //M3 
+             //M3
               if([51,56,31].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 3){
 
                   if(this.productionlist[i].attr_article != 51){
@@ -389,7 +388,7 @@ export class KapazitaetsplanungComponent implements OnInit {
                     if([18,19,20].includes(this.productionlist[i].attr_article)){
                       element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3
                       }
-                
+
                }
 
                 //M9
@@ -427,7 +426,7 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     this.d.data_loaded = true;
   }
-    
+
     // sum_m1 = (E49+E54+E29) * 6
     // sum_m2 = (E50+E55+E30) * 5
     // sum_m3 = E51 * 5 + (E56+31) * 6
@@ -474,11 +473,11 @@ export class KapazitaetsplanungComponent implements OnInit {
 
 
       for (let i = 0; i < this.waiting_workplace.length; i++) {
-       
+
 
         if (element.arbeitsplatz == this.waiting_workplace[i].id) {
           element.kapa_old = this.waiting_workplace[i].timeneed;
-         
+
           break;
         }
       }
@@ -521,7 +520,7 @@ export class KapazitaetsplanungComponent implements OnInit {
         if(data.arbeitsplatz == ruest_zeit.id && data.kapa_old != 0 && data.kapa_new != 0) {
           data.ruest_old = Math.ceil(Number((data.kapa_old/data.kapa_new)*data.ruest_old)) * ruest_zeit.dauer
         }
-        
+
         if(data.arbeitsplatz == ruest_zeit.id && data.kapa_old != 0 && data.kapa_new == 0){
           data.ruest_old = Math.ceil(Number((ruest_zeit.dauer/data.kapa_old)*data.ruest_old)) * ruest_zeit.dauer
         }
@@ -529,12 +528,12 @@ export class KapazitaetsplanungComponent implements OnInit {
         if(data.arbeitsplatz == ruest_zeit.id && data.kapa_old == 0){
           data.ruest_old = 0;
         }
-        
+
       });
     })
   }
 
-      
+
 
   Bedarf_und_Schichten_berechnen() {
 
@@ -606,12 +605,7 @@ export class KapazitaetsplanungComponent implements OnInit {
     console.log("future working list")
     console.log(future_working_list)
 
-    //this.store.dispatch(addWorkingtimelist(future_working_list))
-
-  
- 
-
-
+    this.exportstore.dispatch(addWorkingtimelist({workingtimelist: future_working_list}))
   }
 
 }
