@@ -10,6 +10,8 @@ export class Daten  {
     absatzplan_p3 = 0;
     next_period = 0;
 
+    data_loaded: boolean = false;
+
 
     constructor(){}
 

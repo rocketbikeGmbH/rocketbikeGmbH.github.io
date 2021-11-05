@@ -18,6 +18,7 @@ import {
   waitinglist,
 } from '../model/import.model';
 import { EMPTY } from 'rxjs';
+import { Daten } from '../daten';
 
 
 export interface Kapaelement {
@@ -304,7 +305,7 @@ export class KapazitaetsplanungComponent implements OnInit {
   dataloaded: boolean = false;
 
 
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>) {}
+  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten) {}
 
   ngOnInit(): void {
     console.log(this.summe_maschine)
@@ -317,29 +318,113 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     // Neuen Kapa bedarf berechnen OHNE Rüstzeit
 
-    this.productionlist$.subscribe((i) => (this.productionlist = i));
-    console.log("PRODUKTIONLISTE")
-    console.log(this.productionlist);
+    // ------------- später auskommentieren ---------------
 
-    //this.dataSource.forEach(element =>{
-      for(let x = 0; x < 14; x++){
+    // this.productionlist$.subscribe((i) => (this.productionlist = i));
+    // TESTDATEN IN PRODUKTION LISTE LADEN
+    test_produktion.forEach(testdaten =>{
+      this.productionlist.push(testdaten);
+    })
 
+    if(this.d.data_loaded == true){}
+    else{
 
-          for(let i = 0; i < this.testproduktion.length; i++){
-
-              console.log("Maschine " + this.dataSource[x].arbeitsplatz)
-              console.log("Produkt " + this.testproduktion[i].attr_article)
+    this.dataSource.forEach(element =>{
+     
+          for(let i = 0; i < this.productionlist.length; i++){
 
             // M1
-                if([49,54,29].includes(this.testproduktion[i].attr_article) && this.dataSource[x].arbeitsplatz == 1){
-                console.log("M1 bevor " + this.dataSource[x].kapa_new) 
-                this.dataSource[x].kapa_new = this.dataSource[x].kapa_new + this.testproduktion[i].attr_quantity * 6; 
-                  console.log("M1 " + this.dataSource[x].kapa_new)}
+                if([49,54,29].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 1){
+                element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 6; }
+
+            //M2
+              if([50,55,30].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 2){
+                element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 5; }
+
+             //M3 
+              if([51,56,31].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 3){
+
+                  if(this.productionlist[i].attr_article != 51){
+                    element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 6
+                  }
+                  else{
+                    element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 5 }
+              }
+
+                //M4
+              if([1,2,3].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 4){
+
+                    if(this.productionlist[i].attr_article != 1){
+                      element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 7
+                    }
+                    else{
+                      element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 6 }
+              }
+
+                  //M6
+               if([16,18,19,20].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 6){
+
+                    if(this.productionlist[i].attr_article != 16){
+                      element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3
+                    }
+                    else{
+                      element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 2 }
+                  }
+
+                      // M7
+                if([10,11,12,13,14,15,18,19,20,26].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 7){
+                  element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 2}
+
+               //M8
+               if([10,13,11,12,14,15,18,19,20].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 8){
+
+                    if([10,13].includes(this.productionlist[i].attr_article)){
+                      element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity
+                    }
+                    if([11,12,14,15].includes(this.productionlist[i].attr_article)){
+                      element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 2
+                      }
+                    if([18,19,20].includes(this.productionlist[i].attr_article)){
+                      element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3
+                      }
+                
+               }
+
+                //M9
+                if([18,19,20,10,11,12,13,14,15].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 9){
+
+                  if([18,19,20].includes(this.productionlist[i].attr_article)){
+                    element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 2
+                  }
+                  else{
+                    element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3 }
+                }
+
+                 // M10
+             if([4,5,6,7,8,9].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 10){ element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 4}
+
+              // M11
+              if([4,5,6,7,8,9].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 11){ element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3}
+
+               // M12
+             if([10,11,12,13,14,15].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 12){ element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3}
+
+              // M13
+              if([10,11,12,13,14,15].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 13){ element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 2}
+
+               // M14
+             if(this.productionlist[i].attr_article == 16 && element.arbeitsplatz == 14){  element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3}
+
+            // M15
+              if([17,26].includes(this.productionlist[i].attr_article) && element.arbeitsplatz == 15){ element.kapa_new = element.kapa_new + this.productionlist[i].attr_quantity * 3}
 
 
           }
 
-    }
+    })
+
+    this.d.data_loaded = true;
+  }
 
     
     // if(this.productionlist.length < 2 && this.dataloaded == true){
