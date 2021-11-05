@@ -51,7 +51,8 @@ export interface Workingtime {
 }
 
 export interface Workingtimelist {
-  workingtime: Workingtime[];
+  //workingtime: Workingtime[];
+  workingtime: Array<Workingtime>;
 }
 
 export interface Input {

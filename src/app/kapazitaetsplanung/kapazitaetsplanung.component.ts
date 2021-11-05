@@ -10,7 +10,8 @@ import {
 import { selectProductionlist} from '../store/export/export.selector'
 import { ImportState } from '../store/import/import.reducer';
 import { ExportState } from '../store/export/export.reducer';
-import { Productionlist, Production } from '../model/export.model';
+import { addWorkingtimelist } from '../store/export/export.actions';
+import { Productionlist, Production, Workingtimelist, Workingtime } from '../model/export.model';
 import {
   idletimecosts,
   waitinglistworkstations,
@@ -303,6 +304,7 @@ export class KapazitaetsplanungComponent implements OnInit {
   productionlist: Production[] = [];
   testproduktion = test_produktion;
   dataloaded: boolean = false;
+  
 
 
   constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten) {}
@@ -328,7 +330,7 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     if(this.d.data_loaded == true){}
     else{
-
+      // Berechnen der benötigten Kapa
     this.dataSource.forEach(element =>{
      
           for(let i = 0; i < this.productionlist.length; i++){
@@ -425,134 +427,6 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     this.d.data_loaded = true;
   }
-
-    
-    // if(this.productionlist.length < 2 && this.dataloaded == true){
-    //   console.log("leer oder geladen")}
-    // else{
-    //     console.log("startet berechnung")
-
-       
-    
-    // //this.productionlist?.forEach(product =>{
-    //  // this.dataSource.forEach(maschine =>{
-        
-
-        
-
-    //     this.testproduktion.forEach(product =>{
-    //       console.log("TESTDATEN")
-    //       console.log(this.testproduktion)
-
-          
-          
-    //       for(let i = 0; i < 15; i++){
-    //         console.log("MASCHINE " + this.dataSource[i].arbeitsplatz)
-        
-    //         console.log("Produktnummer" + product.attr_article)
-    //           // M1
-    //          if([49,54,29].includes(product.attr_article)){
-    //           console.log("M1 bevor " + this.dataSource[i].kapa_new) 
-    //           this.dataSource[i].kapa_new = this.dataSource[i].kapa_new + product.attr_quantity * 6; 
-    //           console.log("M1 " + this.dataSource[i].kapa_new)}
-
-            //   // M2
-            //   if(product.attr_article in [50,55,30]){maschine.summe = maschine.summe + product.attr_quantity * 5}
-
-            //   //M3 
-            //   if(product.attr_article in [51,56,31]){
-
-            //       if(product.attr_article != 51){
-            //       maschine.summe = maschine.summe + product.attr_quantity * 6
-            //       }
-            //       else{
-            //         maschine.summe = maschine.summe + product.attr_quantity * 5 }
-            //   }
-
-            //   //M4
-            //   if(product.attr_article in [1,2,3]){
-
-            //         if(product.attr_article != 1){
-            //         maschine.summe = maschine.summe + product.attr_quantity * 7
-            //         }
-            //         else{
-            //           maschine.summe = maschine.summe + product.attr_quantity * 6 }
-            //   }
-
-            //    //M6
-            //    if(product.attr_article in [16,18,19,20]){
-
-            //         if(product.attr_article != 16){
-            //         maschine.summe = maschine.summe + product.attr_quantity * 3
-            //         }
-            //         else{
-            //           maschine.summe = maschine.summe + product.attr_quantity * 2 }
-            //       }
-
-            //     // M7
-            //     if(product.attr_article in [10,11,12,13,14,15,18,19,20,26]){maschine.summe = maschine.summe + product.attr_quantity * 2}
-
-            //    //M8
-            //    if(product.attr_article in [10,13,11,12,14,15,18,19,20]){
-
-            //         if(product.attr_article in [10,13]){
-            //         maschine.summe = maschine.summe + product.attr_quantity
-            //         }
-            //         if(product.attr_article in [11,12,14,15]){
-            //           maschine.summe = maschine.summe + product.attr_quantity * 2
-            //           }
-            //         if(product.attr_article in [18,19,20]){
-            //             maschine.summe = maschine.summe + product.attr_quantity * 3
-            //           }
-                
-            //    }
-
-            //     //M9
-            //     if(product.attr_article in [18,19,20,10,11,12,13,14,15]){
-
-            //       if(product.attr_article in [18,19,20]){
-            //       maschine.summe = maschine.summe + product.attr_quantity * 2
-            //       }
-            //       else{
-            //         maschine.summe = maschine.summe + product.attr_quantity * 3 }
-            //     }
-
-            //      // M10
-            //  if(product.attr_article in [4,5,6,7,8,9]){maschine.summe = maschine.summe + product.attr_quantity * 4}
-
-            //   // M11
-            //   if(product.attr_article in [4,5,6,7,8,9]){maschine.summe = maschine.summe + product.attr_quantity * 3}
-
-            //    // M12
-            //  if(product.attr_article in [10,11,12,13,14,15]){maschine.summe = maschine.summe + product.attr_quantity * 3}
-
-            //   // M13
-            //   if(product.attr_article in [10,11,12,13,14,15]){maschine.summe = maschine.summe + product.attr_quantity * 2}
-
-            //    // M14
-            //  if(product.attr_article == 16){ maschine.summe = maschine.summe + product.attr_quantity * 3}
-
-          //   //  // M15
-          //   //  if(product.attr_article in [17,26]){maschine.summe = maschine.summe + product.attr_quantity * 3}
-
-          //    }
-          // })
-      
-    
-
-
-      //Ermittelten Kapa New bedarf übegeben an anzuzeigende Fields
-      // this.dataSource.forEach(datasource =>{
-
-      //     this.summe_maschine.forEach(bedarf =>{
-      //       if(datasource.arbeitsplatz == bedarf.id){datasource.kapa_new = bedarf.summe}
-      //     })
-      // })
-
-      // this.dataloaded = true;
-      // console.log(this.dataloaded)
-  
-
     
     // sum_m1 = (E49+E54+E29) * 6
     // sum_m2 = (E50+E55+E30) * 5
@@ -707,10 +581,37 @@ export class KapazitaetsplanungComponent implements OnInit {
   }
 
 
-  speichern() {
+  neu_berechnen() {
     this.Bedarf_und_Schichten_berechnen();
   }
 
+  speichern(){
 
+    const working_time: Workingtime[] = [];
+
+    this.dataSource.forEach(element =>{
+     const  temp_working_time: Workingtime = {attr_station: 0, attr_shift: 0, attr_overtime: 0};
+     temp_working_time.attr_station = element.arbeitsplatz;
+     temp_working_time.attr_shift = element.anzahl_schichten;
+     temp_working_time.attr_overtime = element.ueberstunden_min_tag;
+
+      working_time.push(temp_working_time);
+
+    })
+    console.log("working time")
+    console.log(working_time)
+
+    let future_working_list: Workingtimelist | undefined
+    future_working_list = { workingtime: working_time}
+    console.log("future working list")
+    console.log(future_working_list)
+
+    //this.store.dispatch(addWorkingtimelist(future_working_list))
+
+  
+ 
+
+
+  }
 
 }
