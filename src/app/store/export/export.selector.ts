@@ -14,5 +14,5 @@ export const selectExportModel = createSelector(
 
 export const selectProductionlist = createSelector(
   (state: ExportState) => state.exportModel,
-  (exportModel: ExportModel) => exportModel.input.productionlist
+  (exportModel: ExportModel) => exportModel.input.productionlist.production
 );

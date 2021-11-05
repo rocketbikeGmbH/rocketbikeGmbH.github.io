@@ -34,7 +34,7 @@ export const initialState: ExportModel = {
       production: [
         {
           attr_article: 0,
-          attr_quantity: 0,
+          attr_quantity: 1,
         },
       ],
     },

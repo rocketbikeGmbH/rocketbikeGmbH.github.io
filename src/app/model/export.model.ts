@@ -40,7 +40,8 @@ export interface Production {
 }
 
 export interface Productionlist {
-  production: Production[];
+  //production: Production[];
+  production: Array<Production>;
 }
 
 export interface Workingtime {
