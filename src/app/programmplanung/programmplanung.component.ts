@@ -1,6 +1,6 @@
 import { Component, enableProdMode, OnInit } from '@angular/core';
-import { orders_workplace, warehousestock, ordersinwork, waitinglist, waitinglistworkstations, waiting_workplace } from '../model/import.model';
-import { selectImportOrdersInWork, selectImportWarehousestock, selectWaitingListWorkstations } from '../store/import/import.selector';
+import { orders_workplace, warehousestock, ordersinwork, waitinglist, waitinglistworkstations, waiting_workplace, forecast } from '../model/import.model';
+import { selectImportForecast, selectImportOrdersInWork, selectImportWarehousestock, selectWaitingListWorkstations } from '../store/import/import.selector';
 import { select, Store } from '@ngrx/store';
 import { ImportState } from '../store/import/import.reducer';
 
@@ -27,9 +27,9 @@ export interface Endprodukte {
 //TODO: Wie kann man den Array eleganter implementieren?
 // var endprodukt_daten: Array<Endprodukte>;
 var endprodukt_daten: Endprodukte[] = [
-  {artikelnummer: 1, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
-  {artikelnummer: 2, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
-  {artikelnummer: 3, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 0, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0}
+  {artikelnummer: 1, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
+  {artikelnummer: 2, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0},
+  {artikelnummer: 3, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0}
 ];
 
 
@@ -47,6 +47,7 @@ export class ProgrammplanungComponent implements OnInit {
   warehousestock$ = this.store.pipe(select(selectImportWarehousestock));
   ordersInWork$ = this.store.pipe(select(selectImportOrdersInWork));
   waitingListWorkstations$ = this.store.pipe(select(selectWaitingListWorkstations));
+  forecast$ = this.store.pipe(select(selectImportForecast))
   //SERGIO
   total_waitinglist: waitinglist[] = [];
   vorhanden: waitinglist[] = [];
@@ -59,12 +60,18 @@ export class ProgrammplanungComponent implements OnInit {
     let data_ordersinwork: ordersinwork | undefined;
     this.ordersInWork$.subscribe((i) => (data_ordersinwork = i));
 
+    // let data_waitingListWorkstations: waitinglistworkstations | undefined;
+    // this.waitingListWorkstations$.subscribe((i) => (data_waitingListWorkstations!= i));
+
     let data_waitingListWorkstations: waitinglistworkstations | undefined;
-    this.waitingListWorkstations$.subscribe((i) => (data_waitingListWorkstations!= i));
+    this.waitingListWorkstations$.subscribe((i) => (data_waitingListWorkstations = i));
+
+    let data_forecast: forecast | undefined;
+    this.forecast$.subscribe((i) => (data_forecast = i));
 
 
 
-    this.berechnungEndprodukte(data_warehousestock, data_ordersinwork, data_waitingListWorkstations);
+    this.berechnungEndprodukte(data_warehousestock, data_ordersinwork, data_waitingListWorkstations, data_forecast);
     console.log(endprodukt_daten);
     console.log('wa' + data_warehousestock?.article[1]);
     console.log('or' + data_ordersinwork);
@@ -74,9 +81,41 @@ export class ProgrammplanungComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  changeend(newValue: number, artikel: number) {
+    // No longer need to cast to any - hooray for react!
+    // this.setState({temperature: e.target.value});
+    console.log(newValue);
+    endprodukt_daten[artikel - 1].geplanter_endbestand = newValue;
+ 
+    endprodukt_daten[artikel - 1].produktionsauftraege = 
+    +endprodukt_daten[artikel - 1].vertriebswunsch 
+    + +endprodukt_daten[artikel - 1].geplanter_endbestand 
+    - +endprodukt_daten[artikel - 1].aktueller_lagerbestand
+    - +endprodukt_daten[artikel - 1].in_bearbeitung 
+    - +endprodukt_daten[artikel - 1].in_warteschlange;
+  };
+
   berechnungEndprodukte(data_warehousestock?: warehousestock | undefined,
     data_ordersinwork?:   ordersinwork | undefined,
-    data_waitingListWorkstations?: waitinglistworkstations | undefined) {
+    data_waitingListWorkstations?: waitinglistworkstations | undefined,
+    data_forecast?: forecast | undefined) {
+
+      data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
+        const temp_workplace: waiting_workplace = {id: 0, timeneed: 0, waitinglist: [],};
+  
+        temp_workplace.id = workplace.id;
+        temp_workplace.timeneed = workplace.timeneed;
+        const wt = workplace.waitinglist;
+  
+        if (!(workplace.waitinglist == undefined)) {
+          if (Array.isArray(wt)) {
+            this.total_waitinglist.push(...wt);
+          } else {
+            this.total_waitinglist.push(wt)
+          }
+        }
+  
+      });
        
     var sum_bearbeitung: number = 0;
     if (typeof(data_warehousestock) === typeof(this.warehousestock$)){
@@ -95,56 +134,64 @@ export class ProgrammplanungComponent implements OnInit {
 
       endprodukt_daten[i].in_bearbeitung = sum_bearbeitung;
 
-      endprodukt_daten[i].geplanter_endbestand = 1;
-      endprodukt_daten[i].vertriebswunsch = 1;
-      endprodukt_daten[i].direktverkauf = 1;
-      endprodukt_daten[i].produktionsauftraege = 1;
-      sum_bearbeitung = 0;
-    };
-    }
-
-    // SERGIO Code
-    let waiting_workstations: waitinglistworkstations | undefined;
-    this.waitingListWorkstations$.subscribe((i) => (waiting_workstations = i));
-
-    waiting_workstations!.workplace.forEach((workplace: waiting_workplace) => {
-      const temp_workplace: waiting_workplace = {id: 0, timeneed: 0, waitinglist: [],};
-
-      temp_workplace.id = workplace.id;
-      temp_workplace.timeneed = workplace.timeneed;
-      const wt = workplace.waitinglist;
-
-      if (!(workplace.waitinglist == undefined)) {
-        if (Array.isArray(wt)) {
-          this.total_waitinglist.push(...wt);
-        } else {
-          this.total_waitinglist.push(wt)
-        }
-      }
-
-    });
-
-    console.log("total waitlingist");
-    console.log(this.total_waitinglist)
-
-    this.dataSource.forEach(produkt =>{
-
       this.total_waitinglist.forEach(waiting_item =>{
 
-        if(produkt.artikelnummer == waiting_item.item){
+        if(data_warehousestock!.article[i].id == waiting_item.item){
 
         var filter = (this.vorhanden.filter(waiting_i => waiting_i.period === waiting_item.period && waiting_i.firstbatch === waiting_item.firstbatch
           && waiting_i.lastbatch === waiting_item.lastbatch && waiting_i.item === waiting_item.item && waiting_i.amount === waiting_item.amount 
           && waiting_item.order === waiting_i.order));
 
             if(filter.length === 0){
-            produkt.in_warteschlange = +produkt.in_warteschlange + +waiting_item.amount;
+            endprodukt_daten[i].in_warteschlange = +endprodukt_daten[i].in_warteschlange + +waiting_item.amount;
             this.vorhanden.push(waiting_item);
           };
         }
       }
         )
-    })
+
+      endprodukt_daten[i].geplanter_endbestand = 120;
+      endprodukt_daten[i].artikelnummer = data_warehousestock!.article[i]?.id;
+
+      switch (i) {
+        case 0: {
+          endprodukt_daten[i].vertriebswunsch = data_forecast!.p1; 
+          break;
+        }
+        case 1: {
+          endprodukt_daten[i].vertriebswunsch = data_forecast!.p2;
+          break;
+        }
+        case 2: {
+          endprodukt_daten[i].vertriebswunsch = data_forecast!.p3;
+          break;
+        }
+        default: 
+        {
+          console.log('default');
+        }
+      }
+
+      endprodukt_daten[i].direktverkauf = 1;
+
+
+      endprodukt_daten[i].produktionsauftraege = +endprodukt_daten[i].vertriebswunsch + +endprodukt_daten[i].geplanter_endbestand - +endprodukt_daten[i].aktueller_lagerbestand
+      - +endprodukt_daten[i].in_bearbeitung - +endprodukt_daten[i].in_warteschlange;
+      sum_bearbeitung = 0;
+    };
+    }
+
+    // SERGIO Code
+
+    
+
+    // console.log("total waitlingist");
+    // console.log(this.total_waitinglist)
+
+    // this.dataSource.forEach(produkt =>{
+
+      
+    // })
 
   }
 }

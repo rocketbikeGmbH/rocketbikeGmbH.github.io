@@ -37,7 +37,7 @@
               <td mat-cell *matCellDef="let element"> 
                 <mat-form-field class="example-form-field" appearance="fill">
                     <mat-label>Geben Sie Ihre Daten ein:</mat-label>
-                    <input matInput type="number" [(ngModel)]= element.geplanter_endbestand >
+                    <input matInput type="number" [(ngModel)]= element.geplanter_endbestand (ngModelChange)="changeend($event, element.artikelnummer)">
                     <button *ngIf="element.geplanter_endbestand" matSuffix mat-icon-button aria-label="Clear" (click)="element.geplanter_endbestand=''">
                       <mat-icon>close</mat-icon>
                     </button>
