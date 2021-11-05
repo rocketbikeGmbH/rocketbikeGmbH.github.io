@@ -19,6 +19,7 @@ import {
   waitinglist,
 } from '../model/import.model';
 import { Daten } from '../daten';
+import { Router } from '@angular/router';
 
 
 export interface Kapaelement {
@@ -306,7 +307,7 @@ export class KapazitaetsplanungComponent implements OnInit {
 
 
 
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten) {}
+  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router) {}
 
   ngOnInit(): void {
     console.log(this.summe_maschine)
@@ -606,6 +607,8 @@ export class KapazitaetsplanungComponent implements OnInit {
     console.log(future_working_list)
 
     this.exportstore.dispatch(addWorkingtimelist({workingtimelist: future_working_list}))
+
+    this.router.navigate(['mengenplanung'])
   }
 
 }

@@ -62,33 +62,48 @@ export class AbsatzplanungComponent implements OnInit {
 
 
   speichern(){
-    let list_verkauf_item: Item[] = [];
-    let temp_verkauf_item: Item = {attr_article: 0, attr_quantity: 0};
+    const list_verkauf_item: Item[] = [];
+    
 
     if(this.Vabsatzplan_p1 > 0){
+      const temp_verkauf_item: Item = {attr_article: 0, attr_quantity: 0};
       temp_verkauf_item.attr_article = 1;
       temp_verkauf_item.attr_quantity = this.Vabsatzplan_p1;
       list_verkauf_item.push(temp_verkauf_item);
+      console.log(list_verkauf_item)
+
     }
     if(this.Vabsatzplan_p2 > 0){
+      const temp_verkauf_item: Item = {attr_article: 0, attr_quantity: 0};
       temp_verkauf_item.attr_article = 2;
       temp_verkauf_item.attr_quantity = this.Vabsatzplan_p2;
       list_verkauf_item.push(temp_verkauf_item);
+      console.log(list_verkauf_item)
+
     }
     if(this.Vabsatzplan_p3 > 0){
+      const temp_verkauf_item: Item = {attr_article: 0, attr_quantity: 0};
       temp_verkauf_item.attr_article = 3;
       temp_verkauf_item.attr_quantity = this.Vabsatzplan_p3;
       list_verkauf_item.push(temp_verkauf_item);
+      console.log(list_verkauf_item)
+
     }
 
+    console.log("list verkauf item")
+    console.log(list_verkauf_item)
+
     let sellwishliste: Sellwish = {item: list_verkauf_item};
+    console.log("sellwisch")
+    console.log(sellwishliste)
 
-   //this.exportstore.dispatch(addSellwish(sellwishliste))
+   this.exportstore.dispatch(addSellwish({sellwish: sellwishliste}))
 
-   let list_verkauf_item2: Item2[] = [];
-   let temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
+   const list_verkauf_item2: Item2[] = [];
+   const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
 
    if(this.V_direkt_menge_p1 > 0){
+    const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
      temp_verkauf_item2.attr_article = 1;
      temp_verkauf_item2.attr_price = this.V_direkt_preis_p1
      temp_verkauf_item2.attr_quantity = this.V_direkt_menge_p1;
@@ -96,25 +111,30 @@ export class AbsatzplanungComponent implements OnInit {
      list_verkauf_item2.push(temp_verkauf_item2);
    }
    if(this.V_direkt_menge_p2 > 0){
+    const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
     temp_verkauf_item2.attr_article = 2;
     temp_verkauf_item2.attr_price = this.V_direkt_preis_p2
     temp_verkauf_item2.attr_quantity = this.V_direkt_menge_p2;
     temp_verkauf_item2.attr_penalty = this.V_direkt_strafe_p2
     list_verkauf_item2.push(temp_verkauf_item2);
   }
-  if(this.V_direkt_menge_p3 > 0){
+  if(this.V_direkt_menge_p3 > 0){   
+    const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
     temp_verkauf_item2.attr_article = 3;
     temp_verkauf_item2.attr_price = this.V_direkt_preis_p3
     temp_verkauf_item2.attr_quantity = this.V_direkt_menge_p3;
     temp_verkauf_item2.attr_penalty = this.V_direkt_strafe_p3
     list_verkauf_item2.push(temp_verkauf_item2);
   }
+  
 
   let sellwishliste2: Selldirect = {item: list_verkauf_item2};
+  console.log("sell direct")
+  console.log(sellwishliste2)
 
-  //this.exportstore.dispatch(addSelldirect(sellwishliste2))
+   this.exportstore.dispatch(addSelldirect({selldirect: sellwishliste2}))
 
-   //this.router.navigate(['programmplanung'])
+   this.router.navigate(['programmplanung'])
 
   }
 
