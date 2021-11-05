@@ -1,7 +1,56 @@
-<button mat-raised-button routerLink="/">Dateieimport</button>
+<!-- <button mat-raised-button routerLink="/">Dateieimport</button>
 <button mat-raised-button routerLink="/absatzplanung">Absatzplanung</button>
 <button mat-raised-button routerLink="/programmplanung">Programmplanung</button>
 <button mat-raised-button routerLink="/kapazitaetsplanung">Kapazitätsplanung</button>
 <button mat-raised-button routerLink="/mengenplanung">Mengenplanung</button>
 <button mat-raised-button routerLink="/losgroessenplanung">Losgrößenplanung</button>
-<button mat-raised-button routerLink="/dateiexport">Dateiexport</button>
+<button mat-raised-button routerLink="/dateiexport">Dateiexport</button> -->
+
+<!-- TODO: Click-Event ist aktuell nur auf den Text bezogen, passt so nicht, soll kompletten DIV umfassen-->
+
+<mat-horizontal-stepper>
+
+    <mat-step>
+        <ng-template matStepLabel>
+          <p (click)="goto_dateiimport()">Dateiimport</p>
+        </ng-template>
+     </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>
+          <p (click)="goto_absatzplanung()">Absatzplanung</p>
+        </ng-template>
+    </mat-step>
+  
+    <mat-step>
+        <ng-template matStepLabel>
+          <p (click)="goto_programmplanung()">Programmplanung</p>
+        </ng-template>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>
+          <p (click)="goto_kapazitaetsplanung()">Kapazitätsplanung</p>
+        </ng-template>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>
+          <p (click)="goto_mengenplanung()">Mengenplanung</p>
+        </ng-template>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>
+          <p (click)="goto_losgroessenplanung()">Losgrößenplanung</p>
+        </ng-template>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>
+          <p (click)="goto_dateiexport()">Dateiexport</p>
+        </ng-template>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+  
+  
