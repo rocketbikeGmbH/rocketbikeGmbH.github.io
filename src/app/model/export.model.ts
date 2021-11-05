@@ -10,7 +10,8 @@ export interface Item {
 }
 
 export interface Sellwish {
-  item: Item[];
+ // item: Item[];
+ item: Array<Item>;
 }
 
 export interface Item2 {
@@ -21,7 +22,8 @@ export interface Item2 {
 }
 
 export interface Selldirect {
-  item: Item2[];
+  //item: Item2[];
+  item: Array<Item2>;
 }
 
 export interface Order {
