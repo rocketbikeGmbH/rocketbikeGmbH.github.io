@@ -124,8 +124,11 @@ export class ProgrammplanungComponent implements OnInit {
       endprodukt_daten[i].artikelnummer = data_warehousestock!.article[i]?.id;
 
       console.log(endprodukt_daten[i].artikelnummer);
-      
+      if (data_warehousestock!.article[i] != undefined){
+        console.log('wtf:' + data_warehousestock!.article[i]);
+        console.log('wtf2:' + data_warehousestock!.article[i].amount);
       endprodukt_daten[i].aktueller_lagerbestand = data_warehousestock!.article[i].amount;
+      
       data_ordersinwork?.workplace!.forEach(element => {
         if (element.item === data_warehousestock!.article[i].id){
           sum_bearbeitung = +sum_bearbeitung + +element.amount;
@@ -172,7 +175,7 @@ export class ProgrammplanungComponent implements OnInit {
         }
       }
 
-      endprodukt_daten[i].direktverkauf = 1;
+      endprodukt_daten[i].direktverkauf = 1; //TODO
 
 
       endprodukt_daten[i].produktionsauftraege = +endprodukt_daten[i].vertriebswunsch + +endprodukt_daten[i].geplanter_endbestand - +endprodukt_daten[i].aktueller_lagerbestand
@@ -192,6 +195,6 @@ export class ProgrammplanungComponent implements OnInit {
 
       
     // })
-
+  }
   }
 }
