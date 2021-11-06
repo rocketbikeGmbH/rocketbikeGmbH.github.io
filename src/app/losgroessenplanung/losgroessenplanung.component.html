@@ -1,1 +1,39 @@
-<p>losgroessenplanung works!</p>
+<table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" cdkDropList
+       [cdkDropListData]="dataSource"
+       (cdkDropListDropped)="dropTable($event)">
+
+  <!-- Artikel Column -->
+  <ng-container matColumnDef="Artikel"  >
+    <th mat-header-cell *matHeaderCellDef > Artiel </th>
+    <td mat-cell *matCellDef="let element"> {{element.attr_article}} </td>
+  </ng-container>
+
+  <!-- Produktionsmenge Column -->
+  <ng-container matColumnDef="Produktionsmenge" >
+    <th mat-header-cell *matHeaderCellDef > Produktionsmenge </th>
+    <td mat-cell *matCellDef="let element"> {{element.attr_quantity}} </td>
+  </ng-container>
+
+  <!-- Aufteilen Column -->
+  <ng-container matColumnDef="Aufteilen"  >
+    <th mat-header-cell *matHeaderCellDef > Aufteilen </th>
+    <td mat-cell *matCellDef="let element">
+        <button mat-raised-button >
+          <mat-icon> call_split</mat-icon>
+        </button>
+    </td>
+  </ng-container>
+
+  <!-- Loeschen Column -->
+  <ng-container matColumnDef="Löschen" >
+    <th mat-header-cell *matHeaderCellDef > Löschen </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button>
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
+ </table>
