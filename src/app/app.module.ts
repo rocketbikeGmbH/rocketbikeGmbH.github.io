@@ -28,6 +28,7 @@ import { exportReducer } from './store/export/export.reducer';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatTable, MatTableModule} from '@angular/material/table';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 
@@ -44,31 +45,32 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MengenplanungComponent,
     ProgrammplanungComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MatButtonModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatTableModule,
-        FormsModule,
-        MatCardModule,
-        MatInputModule,
-        MatStepperModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatDividerModule,
-        MatListModule,
-        CdkStepperModule,
-        MatTableModule,
-        StoreModule.forRoot({importModel: importReducer, exportModel: exportReducer}),
-        StoreDevtoolsModule.instrument({
-            maxAge: 25,
-            logOnly: environment.production,
-            autoPause: true,
-        }),
-        DragDropModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatToolbarModule,
+    FormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDividerModule,
+    MatListModule,
+    CdkStepperModule,
+    MatTableModule,
+    StoreModule.forRoot({ importModel: importReducer,  exportModel: exportReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true,
+    }),
+    DragDropModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
