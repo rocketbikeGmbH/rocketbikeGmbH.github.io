@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit {
 
   onStepChange(event: any): void {
     var change = event.selectedIndex;
-    console.log (change);
 
     if (change == 0){
       this.goto_dateiimport();
@@ -22,7 +21,6 @@ export class HeaderComponent implements OnInit {
 
     if (change == 1){
       this.route.navigate(['/absatzplanung']);
-      console.log("HI!")
     }
 
     if (change == 2){
