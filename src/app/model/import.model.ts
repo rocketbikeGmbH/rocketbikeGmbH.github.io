@@ -11,8 +11,8 @@ export interface Results {
   warehousestock: {
     article: Array<article>;
   };
-  inwardstockmovement: {};
-  futureinwardstockmovement: {};
+  inwardstockmovement: inwardstockmovement;
+  futureinwardstockmovement: futureinwardstockmovement;
   idletimecosts: idletimecosts;
   waitinglistworkstations: {
     workplace: Array<waiting_workplace>;
@@ -48,16 +48,33 @@ export interface forecast {
   p3: number;
 }
 
-export interface futureinwardstockmovement {
-  order: {
-    orderperiod: number;
-    id: number;
-    mode: number;
-    article: number;
-    amount: number;
-  };
+export interface  inwardstockmovement {
+  order: Array<inwardstockmovementorder>;
 }
 
+export interface inwardstockmovementorder {
+  orderperiod: number;
+  id: number;
+  mode: number;
+  article: number;
+  amount: number;
+  piececosts: number;
+  entirecosts: number;
+  ordercosts: number;
+  materialcosts: number;
+  time: number;
+}
+
+export interface futureinwardstockmovement {
+  order: Array<futureinwardstockmovementorder>;
+}
+export interface futureinwardstockmovementorder {
+  orderperiod: number;
+  id: number;
+  mode: number;
+  article: number;
+  amount: number;
+}
 export interface idletimecosts {
   workplace: Array<idle_workplace>;
   sum: {

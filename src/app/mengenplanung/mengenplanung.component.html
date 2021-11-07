@@ -4,24 +4,47 @@
 
   <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
 
-    <ng-container matColumnDef="seqNo">
+    <ng-container matColumnDef="artikelnr">
       <mat-header-cell *matHeaderCellDef>Artikel-Nr.</mat-header-cell>
-      <mat-cell *matCellDef="let lesson">{{lesson.id}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+    <ng-container matColumnDef="lieferfrist">
+      <mat-header-cell *matHeaderCellDef>Lieferfrist</mat-header-cell>
       <mat-cell class="description-cell"
-                *matCellDef="let lesson">{{lesson.id}}</mat-cell>
+                *matCellDef="let element">{{element.lieferfrist}}</mat-cell>
 
     </ng-container>
 
-    <ng-container matColumnDef="duration">
-      <mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>
+    <ng-container matColumnDef="abweichung">
+      <mat-header-cell *matHeaderCellDef>Abweichung</mat-header-cell>
       <mat-cell class="duration-cell"
-                *matCellDef="let lesson">{{lesson.duration}}</mat-cell>
+                *matCellDef="let element">{{element.abweichung}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="verwendung">
+      <mat-header-cell *matHeaderCellDef>Verwendung</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let element">{{element.verwendung.p1}} {{element.verwendung.p2}} {{element.verwendung.p3}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="diskont">
+      <mat-header-cell *matHeaderCellDef>Diskont</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let element">{{element.diskont}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="anfangsbestand">
+      <mat-header-cell *matHeaderCellDef>Anfangsbestand</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let element">{{element.anfangsbestand}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="offeneBestellung">
+      <mat-header-cell *matHeaderCellDef>Bestellungen</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let element">{{element.offeneBestellung}}</mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

@@ -32,7 +32,6 @@ export class DateiimportComponent {
         const xmlDataAsJson: ImportModel = parse(reader.result as string, options, true);
         this.store.dispatch(addImportXml(xmlDataAsJson));
       };
-      debugger;
     }
   }
 }
