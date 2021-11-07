@@ -12,8 +12,7 @@ export interface Results {
     article: Array<article>;
   };
   inwardstockmovement: {};
-  futureinwardstockmovement: {
-  };
+  futureinwardstockmovement: {};
   idletimecosts: idletimecosts;
   waitinglistworkstations: {
     workplace: Array<waiting_workplace>;
@@ -49,25 +48,25 @@ export interface forecast {
   p3: number;
 }
 
-export interface futureinwardstockmovement{
+export interface futureinwardstockmovement {
   order: {
     orderperiod: number;
     id: number;
     mode: number;
     article: number;
     amount: number;
-  }
+  };
 }
 
-export interface idletimecosts{
-  workplace: Array<idle_workplace>,
-  sum:{
+export interface idletimecosts {
+  workplace: Array<idle_workplace>;
+  sum: {
     setupevents: number;
     idletime: number;
     wageidltimecosts: number;
     wagecosts: number;
     machineidletimecosts: number;
-  }
+  };
 }
 
 export interface idle_workplace {
@@ -79,48 +78,42 @@ export interface idle_workplace {
   machineidletimecosts: number;
 }
 
-export interface waitinglistworkstations{
+export interface waitinglistworkstations {
   workplace: Array<waiting_workplace>;
 }
 
-
-export interface waiting_workplace{
+export interface waiting_workplace {
   id: number | undefined;
   timeneed: number;
   waitinglist: Array<waitinglist>;
 }
 
-  export interface waitingliststock{
-     missingpart: {
-       id: number;
-     }
-  }
+export interface waitingliststock {
+  missingpart: {
+    id: number;
+  };
+}
 
-  export interface waitinglist{
-    period: number;
-    order: number;
-    firstbatch: number;
-    lastbatch:number;
-    item: number;
-    amount: number;
-    timeneed: number
-  }
+export interface waitinglist {
+  period: number;
+  order: number;
+  firstbatch: number;
+  lastbatch: number;
+  item: number;
+  amount: number;
+  timeneed: number;
+}
 
-  export interface ordersinwork{
-    workplace: Array<orders_workplace>;
-  }
+export interface ordersinwork {
+  workplace: Array<orders_workplace>;
+}
 
-  export interface orders_workplace{
-      id:number;
-      period: number;
-      order: number;
-      batch: number;
-      item:number;
-      amount: number;
-      timeneed:number;
-  }
-
-
-
-
-
+export interface orders_workplace {
+  id: number;
+  period: number;
+  order: number;
+  batch: number;
+  item: number;
+  amount: number;
+  timeneed: number;
+}

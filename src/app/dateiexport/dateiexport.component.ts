@@ -35,7 +35,6 @@ export class DateiexportComponent implements OnInit {
     this.downloadUrl = this.sanitizer.bypassSecurityTrustUrl(
       "data:text/xml;charset=UTF-8," + encodeURIComponent(xmlData)
     );
-
     //this.store.dispatch(addSellwish())
   }
 }
