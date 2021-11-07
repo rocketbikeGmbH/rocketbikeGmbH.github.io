@@ -28,6 +28,7 @@ import { exportReducer } from './store/export/export.reducer';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatTable, MatTableModule} from '@angular/material/table';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 
 
@@ -50,6 +51,7 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
     MatIconModule,
     MatFormFieldModule,
     MatTableModule,
+    MatToolbarModule,
     FormsModule,
     MatCardModule,
     MatInputModule,

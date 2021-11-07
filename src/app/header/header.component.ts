@@ -12,32 +12,43 @@ export class HeaderComponent implements OnInit {
 
   constructor(private route:Router) { }
 
+  onStepChange(event: any): void {
+    var change = event.selectedIndex;
+    console.log (change);
+
+    if (change == 0){
+      this.goto_dateiimport();
+    }
+
+    if (change == 1){
+      this.route.navigate(['/absatzplanung']);
+      console.log("HI!")
+    }
+
+    if (change == 2){
+      this.route.navigate(['/programmplanung']);
+    }
+
+    if (change == 3){
+      this.route.navigate(['/kapazitaetsplanung']);
+    }
+
+    if (change == 4){
+      this.route.navigate(['/mengenplanung']);
+    }
+
+    if (change == 5){
+      this.route.navigate(['/losgroessenplanung']);
+    }
+
+    if (change == 6){
+      this.route.navigate(['/dateiexport']);
+    }
+
+  }
+
   goto_dateiimport() {
     this.route.navigate(['/']);
-  }
-
-  goto_absatzplanung() {
-      this.route.navigate(['/absatzplanung']);
-  }
-
-  goto_programmplanung() {
-    this.route.navigate(['/programmplanung']);
-  }
-
-  goto_kapazitaetsplanung() {
-    this.route.navigate(['/kapazitaetsplanung']);
-  }
- 
-  goto_mengenplanung() {
-    this.route.navigate(['/mengenplanung']);
-  }
-
-  goto_losgroessenplanung() {
-    this.route.navigate(['/losgroessenplanung']);
-  }
-
-  goto_dateiexport() {
-    this.route.navigate(['/dateiexport']);
   }
 
   ngOnInit() {
