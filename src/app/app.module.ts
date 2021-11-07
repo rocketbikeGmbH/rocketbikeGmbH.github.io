@@ -30,6 +30,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {CdkStepperModule} from '@angular/cdk/stepper';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
       logOnly: environment.production,
       autoPause: true,
     }),
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
