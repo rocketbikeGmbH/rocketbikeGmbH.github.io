@@ -1,12 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
-import {MatTable} from '@angular/material/table';
-import {Production} from "../model/export.model";
-import {FormGroup} from "@angular/forms";
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDragHandle,
+} from '@angular/cdk/drag-drop';
+import { MatTable } from '@angular/material/table';
+import { Production } from '../model/export.model';
+import { FormGroup } from '@angular/forms';
 
 export interface LosgrossenElement {
-  attr_article: string,
-  attr_quantity: number,
+  attr_article: string;
+  attr_quantity: number;
 }
 
 let Element_Data: Production[] = [
@@ -45,12 +50,17 @@ let Element_Data: Production[] = [
 @Component({
   selector: 'app-losgroessenplanung',
   templateUrl: './losgroessenplanung.component.html',
-  styleUrls: ['./losgroessenplanung.component.scss']
+  styleUrls: ['./losgroessenplanung.component.scss'],
 })
 export class LosgroessenplanungComponent implements OnInit {
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
-  displayedColumns: string[] = ['Artikel', 'Produktionsmenge', 'Aufteilen', 'Löschen'];
+  displayedColumns: string[] = [
+    'Artikel',
+    'Produktionsmenge',
+    'Aufteilen',
+    'Löschen',
+  ];
   dataSource = Element_Data;
 
   dropTable(event: CdkDragDrop<Production[]>) {
@@ -59,10 +69,22 @@ export class LosgroessenplanungComponent implements OnInit {
     this.table.renderRows();
   }
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  onClick(element: Production) {
+    const article_attr = element.attr_article;
+    let quant_attr = element.attr_quantity;
+    const prod = this.dataSource.find((d) => d.attr_article === article_attr);
+    // @ts-ignore
+    prod.attr_quantity = prod.attr_quantity / 2;
+    this.dataSource.push({
+      attr_article: article_attr,
+      attr_quantity: quant_attr / 2,
+    });
+    this.table.renderRows();
   }
 
-
+  // Loop if(article gibts mindestes 2 mal) -> dann Lösch-Button anzeigen
 }
