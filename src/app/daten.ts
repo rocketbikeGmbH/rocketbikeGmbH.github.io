@@ -12,7 +12,7 @@ export class Daten  {
 
     data_loaded: boolean = false;
 
-
+    
     constructor(){}
 
     

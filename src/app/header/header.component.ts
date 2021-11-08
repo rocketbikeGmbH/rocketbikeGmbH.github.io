@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Daten } from '../daten';
 
 
 @Component({
@@ -10,13 +11,15 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private route:Router) { }
+  constructor(private route:Router, private daten: Daten) { 
+    
+  }
 
   onStepChange(event: any): void {
     var change = event.selectedIndex;
 
     if (change == 0){
-      this.goto_dateiimport();
+      this.route.navigate(['/']);
     }
 
     if (change == 1){
@@ -43,10 +46,6 @@ export class HeaderComponent implements OnInit {
       this.route.navigate(['/dateiexport']);
     }
 
-  }
-
-  goto_dateiimport() {
-    this.route.navigate(['/']);
   }
 
   ngOnInit() {

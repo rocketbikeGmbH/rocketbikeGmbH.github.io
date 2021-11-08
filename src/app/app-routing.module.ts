@@ -7,8 +7,10 @@ import { MengenplanungComponent } from './mengenplanung/mengenplanung.component'
 import { KapazitaetsplanungComponent} from './kapazitaetsplanung/kapazitaetsplanung.component'
 import { LosgroessenplanungComponent} from './losgroessenplanung/losgroessenplanung.component'
 import { DateiexportComponent} from './dateiexport/dateiexport.component'
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent},
   { path: '', component: DateiimportComponent },
   { path: 'absatzplanung', component: AbsatzplanungComponent },
   { path: 'programmplanung', component: ProgrammplanungComponent },

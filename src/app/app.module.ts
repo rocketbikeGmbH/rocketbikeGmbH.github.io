@@ -31,6 +31,7 @@ import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     MatButtonModule,
     MatIconModule,
