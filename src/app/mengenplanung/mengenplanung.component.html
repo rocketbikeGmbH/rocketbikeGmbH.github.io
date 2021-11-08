@@ -45,6 +45,12 @@
       <mat-cell class="duration-cell"
                 *matCellDef="let element">{{element.offeneBestellung}}</mat-cell>
     </ng-container>
+
+    <ng-container matColumnDef="bruttobedarf">
+      <mat-header-cell *matHeaderCellDef>Bruttobedarf </mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let element">{{element.bruttobedarf}}</mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
