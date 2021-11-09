@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix"
+    "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix",
+    "extract-translations": "ngx-translate-extract --input ./src --output ./src/assets/i18n/de.json --clean --sort --format namespaced-json --marker _"
   },
   "private": true,
   "dependencies": {
@@ -23,8 +24,12 @@
     "@angular/router": "~12.2.0",
     "@ngrx/store": "^12.5.0",
     "@ngrx/store-devtools": "^12.5.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "fast-xml-parser": "^3.20.3",
     "git": "^0.1.5",
+    "http-loader": "0.0.1",
+    "ngx-translate": "0.0.1-security",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -45,6 +50,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ngx-translate-extract": "^1.0.0",
     "prettier": "^2.4.1",
     "prettier-eslint": "^13.0.0",
     "typescript": "~4.3.5"

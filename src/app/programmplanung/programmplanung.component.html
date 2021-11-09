@@ -1,42 +1,42 @@
-<p>... in progress ...</p>
+
 
 <br>
 <mat-card class="hintergrund">
-        <mat-card-title>Programmplanung</mat-card-title>
-        <mat-card-subtitle>Endprodukte</mat-card-subtitle>
+        <mat-card-title>{{'Programmplanung' | translate}}</mat-card-title>
+        <mat-card-subtitle>{{'Endprodukte' | translate}}</mat-card-subtitle>
 
         <table mat-table [dataSource]="dataSourceEnd" class="mat-elevation-z8">
   
             <!-- Artikelnummer -->
             <ng-container matColumnDef="artikelnummer">
-              <th mat-header-cell *matHeaderCellDef> Artikelnummer </th>
+              <th mat-header-cell *matHeaderCellDef> {{'Artikelnummer' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.artikelnummer}} </td>
             </ng-container>
           
             <!-- Aktueller Lagerbestand -->
             <ng-container matColumnDef="aktueller_lagerbestand">
-              <th mat-header-cell *matHeaderCellDef> Aktueller Lagerbestand </th>
+              <th mat-header-cell *matHeaderCellDef> {{'Aktueller Lagerbestand' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.aktueller_lagerbestand}} </td>
             </ng-container>
           
             <!-- In Bearbeitung -->
             <ng-container matColumnDef="in_bearbeitung">
-              <th mat-header-cell *matHeaderCellDef> In Bearbeitung </th>
+              <th mat-header-cell *matHeaderCellDef> {{'In Bearbeitung' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.in_bearbeitung}} </td>
             </ng-container>
           
             <!-- In Warteschlange -->
             <ng-container matColumnDef="in_warteschlange">
-              <th mat-header-cell *matHeaderCellDef> In Warteschlange </th>
+              <th mat-header-cell *matHeaderCellDef> {{'In Warteschlange' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.in_warteschlange}} </td>
             </ng-container>
         
             <!-- Geplanter Endbestand -->
             <ng-container matColumnDef="geplanter_endbestand">
-              <th mat-header-cell *matHeaderCellDef> Geplanter Endbestand </th>
+              <th mat-header-cell *matHeaderCellDef> {{'Geplanter Endbestand' | translate}} </th>
               <td mat-cell *matCellDef="let element"> 
                 <mat-form-field class="example-form-field" appearance="fill">
-                    <mat-label>Geben Sie Ihre Daten ein:</mat-label>
+                    <mat-label>{{'Geben Sie ihre Daten ein:' | translate}}</mat-label>
                     <input matInput type="number" [(ngModel)]= element.geplanter_endbestand (ngModelChange)="changeend($event, element.artikelnummer)">
                     <button *ngIf="element.geplanter_endbestand" matSuffix mat-icon-button aria-label="Clear" (click)="element.geplanter_endbestand=''">
                       <mat-icon>close</mat-icon>
@@ -47,19 +47,19 @@
         
             <!-- Vertriebswunsch  -->
             <ng-container matColumnDef="vertriebswunsch">
-                <th mat-header-cell *matHeaderCellDef> Vertriebswunsch </th>
+                <th mat-header-cell *matHeaderCellDef> {{'Vertriebswunsch' | translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.vertriebswunsch}} </td>
               </ng-container>
          
             <!-- Direktverkauf  -->
             <ng-container matColumnDef="direktverkauf">
-                <th mat-header-cell *matHeaderCellDef> Direktverkauf </th>
+                <th mat-header-cell *matHeaderCellDef> {{'Direktverkauf' | translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.direktverkauf}} </td>
               </ng-container>      
         
             <!-- Produktionsauftraege  -->
             <ng-container matColumnDef="produktionsauftraege">
-                <th mat-header-cell *matHeaderCellDef> Produktionsaufträge </th>
+                <th mat-header-cell *matHeaderCellDef> {{'Produktionsaufträge' | translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.produktionsauftraege}} </td>
               </ng-container> 
         
@@ -68,40 +68,40 @@
         </table>
         <br>
 
-        <mat-card-subtitle>Zwischenprodukte</mat-card-subtitle>
+        <mat-card-subtitle>{{'Zwischenprodukte' | translate}}</mat-card-subtitle>
 
         <table mat-table [dataSource]="dataSourceZwi" class="mat-elevation-z8">
   
             <!-- Artikelnummer -->
             <ng-container matColumnDef="artikelnummer">
-              <th mat-header-cell *matHeaderCellDef> Artikelnummer </th>
+              <th mat-header-cell *matHeaderCellDef> {{'Artikelnummer' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.artikelnummer}} </td>
             </ng-container>
           
             <!-- Aktueller Lagerbestand -->
             <ng-container matColumnDef="aktueller_lagerbestand">
-              <th mat-header-cell *matHeaderCellDef> Aktueller Lagerbestand </th>
+              <th mat-header-cell *matHeaderCellDef> {{'Aktueller Lagerbestand' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.aktueller_lagerbestand}} </td>
             </ng-container>
           
             <!-- In Bearbeitung -->
             <ng-container matColumnDef="in_bearbeitung">
-              <th mat-header-cell *matHeaderCellDef> In Bearbeitung </th>
+              <th mat-header-cell *matHeaderCellDef> {{'In Bearbeitung' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.in_bearbeitung}} </td>
             </ng-container>
           
             <!-- In Warteschlange -->
             <ng-container matColumnDef="in_warteschlange">
-              <th mat-header-cell *matHeaderCellDef> In Warteschlange </th>
+              <th mat-header-cell *matHeaderCellDef> {{'In Warteschlange' | translate}} </th>
               <td mat-cell *matCellDef="let element"> {{element.in_warteschlange}} </td>
             </ng-container>
         
             <!-- Geplanter Endbestand -->
             <ng-container matColumnDef="geplanter_endbestand">
-              <th mat-header-cell *matHeaderCellDef> Geplanter Endbestand </th>
+              <th mat-header-cell *matHeaderCellDef> {{'Geplanter Endbestand' | translate}} </th>
               <td mat-cell *matCellDef="let element"> 
                 <mat-form-field class="example-form-field" appearance="fill">
-                    <mat-label>Geben Sie Ihre Daten ein:</mat-label>
+                    <mat-label>{{'Geben Sie ihre Daten ein:' | translate}}</mat-label>
                     <input matInput type="number" [(ngModel)]= element.geplanter_endbestand (ngModelChange)="changezwi($event, element.artikelnummer)">
                     <button *ngIf="element.geplanter_endbestand" matSuffix mat-icon-button aria-label="Clear" (click)="element.geplanter_endbestand=''">
                       <mat-icon>close</mat-icon>
@@ -112,19 +112,19 @@
         
             <!-- Vertriebswunsch  -->
             <ng-container matColumnDef="vertriebswunsch">
-                <th mat-header-cell *matHeaderCellDef> Vertriebswunsch </th>
+                <th mat-header-cell *matHeaderCellDef> {{'Vertriebswunsch' | translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.vertriebswunsch}} </td>
               </ng-container>
          
             <!-- Direktverkauf  -->
             <ng-container matColumnDef="direktverkauf">
-                <th mat-header-cell *matHeaderCellDef> Direktverkauf </th>
+                <th mat-header-cell *matHeaderCellDef> {{'Direktverkauf' | translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.direktverkauf}} </td>
               </ng-container>      
         
             <!-- Produktionsauftraege  -->
             <ng-container matColumnDef="produktionsauftraege">
-                <th mat-header-cell *matHeaderCellDef> Produktionsaufträge </th>
+                <th mat-header-cell *matHeaderCellDef> {{'Produktionsaufträge' | translate}} </th>
                 <td mat-cell *matCellDef="let element"> {{element.produktionsauftraege}} </td>
               </ng-container> 
         
@@ -134,5 +134,5 @@
         <br>
 
         <!-- Button -->
-        <button mat-raised-button color="berechnen">Berechnen</button>
+        <button mat-raised-button color="berechnen">{{'Berechnen' | translate}}</button>
 </mat-card>

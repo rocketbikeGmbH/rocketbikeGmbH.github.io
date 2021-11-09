@@ -12,6 +12,7 @@ import { ImportModel } from '../model/import.model';
 })
 export class DateiimportComponent {
   fileName = '';
+  dateiimport_file_auswahl = '';
 
   constructor(private store: Store<ImportState>) {}
 

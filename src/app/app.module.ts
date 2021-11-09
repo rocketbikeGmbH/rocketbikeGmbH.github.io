@@ -32,7 +32,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import { CommonModule } from '@angular/common';
-
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,14 @@ import { CommonModule } from '@angular/common';
     MatListModule,
     CdkStepperModule,
     MatTableModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     StoreModule.forRoot({ importModel: importReducer,  exportModel: exportReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -77,3 +88,8 @@ import { CommonModule } from '@angular/common';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+
+export function HttpLoaderFactory(http: HttpClient){
+  return new TranslateHttpLoader(http);
+}

@@ -1,47 +1,47 @@
 <mat-card class="hintergrund">
-  <mat-card-title>Bestellmengenplanung</mat-card-title>
+  <mat-card-title>{{'Bestellmengenplanung' | translate}}</mat-card-title>
 
 
   <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
 
     <ng-container matColumnDef="artikelnr">
-      <mat-header-cell *matHeaderCellDef>Artikel-Nr.</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{'Artikel Nummer' | translate}}</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lieferfrist">
-      <mat-header-cell *matHeaderCellDef>Lieferfrist</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{'Lieferfrist' | translate}}</mat-header-cell>
       <mat-cell class="description-cell"
                 *matCellDef="let element">{{element.lieferfrist}}</mat-cell>
 
     </ng-container>
 
     <ng-container matColumnDef="abweichung">
-      <mat-header-cell *matHeaderCellDef>Abweichung</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{'Abweichung' | translate}}</mat-header-cell>
       <mat-cell class="duration-cell"
                 *matCellDef="let element">{{element.abweichung}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="verwendung">
-      <mat-header-cell *matHeaderCellDef>Verwendung</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{'Verwendung' | translate}}</mat-header-cell>
       <mat-cell class="duration-cell"
                 *matCellDef="let element">{{element.verwendung.p1}} {{element.verwendung.p2}} {{element.verwendung.p3}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="diskont">
-      <mat-header-cell *matHeaderCellDef>Diskont</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{'Diskont' | translate}}</mat-header-cell>
       <mat-cell class="duration-cell"
                 *matCellDef="let element">{{element.diskont}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="anfangsbestand">
-      <mat-header-cell *matHeaderCellDef>Anfangsbestand</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{'Anfangsbestand' | translate}}</mat-header-cell>
       <mat-cell class="duration-cell"
                 *matCellDef="let element">{{element.anfangsbestand}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="offeneBestellung">
-      <mat-header-cell *matHeaderCellDef>Bestellungen</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>{{'Bestellungen' | translate}}</mat-header-cell>
       <mat-cell class="duration-cell"
                 *matCellDef="let element">{{element.offeneBestellung}}</mat-cell>
     </ng-container>

@@ -4,19 +4,19 @@
 
   <!-- Artikel Column -->
   <ng-container matColumnDef="Artikel"  >
-    <th mat-header-cell *matHeaderCellDef > Artiel </th>
+    <th mat-header-cell *matHeaderCellDef > {{'Artikel' | translate}} </th>
     <td mat-cell *matCellDef="let element"> {{element.attr_article}} </td>
   </ng-container>
 
   <!-- Produktionsmenge Column -->
   <ng-container matColumnDef="Produktionsmenge" >
-    <th mat-header-cell *matHeaderCellDef > Produktionsmenge </th>
+    <th mat-header-cell *matHeaderCellDef > {{'Produktionsmenge' | translate}} </th>
     <td mat-cell *matCellDef="let element"> {{element.attr_quantity}} </td>
   </ng-container>
 
   <!-- Aufteilen Column -->
   <ng-container matColumnDef="Aufteilen"  >
-    <th mat-header-cell *matHeaderCellDef > Aufteilen </th>
+    <th mat-header-cell *matHeaderCellDef > {{'Aufteilen' | translate}} </th>
     <td mat-cell *matCellDef="let element">
         <button mat-raised-button (click)='onClick(element)'>
           <mat-icon> call_split</mat-icon>
@@ -26,7 +26,7 @@
 
   <!-- Loeschen Column -->
   <ng-container matColumnDef="Löschen" >
-    <th mat-header-cell *matHeaderCellDef > Löschen </th>
+    <th mat-header-cell *matHeaderCellDef > {{'Löschen' | translate}} </th>
     <td mat-cell *matCellDef="let element">
       <button mat-raised-button>
         <mat-icon>delete_outline</mat-icon>

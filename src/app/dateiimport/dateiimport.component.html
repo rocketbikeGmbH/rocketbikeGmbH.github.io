@@ -1,8 +1,11 @@
 <input type="file" class="file-input" accept="text/xml" (change)="onFileSelected($event)" #fileUpload>
 <div class="file-upload">
-  {{fileName || "No file uploaded yet."}}
+  {{fileName || 'Keine Datei ausgewählt' | translate }}
+  
   <button mat-mini-fab color="primary" class="upload-btn"
           (click)="fileUpload.click()">
     <mat-icon>attach_file</mat-icon>
   </button>
 </div>
+
+

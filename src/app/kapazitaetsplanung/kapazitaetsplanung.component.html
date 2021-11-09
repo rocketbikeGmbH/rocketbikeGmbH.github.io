@@ -1,63 +1,61 @@
 <br>
 <mat-card class="hintergrund">
-        <mat-card-title>Kapazitätsplanung</mat-card-title>
+        <mat-card-title>{{'Kapazitätsplanung' | translate}}</mat-card-title>
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-          <!--- Note that these columns can be defined in any order.
-                The actual rendered columns are set as a property on the row definition" -->
         
           <!-- Position Column -->
           <ng-container matColumnDef="arbeitsplatz">
-            <th mat-header-cell *matHeaderCellDef> Arbeitsplatz </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Arbeitsplatz' | translate}} </th>
             <td mat-cell *matCellDef="let element"> {{element.arbeitsplatz}} </td>
           </ng-container>
         
           <!-- Name Column -->
           <ng-container matColumnDef="kapa_new">
-            <th mat-header-cell *matHeaderCellDef> Kapazitätbedarf </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Kapazitätsbedarf' | translate}} </th>
             <td mat-cell *matCellDef="let element"> {{element.kapa_new}} </td>
           </ng-container>
         
           <!-- Weight Column -->
           <ng-container matColumnDef="ruest_new">
-            <th mat-header-cell *matHeaderCellDef> Rüstzeit </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Rüstzeit' | translate}} </th>
             <td mat-cell *matCellDef="let element"> {{element.ruest_new}} </td>
           </ng-container>
         
           <!-- Symbol Column -->
           <ng-container matColumnDef="kapa_old">
-            <th mat-header-cell *matHeaderCellDef> Warteschlange Kapazitätbedarf </th>
+            <th mat-header-cell *matHeaderCellDef> {{'Warteschlange Kapazitätsbedarf' | translate}} </th>
             <td mat-cell *matCellDef="let element"> {{element.kapa_old}} </td>
           </ng-container>
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="ruest_old">
-                      <th mat-header-cell *matHeaderCellDef> Warteschlange Rüstzeit </th>
+                      <th mat-header-cell *matHeaderCellDef> {{'Warteschlange Rüstzeit' | translate}} </th>
                       <td mat-cell *matCellDef="let element"> {{element.ruest_old}} </td>
                     </ng-container>
 
                       <!-- Symbol Column -->
                       <ng-container matColumnDef="kapa_gesamt">
-                        <th mat-header-cell *matHeaderCellDef> Kapa Bedarf gesamt </th>
+                        <th mat-header-cell *matHeaderCellDef> {{'Kapazitätbedarf Gesamt' | translate}} </th>
                         <td mat-cell *matCellDef="let element"> {{element.kapa_gesamt}} </td>
                       </ng-container>
 
                         <!-- Symbol Column -->
                     <ng-container matColumnDef="anzahl_schichten">
-                      <th mat-header-cell *matHeaderCellDef> Anzahl Schichten </th>
+                      <th mat-header-cell *matHeaderCellDef> {{'Anzahl Schichten' | translate}} </th>
                       <td mat-cell *matCellDef="let element"> {{element.anzahl_schichten}} </td>
                     </ng-container>
 
                       <!-- Symbol Column -->
                       <ng-container matColumnDef="ueberstunden_min_tag">
-                        <th mat-header-cell *matHeaderCellDef> Überstunden Min pro Tag </th>
+                        <th mat-header-cell *matHeaderCellDef> {{'Überstunden Minuten pro Tag' | translate}} </th>
                         <td mat-cell *matCellDef="let element"> {{element.ueberstunden_min_tag}} </td>
                       </ng-container>
 
                         <!-- Symbol Column -->
                     <ng-container matColumnDef="zusatz_ueberstunden">
-                      <th mat-header-cell *matHeaderCellDef> Zusätzliche Minuten pro Tag </th>
+                      <th mat-header-cell *matHeaderCellDef> {{'Zusatz Minuten pro Tag' | translate}} </th>
                       <td mat-cell *matCellDef="let element"> 
                         <mat-form-field class="example-form-field" appearance="fill">
                           <input  matInput type="number" [(ngModel)]= element.zusatz_ueberstunden >
@@ -73,8 +71,8 @@
                 
                 <br>
            
-        <button mat-raised-button (click)="neu_berechnen()">Neu berechnen</button>
+        <button mat-raised-button (click)="neu_berechnen()">{{'Neu berechnen' | translate}}</button>
         <br>
         <br>
-        <button mat-raised-button (click)="speichern()"> Speichern & Weiter</button>
+        <button mat-raised-button (click)="speichern()"> {{'Speichern & Weiter' | translate}}</button>
 </mat-card>
