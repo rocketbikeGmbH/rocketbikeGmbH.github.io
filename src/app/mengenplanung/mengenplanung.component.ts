@@ -26,6 +26,7 @@ export class MengenplanungComponent implements OnInit {
   panelOpenState = true;
   dataSource: Array<BestellArtikel> = bestellArtikelArray;
   dataSource2: Array<Bestellungen> = [];
+  options: Array<string> = [ 'Normal', 'Eil', 'Sonderbestellung'];
   displayedColumns = [
     'artikelnr',
     'lieferfrist',
@@ -101,7 +102,7 @@ export class MengenplanungComponent implements OnInit {
         let modus;
         // @ts-ignore
         if (d.anfangsbestand * d.lieferfrist <= d.bestellpunkt) {
-          modus = 'Express';
+          modus = 'Eil';
         } else {
           modus = 'Normal';
         }
@@ -109,14 +110,10 @@ export class MengenplanungComponent implements OnInit {
         bestellungen.id = d.id;
         this.dataSource2.push(bestellungen);
       }
-      // wenn anfangsbestand < bestellpunkt
-      // dann wenn anfangsbestand * liferfrist < bestellpunkt
-      // dann Express -> Zeile Rot muss Benutzer entscheiden
-      // dann Bestellung aufgeben mit Bruttobestellwert
     });
   }
 }
-function round(value: number, precision: number) {
+const round = (value: number, precision: number) => {
   let multiplier = Math.pow(10, precision || 0);
   return Math.round(value * multiplier) / multiplier;
 }

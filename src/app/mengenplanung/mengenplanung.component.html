@@ -1,4 +1,4 @@
-<mat-accordion multi >
+<mat-accordion multi>
   <mat-expansion-panel
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
@@ -102,7 +102,10 @@
     <mat-expansion-panel-header>
       <mat-card-title>{{ 'Bestellungen' | translate }}</mat-card-title>
     </mat-expansion-panel-header>
-    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource2">
+    <mat-table
+      class="lessons-table mat-elevation-z8"
+      [dataSource]="dataSource2"
+    >
       <ng-container matColumnDef="artikelnr">
         <mat-header-cell *matHeaderCellDef>{{
           'Artikel Nummer' | translate
@@ -113,15 +116,21 @@
       <ng-container matColumnDef="menge">
         <mat-header-cell *matHeaderCellDef>{{
           'Menge' | translate
-          }}</mat-header-cell>
+        }}</mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element.anzahl }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="modus">
         <mat-header-cell *matHeaderCellDef>{{
           'Modus' | translate
-          }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.modus }}</mat-cell>
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let element"
+          ><mat-select [(value)] ="element.modus">
+            <mat-option *ngFor="let option of options" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-select></mat-cell
+        >
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
