@@ -36,6 +36,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -76,13 +77,14 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
         deps: [HttpClient]
       }
     }),
-    StoreModule.forRoot({ importModel: importReducer,  exportModel: exportReducer }),
+    StoreModule.forRoot({ importModel: importReducer, exportModel: exportReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
-      autoPause: true,
+      autoPause: true
     }),
     DragDropModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent],

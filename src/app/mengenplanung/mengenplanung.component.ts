@@ -14,7 +14,8 @@ import {
   futureinwardstockmovementorder,
   inwardstockmovementorder,
 } from '../model/import.model';
-import { BestellArtikel, ProduktType } from './bestellarticel';
+import { BestellArtikel, Bestellungen } from './bestellarticel';
+import { bestellArtikelArray } from './BestellArtikelArray';
 
 @Component({
   selector: 'app-mengenplanung',
@@ -22,37 +23,9 @@ import { BestellArtikel, ProduktType } from './bestellarticel';
   styleUrls: ['./mengenplanung.component.scss'],
 })
 export class MengenplanungComponent implements OnInit {
-  dataSource: Array<BestellArtikel> = [
-    new BestellArtikel(21, 1.8, 0.4, new ProduktType(1, 0, 0), 300),
-    new BestellArtikel(22, 1.7, 0.4, new ProduktType(0, 1, 0), 300),
-    new BestellArtikel(23, 1.2, 0.2, new ProduktType(0, 0, 1), 300),
-    new BestellArtikel(24, 3.2, 0.3, new ProduktType(7, 7, 7), 6100),
-    new BestellArtikel(25, 0.9, 0.2, new ProduktType(4, 4, 4), 3600),
-    new BestellArtikel(27, 0.9, 0.2, new ProduktType(2, 2, 2), 1800),
-    new BestellArtikel(28, 1.7, 0.4, new ProduktType(4, 5, 6), 4500),
-    new BestellArtikel(32, 2.1, 0.5, new ProduktType(3, 3, 3), 2700),
-    new BestellArtikel(33, 1.9, 0.5, new ProduktType(0, 0, 2), 900),
-    new BestellArtikel(34, 1.6, 0.3, new ProduktType(0, 0, 72), 22000),
-    new BestellArtikel(35, 2.2, 0.4, new ProduktType(4, 4, 4), 3600),
-    new BestellArtikel(36, 1.2, 0.1, new ProduktType(1, 1, 1), 900),
-    new BestellArtikel(37, 1.5, 0.3, new ProduktType(1, 1, 1), 900),
-    new BestellArtikel(38, 1.7, 0.4, new ProduktType(1, 1, 1), 300),
-    new BestellArtikel(39, 1.5, 0.3, new ProduktType(2, 2, 2), 1800),
-    new BestellArtikel(40, 1.7, 0.2, new ProduktType(1, 1, 1), 900),
-    new BestellArtikel(41, 0.9, 0.2, new ProduktType(1, 1, 1), 900),
-    new BestellArtikel(42, 1.2, 0.3, new ProduktType(2, 2, 2), 1800),
-    new BestellArtikel(43, 2, 0.5, new ProduktType(1, 1, 1), 2700),
-    new BestellArtikel(44, 1, 0.2, new ProduktType(3, 3, 3), 900),
-    new BestellArtikel(45, 1.7, 0.3, new ProduktType(1, 1, 1), 900),
-    new BestellArtikel(46, 0.9, 0.3, new ProduktType(1, 1, 1), 900),
-    new BestellArtikel(47, 1.1, 0.1, new ProduktType(1, 1, 1), 900),
-    new BestellArtikel(48, 1, 0.2, new ProduktType(2, 2, 2), 1800),
-    new BestellArtikel(52, 1.6, 0.4, new ProduktType(2, 0, 0), 600),
-    new BestellArtikel(53, 1.6, 0.2, new ProduktType(73, 0, 0), 22000),
-    new BestellArtikel(57, 1.7, 0.3, new ProduktType(0, 2, 0), 600),
-    new BestellArtikel(58, 1.6, 0.5, new ProduktType(0, 72, 0), 2200),
-    new BestellArtikel(59, 1.7, 0.2, new ProduktType(2, 2, 2), 1800),
-  ];
+  panelOpenState = true;
+  dataSource: Array<BestellArtikel> = bestellArtikelArray;
+  dataSource2: Array<Bestellungen> = [];
   displayedColumns = [
     'artikelnr',
     'lieferfrist',
@@ -60,9 +33,12 @@ export class MengenplanungComponent implements OnInit {
     'verwendung',
     'diskont',
     'anfangsbestand',
+    'eintreffendeBestellung',
     'offeneBestellung',
     'bruttobedarf',
+    'bestellpunkt',
   ];
+  displayedColumns2 = ['artikelnr', 'menge', 'modus'];
   _articles: Array<article> | undefined;
   articles$ = this.importStore
     .pipe(select(selectImportArticle))
@@ -92,22 +68,55 @@ export class MengenplanungComponent implements OnInit {
     this.dataSource.forEach((d) => {
       const article = this._articles?.find((article) => article.id == d.id);
       d.anfangsbestand = article?.amount;
+      // überprüfen ob es ein Array ist
       const order = this._orders?.find((o) => o.article == d.id);
 
       if (order) {
-        d.offeneBestellung = order?.amount;
+        d.eintreffendeBestellung = new Bestellungen(
+          order?.amount,
+          order?.orderperiod,
+          ''
+        );
       }
 
+      // überprüfen ob es ein Array ist
       const futureOrder = this._futureorders?.find((fo) => fo.article == d.id);
       if (futureOrder) {
         d.offeneBestellung = futureOrder?.amount;
       }
-      const { p1, p2, p3 } = this._forecast ?? {};
 
+      const { p1, p2, p3 } = this._forecast ?? {};
       d.bruttobedarf =
         d.verwendung.p1 * (p1 ?? 0) +
         d.verwendung.p2 * (p2 ?? 0) +
         d.verwendung.p3 * (p3 ?? 0);
+
+      d.bestellpunkt = round(
+        (d.bruttobedarf * (5 * d.lieferfrist + 5)) / 5,
+        -1
+      );
+
+      // @ts-ignore
+      if (d.anfangsbestand <= d.bestellpunkt) {
+        let modus;
+        // @ts-ignore
+        if (d.anfangsbestand * d.lieferfrist <= d.bestellpunkt) {
+          modus = 'Express';
+        } else {
+          modus = 'Normal';
+        }
+        const bestellungen = new Bestellungen(d.bruttobedarf, 0, modus);
+        bestellungen.id = d.id;
+        this.dataSource2.push(bestellungen);
+      }
+      // wenn anfangsbestand < bestellpunkt
+      // dann wenn anfangsbestand * liferfrist < bestellpunkt
+      // dann Express -> Zeile Rot muss Benutzer entscheiden
+      // dann Bestellung aufgeben mit Bruttobestellwert
     });
   }
+}
+function round(value: number, precision: number) {
+  let multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
 }
