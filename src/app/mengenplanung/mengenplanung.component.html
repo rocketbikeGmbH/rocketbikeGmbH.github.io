@@ -117,7 +117,9 @@
         <mat-header-cell *matHeaderCellDef>{{
           'Menge' | translate
         }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.anzahl }}</mat-cell>
+        <mat-cell *matCellDef="let element">
+          <input matInput type="number" step='10' [(ngModel)]='element.anzahl' />
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="modus">
@@ -125,7 +127,7 @@
           'Modus' | translate
         }}</mat-header-cell>
         <mat-cell *matCellDef="let element"
-          ><mat-select [(value)] ="element.modus">
+          ><mat-select [(value)]="element.modus">
             <mat-option *ngFor="let option of options" [value]="option">
               {{ option }}
             </mat-option>
