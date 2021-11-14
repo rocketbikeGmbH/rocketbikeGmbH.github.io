@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
+import {MatNativeDateModule} from '@angular/material/core';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -65,6 +68,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDividerModule,
+    MatNativeDateModule,
     MatListModule,
     CdkStepperModule,
     MatTableModule,

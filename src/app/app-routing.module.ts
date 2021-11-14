@@ -10,8 +10,8 @@ import { DateiexportComponent} from './dateiexport/dateiexport.component'
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent},
-  { path: '', component: DateiimportComponent },
+  { path: '', component: HomeComponent},
+  { path: 'dateiimport', component: DateiimportComponent },
   { path: 'absatzplanung', component: AbsatzplanungComponent },
   { path: 'programmplanung', component: ProgrammplanungComponent },
   { path: 'mengenplanung', component: MengenplanungComponent },

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Daten } from '../daten';
 import { Router } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,19 @@ import { HeaderComponent } from '../header/header.component';
 
 export class HomeComponent implements OnInit {
 
-  constructor(private daten: Daten, private router: Router) { }
+  constructor(private daten: Daten, private router: Router, private translate: TranslateService) {
+    translate.addLangs(['de', 'en'])
+    translate.setDefaultLang('de');
+   }
+
+   useLanguage(language: string){
+    this.translate.use(language)
+  }
+
+  onClick(event :Event){
+    event.preventDefault();
+    this.router.navigate(['/dateiimport'])
+  }
 
   ngOnInit(): void {
   }

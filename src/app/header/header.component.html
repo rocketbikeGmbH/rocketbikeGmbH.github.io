@@ -1,49 +1,45 @@
+<!-- class="example-stepper"
+[orientation]="(stepperOrientation | async)!" -->
 
+<mat-horizontal-stepper (selectionChange)="onStepChange($event)" *ngIf="header_anzeigen">
+  <mat-step>
+    <ng-template matStepLabel>
+      <p>{{'Dateiimport' | translate}}</p>
+    </ng-template>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>
+      <p>{{'Absatzplanung' | translate}}</p>
+    </ng-template>
+  </mat-step>
 
+  <mat-step>
+    <ng-template matStepLabel>
+      <p>{{'Programmplanung' | translate}}</p>
+    </ng-template>
+  </mat-step>
 
-<mat-horizontal-stepper (selectionChange)="onStepChange($event)">
-    <mat-step>
-        <ng-template matStepLabel>
-          <p>{{'Dateiimport' | translate}}</p>
-        </ng-template>
-     </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>
-          <p>{{'Absatzplanung' | translate}}</p>
-        </ng-template>
-    </mat-step>
-  
-    <mat-step>
-        <ng-template matStepLabel>
-          <p>{{'Programmplanung' | translate}}</p>
-        </ng-template>
-    </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>
+      <p>{{'Kapazitätsplanung' | translate}}</p>
+    </ng-template>
+  </mat-step>
 
-    <mat-step>
-        <ng-template matStepLabel>
-          <p>{{'Kapazitätsplanung' | translate}}</p>
-        </ng-template>
-    </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>
+      <p>{{'Mengenplanung' | translate}}</p>
+    </ng-template>
+  </mat-step>
 
-    <mat-step>
-        <ng-template matStepLabel>
-          <p >{{'Mengenplanung' | translate}}</p>
-        </ng-template>
-    </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>
+      <p>{{'Losgrößenplanung' | translate}}</p>
+    </ng-template>
+  </mat-step>
 
-    <mat-step>
-        <ng-template matStepLabel>
-          <p>{{'Losgrößenplanung' | translate}}</p>
-        </ng-template>
-    </mat-step>
-
-    <mat-step>
-        <ng-template matStepLabel>
-          <p>{{'Dateiexport' | translate}}</p>
-        </ng-template>
-    </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>
+      <p>{{'Dateiexport' | translate}}</p>
+    </ng-template>
+  </mat-step>
 </mat-horizontal-stepper>
-
-
-
-  
