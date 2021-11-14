@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ImportState } from '../store/import/import.reducer';
 import { ExportState } from '../store/export/export.reducer';
 import { select, Store } from '@ngrx/store';
@@ -16,6 +16,23 @@ import {
 } from '../model/import.model';
 import { BestellArtikel, Bestellungen } from './bestellarticel';
 import { bestellArtikelArray } from './BestellArtikelArray';
+import { Order, Orderlist } from '../model/export.model';
+import { addOrderlist } from '../store/export/export.actions';
+import { Router } from '@angular/router';
+import { MatTable } from '@angular/material/table';
+import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.component';
+
+class OrderImpl implements Order {
+  attr_article: number;
+  attr_quantity: number;
+  attr_modus: number;
+
+  constructor(attr_article: number, attr_quantity: number, attr_modus: number) {
+    this.attr_article = attr_article;
+    this.attr_quantity = attr_quantity;
+    this.attr_modus = attr_modus;
+  }
+}
 
 @Component({
   selector: 'app-mengenplanung',
@@ -23,10 +40,10 @@ import { bestellArtikelArray } from './BestellArtikelArray';
   styleUrls: ['./mengenplanung.component.scss'],
 })
 export class MengenplanungComponent implements OnInit {
-  panelOpenState = true;
   dataSource: Array<BestellArtikel> = bestellArtikelArray;
   dataSource2: Array<Bestellungen> = [];
   options: Array<string> = [ 'Normal', 'Eil', 'Sonderbestellung'];
+  optionsMap = new Map([[ 'Normal', 5], ['Eil', 4], ['Sonderbestellung', 1]]);
   displayedColumns = [
     'artikelnr',
     'lieferfrist',
@@ -39,7 +56,7 @@ export class MengenplanungComponent implements OnInit {
     'bruttobedarf',
     'bestellpunkt',
   ];
-  displayedColumns2 = ['artikelnr', 'menge', 'modus'];
+  displayedColumns2 = ['artikelnr', 'menge', 'modus', 'loeschen'];
   _articles: Array<article> | undefined;
   articles$ = this.importStore
     .pipe(select(selectImportArticle))
@@ -60,9 +77,13 @@ export class MengenplanungComponent implements OnInit {
     .pipe(select(selectImportForecast))
     .subscribe((i) => (this._forecast = i));
 
+  @ViewChild('table')
+  table!: MatTable<LosgrossenElement>;
+
   constructor(
     private importStore: Store<ImportState>,
-    private exportStore: Store<ExportState>
+    private exportStore: Store<ExportState>,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -100,20 +121,47 @@ export class MengenplanungComponent implements OnInit {
       // @ts-ignore
       if (d.anfangsbestand <= d.bestellpunkt) {
         let modus;
-        // @ts-ignore
-        if (d.anfangsbestand * d.lieferfrist <= d.bestellpunkt) {
-          modus = 'Eil';
-        } else {
+
+        // if ((d.bruttobedarf * d.lieferfrist) <= d.bestellpunkt) {
+        //   // @ts-ignore
+        //   if((d.anfangsbestand * (d.lieferfrist / 2)) <= d.bestellpunkt){
+        //     modus = 'Sonderbestellung';
+        //   } else {
+        //     modus = 'Eil';
+        //   }
+        // } else {
           modus = 'Normal';
-        }
+        // }
         const bestellungen = new Bestellungen(d.bruttobedarf, 0, modus);
         bestellungen.id = d.id;
         this.dataSource2.push(bestellungen);
       }
     });
   }
+
+  speichern() {
+    const orders : Array<Order> = [];
+
+    this.dataSource2.forEach( (d) => {
+      const order = new OrderImpl(d.id, d.anzahl, this.optionsMap.get(d.modus) ?? 5);
+      orders.push(order);
+    })
+    const orderlist : Orderlist = { order: orders};
+    this.exportStore.dispatch(addOrderlist({orderlist: orderlist}))
+    this.router.navigate(['losgroessenplanung'])
+  }
+
+  loeschen(element : Bestellungen) {
+    const index = this.dataSource2.indexOf(element);
+    if (index > -1) {
+      this.dataSource2.splice(index, 1);
+      this.table.renderRows();
+    }
+  }
 }
+
 const round = (value: number, precision: number) => {
   let multiplier = Math.pow(10, precision || 0);
   return Math.round(value * multiplier) / multiplier;
 }
+

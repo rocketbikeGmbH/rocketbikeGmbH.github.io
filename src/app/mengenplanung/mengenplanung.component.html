@@ -1,7 +1,6 @@
 <mat-accordion multi>
   <mat-expansion-panel
-    (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false"
+    [expanded]='false'
   >
     <mat-expansion-panel-header>
       <mat-card-title>{{ 'Bestellmengenplanung' | translate }}</mat-card-title>
@@ -105,6 +104,7 @@
     <mat-table
       class="lessons-table mat-elevation-z8"
       [dataSource]="dataSource2"
+      #table
     >
       <ng-container matColumnDef="artikelnr">
         <mat-header-cell *matHeaderCellDef>{{
@@ -118,7 +118,12 @@
           'Menge' | translate
         }}</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <input matInput type="number" step='10' [(ngModel)]='element.anzahl' />
+          <input
+            matInput
+            type="number"
+            step="10"
+            [(ngModel)]="element.anzahl"
+          />
         </mat-cell>
       </ng-container>
 
@@ -126,18 +131,32 @@
         <mat-header-cell *matHeaderCellDef>{{
           'Modus' | translate
         }}</mat-header-cell>
-        <mat-cell *matCellDef="let element"
-          ><mat-select [(value)]="element.modus">
+        <mat-cell *matCellDef="let element">
+          <mat-select [(value)]="element.modus">
             <mat-option *ngFor="let option of options" [value]="option">
               {{ option }}
             </mat-option>
-          </mat-select></mat-cell
-        >
+          </mat-select>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="loeschen">
+        <mat-header-cell *matHeaderCellDef>{{
+          'Löschen' | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-raised-button (click)="loeschen(element)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
 
       <mat-row *matRowDef="let row; columns: displayedColumns2"></mat-row>
     </mat-table>
+    <button mat-raised-button (click)="speichern()">
+      {{ 'Speichern & Weiter' | translate }}
+    </button>
   </mat-expansion-panel>
 </mat-accordion>

@@ -144,29 +144,29 @@ export class Bestellungen {
     this._modus = modus;
   }
 
-  private _anzahl: number | undefined;
-  private _modus: string | undefined;
+  private _anzahl: number = 0;
+  private _modus: string  = "";
   private readonly _periode: number;
-  private _id: number | undefined;
+  private _id: number  = 0;
 
-  get id(): number | undefined {
+  get id(): number {
     return this._id;
   }
-  set id(value: number | undefined) {
+  set id(value: number) {
     this._id = value;
   }
 
-  set modus(value: string | undefined) {
+  set modus(value: string ) {
     this._modus = value;
   }
-  get modus(): string | undefined{
+  get modus(): string {
     return this._modus;
   }
 
-  set anzahl(value: number | undefined) {
+  set anzahl(value: number ) {
     this._anzahl = value;
   }
-  get anzahl(): number | undefined {
+  get anzahl(): number {
     return this._anzahl;
   }
 
