@@ -18,7 +18,8 @@
   <ng-container matColumnDef="Aufteilen"  >
     <th mat-header-cell *matHeaderCellDef > {{'Aufteilen' | translate}} </th>
     <td mat-cell *matCellDef="let element">
-        <button mat-raised-button (click)='onClick(element)'>
+<!--        <button mat-raised-button (click)='onClick(element)'> -->
+      <button mat-raised-button (click)="openDialog()">
           <mat-icon> call_split</mat-icon>
         </button>
     </td>
