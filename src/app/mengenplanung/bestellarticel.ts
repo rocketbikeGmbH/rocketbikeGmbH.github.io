@@ -1,4 +1,5 @@
 export class BestellArtikel {
+
   constructor(
     id: number,
     lieferfrist: number,
@@ -12,7 +13,6 @@ export class BestellArtikel {
     this._verwendung = verwendung;
     this._diskont = diskont;
   }
-
   private readonly _id: number;
   private readonly _lieferfrist: number;
   private readonly _abweichung: number;
@@ -21,6 +21,43 @@ export class BestellArtikel {
   private _anfangsbestand: number | undefined;
   private _bruttobedarf: number | undefined;
   private _offeneBestellung: number | undefined;
+  private _eintreffendeBestellung: Bestellungen | undefined;
+  private _laufendeAuftraege: number | undefined;
+  private _bestellpunkt: number | undefined;
+  private _bestellungen: Array<Bestellungen> | undefined;
+  private _bestellmenge: number | undefined;
+
+
+  get bestellungen(): Array<Bestellungen> | undefined {
+    return this._bestellungen;
+  }
+
+  set bestellungen(value: Array<Bestellungen> | undefined) {
+    this._bestellungen = value;
+  }
+
+  get bestellmenge(): number | undefined {
+    return this._bestellmenge;
+  }
+
+  set bestellmenge(value: number | undefined) {
+    this._bestellmenge = value;
+  }
+
+  get bestellpunkt(): number | undefined {
+    return this._bestellpunkt;
+  }
+
+  set bestellpunkt(value: number | undefined) {
+    this._bestellpunkt = value;
+  }
+  get laufendeAuftraege(): number | undefined {
+    return this._laufendeAuftraege;
+  }
+
+  set laufendeAuftraege(value: number | undefined) {
+    this._laufendeAuftraege = value;
+  }
 
   set anfangsbestand(value: number | undefined) {
     this._anfangsbestand = value;
@@ -28,6 +65,14 @@ export class BestellArtikel {
 
   set bruttobedarf(value: number | undefined) {
     this._bruttobedarf = value;
+  }
+
+  get eintreffendeBestellung(): Bestellungen | undefined {
+    return this._eintreffendeBestellung;
+  }
+
+  set eintreffendeBestellung(value: Bestellungen | undefined) {
+    this._eintreffendeBestellung = value;
   }
 
   set offeneBestellung(value: number | undefined) {
@@ -89,5 +134,43 @@ export class ProduktType {
 
   get p3(): number {
     return this._p3;
+  }
+}
+
+export class Bestellungen {
+  constructor(anzahl: number, periode: number, modus: string) {
+    this._anzahl = anzahl;
+    this._periode = periode;
+    this._modus = modus;
+  }
+
+  private _anzahl: number = 0;
+  private _modus: string  = "";
+  private readonly _periode: number;
+  private _id: number  = 0;
+
+  get id(): number {
+    return this._id;
+  }
+  set id(value: number) {
+    this._id = value;
+  }
+
+  set modus(value: string ) {
+    this._modus = value;
+  }
+  get modus(): string {
+    return this._modus;
+  }
+
+  set anzahl(value: number ) {
+    this._anzahl = value;
+  }
+  get anzahl(): number {
+    return this._anzahl;
+  }
+
+  get periode(): number {
+    return this._periode;
   }
 }

@@ -16,3 +16,8 @@ export const selectProductionlist = createSelector(
   (state: ExportState) => state.exportModel,
   (exportModel: ExportModel) => exportModel.input.productionlist.production
 );
+
+export const selectWishList = createSelector(
+  (state: ExportState) => state.exportModel,
+  (exportModel: ExportModel) => exportModel.input?.selldirect
+);
