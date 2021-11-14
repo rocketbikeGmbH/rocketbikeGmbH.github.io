@@ -38,6 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import {SplitDialogOverview} from "./splitdialog/splitdialogoverview.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { MatSelectModule } from '@angular/material/select';
     DateiimportComponent,
     KapazitaetsplanungComponent,
     LosgroessenplanungComponent,
+    SplitDialogOverview,
     MengenplanungComponent,
     ProgrammplanungComponent,
   ],
@@ -58,6 +61,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
+    MatDialogModule,
     MatTableModule,
     MatToolbarModule,
     FormsModule,

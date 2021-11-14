@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -7,11 +7,17 @@ import {
 } from '@angular/cdk/drag-drop';
 import { MatTable } from '@angular/material/table';
 import { Production } from '../model/export.model';
-import { FormGroup } from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {SplitDialogOverview} from "../splitdialog/splitdialogoverview.component";
 
 export interface LosgrossenElement {
   attr_article: string;
   attr_quantity: number;
+}
+
+export interface  SplitDialog {
+  attr_name: string; //Gruppenname z. B. d1
+  attr_splitquant: number;
 }
 
 let Element_Data: Production[] = [
@@ -52,7 +58,11 @@ let Element_Data: Production[] = [
   templateUrl: './losgroessenplanung.component.html',
   styleUrls: ['./losgroessenplanung.component.scss'],
 })
+
 export class LosgroessenplanungComponent implements OnInit {
+  attr_name!: string;
+  attr_splitquant: number | undefined;
+
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
   displayedColumns: string[] = [
@@ -63,17 +73,17 @@ export class LosgroessenplanungComponent implements OnInit {
   ];
   dataSource = Element_Data;
 
+  constructor(public dialog: MatDialog) {}
+
   dropTable(event: CdkDragDrop<Production[]>) {
     const prevIndex = this.dataSource.findIndex((d) => d === event.item.data);
     moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
     this.table.renderRows();
   }
 
-  constructor() {}
-
   ngOnInit(): void {}
 
-  onClick(element: Production) {
+/*  onClick(element: Production) {
     const article_attr = element.attr_article;
     let quant_attr = element.attr_quantity;
     const prod = this.dataSource.find((d) => d.attr_article === article_attr);
@@ -84,7 +94,21 @@ export class LosgroessenplanungComponent implements OnInit {
       attr_quantity: quant_attr / 2,
     });
     this.table.renderRows();
+    debugger;
   }
+*/
 
   // Loop if(article gibts mindestes 2 mal) -> dann Lösch-Button anzeigen
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(SplitDialogOverview, {
+      width: '350px',
+      data: {attr_name: this.attr_name, attr_splitquant: this.attr_splitquant},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.attr_splitquant = result;
+    })
+  }
 }
