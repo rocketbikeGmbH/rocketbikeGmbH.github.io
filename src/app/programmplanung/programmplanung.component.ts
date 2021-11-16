@@ -7,6 +7,9 @@ import { ExportState } from '../store/export/export.reducer';
 import { Selldirect } from '../model/export.model';
 import { selectWishList } from '../store/export/export.selector';
 import { MatTable } from '@angular/material/table';
+import { addProductionlist } from '../store/export/export.actions';
+import { Production, Productionlist } from '../model/export.model';
+import { Router } from '@angular/router';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -124,13 +127,9 @@ export class ProgrammplanungComponent implements OnInit {
   data_forecast: forecast | undefined;
   data_wishlist: Selldirect | undefined;
 
-
-
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>) {
     
-
+  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router) {
     this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
-
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
 
@@ -397,5 +396,27 @@ export class ProgrammplanungComponent implements OnInit {
 
  
     // this.tableZwi.renderRows();
+  }
+
+  speichern(){
+    const produkttionliste: Production[] = [];
+
+    endprodukt_daten.forEach(endprodukt =>{
+      const temp_item: Production = { attr_article: endprodukt.artikelnummer, attr_quantity: endprodukt.produktionsauftraege}
+      produkttionliste.push(temp_item);
+    })
+
+    zwischenprodukt_daten.forEach(zwischenp =>{
+      const temp_z: Production = { attr_article: zwischenp.artikelnummer, attr_quantity: zwischenp.produktionsauftraege}
+      produkttionliste.push(temp_z)
+    })
+
+    let PL: Productionlist | undefined;
+    PL = { production: produkttionliste}
+
+    this.exportstore.dispatch(addProductionlist({productionlist: PL}))
+
+    this.router.navigate(['kapazitaetsplanung'])
+
   }
 }
