@@ -43,6 +43,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import {SplitDialogOverview} from "./splitdialog/splitdialogoverview.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     SplitDialogOverview,
     MengenplanungComponent,
     ProgrammplanungComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
