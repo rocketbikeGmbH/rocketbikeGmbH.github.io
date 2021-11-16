@@ -70,7 +70,7 @@
 
         <mat-card-subtitle>{{'Zwischenprodukte' | translate}}</mat-card-subtitle>
 
-        <table mat-table [dataSource]="dataSourceZwi" class="mat-elevation-z8">
+        <table #tablezwi mat-table [dataSource]="dataSourceZwi" class="mat-elevation-z8">
   
             <!-- Artikelnummer -->
             <ng-container matColumnDef="artikelnummer">

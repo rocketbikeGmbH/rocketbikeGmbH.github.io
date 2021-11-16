@@ -1,4 +1,4 @@
-import { Component, enableProdMode, OnInit } from '@angular/core';
+import { Component, enableProdMode, OnInit, ViewChild } from '@angular/core';
 import { orders_workplace, warehousestock, ordersinwork, waitinglist, waitinglistworkstations, waiting_workplace, forecast } from '../model/import.model';
 import { selectImportForecast, selectImportOrdersInWork, selectImportWarehousestock, selectWaitingListWorkstations } from '../store/import/import.selector';
 import { select, Store } from '@ngrx/store';
@@ -6,6 +6,7 @@ import { ImportState } from '../store/import/import.reducer';
 import { ExportState } from '../store/export/export.reducer';
 import { Selldirect } from '../model/export.model';
 import { selectWishList } from '../store/export/export.selector';
+import { MatTable } from '@angular/material/table';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -27,8 +28,36 @@ var endprodukt_daten: Endprodukte[] = [
   { artikelnummer: 3, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 }
 ];
 
-const zwischenprodukt_daten: Endprodukte[] = [];
-// const zwischen_artikel: number[] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 26, 29, 30, 31, 49, 50, 51, 54, 55, 56];
+var zwischenprodukt_daten: Endprodukte[] = [
+  {artikelnummer: 26, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 51, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 56, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 31, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 16, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 17, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 50, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 55, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 30, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 4, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 10, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 49, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 5, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 11, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 54, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 6, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 12, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 29, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 7, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 13, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 18, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 8, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 14, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 19, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 9, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 15, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  {artikelnummer: 20, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+];
+const zwischen_artikel_sort: number[] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 26, 29, 30, 31, 49, 50, 51, 54, 55, 56];
 const zwischen_artikel: number[] = [26, 51, 56, 31, 16, 17, 50, 55, 30, 4, 10, 49, 5, 11, 54, 6, 12, 29, 7, 13, 18, 8, 14, 19, 9, 15, 20];
 var artikelZuordnung = new Map([
   [1, [0]],
@@ -63,6 +92,8 @@ var artikelZuordnung = new Map([
   [56, [2]],
 ])
 
+const wunsch_lager: number[] = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+  100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,]
 
 
 @Component({
@@ -72,7 +103,7 @@ var artikelZuordnung = new Map([
 })
 
 export class ProgrammplanungComponent implements OnInit {
-
+  @ViewChild(MatTable) tableZwi!: MatTable<any>;
   // Tabelle
   displayedColumns: string[] = ['artikelnummer', 'vertriebswunsch', 'direktverkauf', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
   displayedColumnsZwi: string[] = ['artikelnummer', 'vertriebswunsch', 'bedarfsmenge', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
@@ -87,44 +118,50 @@ export class ProgrammplanungComponent implements OnInit {
   total_waitinglist: waitinglist[] = [];
   vorhanden: waitinglist[] = [];
 
+  data_warehousestock: warehousestock | undefined;
+  data_ordersinwork: ordersinwork | undefined;
+  data_waitingListWorkstations: waitinglistworkstations | undefined;
+  data_forecast: forecast | undefined;
+  data_wishlist: Selldirect | undefined;
+
+
+
   constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>) {
+    
 
-    let data_warehousestock: warehousestock | undefined;
-    this.warehousestock$.subscribe((i) => (data_warehousestock = i));
+    this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
 
-    let data_ordersinwork: ordersinwork | undefined;
-    this.ordersInWork$.subscribe((i) => (data_ordersinwork = i));
+
+    this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
 
     // let data_waitingListWorkstations: waitinglistworkstations | undefined;
     // this.waitingListWorkstations$.subscribe((i) => (data_waitingListWorkstations!= i));
 
-    let data_waitingListWorkstations: waitinglistworkstations | undefined;
-    this.waitingListWorkstations$.subscribe((i) => (data_waitingListWorkstations = i));
 
-    let data_forecast: forecast | undefined;
-    this.forecast$.subscribe((i) => (data_forecast = i));
-
-    let data_wishlist: Selldirect | undefined;
-    this.wishlist$.subscribe((i) => (data_wishlist = i));
+    this.waitingListWorkstations$.subscribe((i) => (this.data_waitingListWorkstations = i));
 
 
-    console.log('wishlist:' + data_wishlist);
-    this.berechnungEndprodukte(data_warehousestock, data_ordersinwork, data_waitingListWorkstations, data_forecast, data_wishlist);
-    this.berechnungZwischenprodukte(data_warehousestock, data_ordersinwork, data_waitingListWorkstations, data_forecast);
-    console.log(endprodukt_daten);
-    console.log('wa' + data_warehousestock?.article[1]);
-    console.log('or' + data_ordersinwork);
-    console.log('en' + endprodukt_daten);
+    this.forecast$.subscribe((i) => (this.data_forecast = i));
+
+
+    this.wishlist$.subscribe((i) => (this.data_wishlist = i));
+
+
+
+    this.berechnungEndprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast, this.data_wishlist);
+    this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
   }
 
   ngOnInit(): void {
+    
   }
 
   changeend(newValue: number, artikel: number) {
     // No longer need to cast to any - hooray for react!
     // this.setState({temperature: e.target.value});
-    console.log(newValue);
     endprodukt_daten[artikel - 1].geplanter_endbestand = newValue;
+
+    wunsch_lager[artikel - 1] = newValue;
 
     endprodukt_daten[artikel - 1].produktionsauftraege =
       +endprodukt_daten[artikel - 1].vertriebswunsch
@@ -132,14 +169,21 @@ export class ProgrammplanungComponent implements OnInit {
       - +endprodukt_daten[artikel - 1].aktueller_lagerbestand
       - +endprodukt_daten[artikel - 1].in_bearbeitung
       - +endprodukt_daten[artikel - 1].in_warteschlange;
+ 
+    //this.berechnungEndprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast, this.data_wishlist);
+    // this.store.dispatch(addWorkingtimelist({workingtimelist: future_working_list}))
+    console.log('berechnungszwischenprodukte')
+    this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
+    // this.tableZwi.renderRows();
   };
 
   changezwi(newValue: number, artikel: number) {
-    // No longer need to cast to any - hooray for react!
-    // this.setState({temperature: e.target.value});
-    console.log(newValue);
-    var wert = zwischen_artikel.indexOf(artikel);
+    var wert = zwischen_artikel_sort.indexOf(artikel);
+    // var wert = artikel - 1;
+    console.log('wert' + wert)
+    console.log(zwischenprodukt_daten[wert].artikelnummer);
     zwischenprodukt_daten[wert].geplanter_endbestand = newValue;
+    console.log('val' + zwischenprodukt_daten[wert].geplanter_endbestand)
 
     zwischenprodukt_daten[wert].produktionsauftraege =
       +zwischenprodukt_daten[wert].vertriebswunsch
@@ -147,6 +191,7 @@ export class ProgrammplanungComponent implements OnInit {
       - +zwischenprodukt_daten[wert].aktueller_lagerbestand
       - +zwischenprodukt_daten[wert].in_bearbeitung
       - +zwischenprodukt_daten[wert].in_warteschlange;
+      this.tableZwi.renderRows();
   };
 
   berechnungEndprodukte(data_warehousestock?: warehousestock | undefined,
@@ -154,6 +199,7 @@ export class ProgrammplanungComponent implements OnInit {
     data_waitingListWorkstations?: waitinglistworkstations | undefined,
     data_forecast?: forecast | undefined,
     data_wishlist?: Selldirect | undefined) {
+      console.log('END')
 
     data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
       const temp_workplace: waiting_workplace = { id: 0, timeneed: 0, waitinglist: [], };
@@ -180,10 +226,7 @@ export class ProgrammplanungComponent implements OnInit {
         endprodukt_daten[i].in_warteschlange = 0;
         endprodukt_daten[i].artikelnummer = data_warehousestock!.article[i]?.id;
 
-        console.log(endprodukt_daten[i].artikelnummer);
         if (data_warehousestock!.article[i] != undefined) {
-          console.log('wtf:' + data_warehousestock!.article[i]);
-          console.log('wtf2:' + data_warehousestock!.article[i].amount);
           endprodukt_daten[i].aktueller_lagerbestand = data_warehousestock!.article[i].amount;
 
           data_ordersinwork?.workplace!.forEach(element => {
@@ -210,7 +253,7 @@ export class ProgrammplanungComponent implements OnInit {
           }
           )
 
-          endprodukt_daten[i].geplanter_endbestand = 120;
+          endprodukt_daten[i].geplanter_endbestand = wunsch_lager[endprodukt_daten[i].artikelnummer - 1];
           endprodukt_daten[i].artikelnummer = data_warehousestock!.article[i]?.id;
 
           switch (i) {
@@ -228,12 +271,9 @@ export class ProgrammplanungComponent implements OnInit {
             }
             default:
               {
-                console.log('default');
               }
           }
 
-          // endprodukt_daten[i].direktverkauf = 1; //TODO
-          // endprodukt_daten[i].direktverkauf = data_wishlist!.item
           if (data_wishlist!.item[i].attr_quantity) {
             endprodukt_daten[i].direktverkauf = data_wishlist!.item[i].attr_quantity;
           }
@@ -243,135 +283,119 @@ export class ProgrammplanungComponent implements OnInit {
           sum_bearbeitung = 0;
         };
       }
-
-      // SERGIO Code
-
-
-
-      // console.log("total waitlingist");
-      // console.log(this.total_waitinglist)
-
-      // this.dataSource.forEach(produkt =>{
-
-
-      // })
     }
   }
   berechnungZwischenprodukte(data_warehousestock?: warehousestock | undefined,
     data_ordersinwork?: ordersinwork | undefined,
     data_waitingListWorkstations?: waitinglistworkstations | undefined,
     data_forecast?: forecast | undefined) {
-    zwischenprodukt_daten.length = 0;
 
+    // zwischenprodukt_daten.length = 0;
+      console.log(zwischenprodukt_daten);
 
+      zwischenprodukt_daten.forEach(zwiprodukt => {
 
-    // for (let i = 0; i <= 25; i++) {
-    zwischen_artikel.forEach(element => {
-      const temp_zwischenprodukt: Endprodukte =
-      {
-        artikelnummer: 4, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0,
-        geplanter_endbestand: 120, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0
-      };
-
-      temp_zwischenprodukt.artikelnummer = element;
-
-      if (data_warehousestock!.article[temp_zwischenprodukt.artikelnummer - 1] != undefined) {
-        temp_zwischenprodukt.aktueller_lagerbestand = data_warehousestock!.article[temp_zwischenprodukt.artikelnummer - 1].amount;
+      if (data_warehousestock!.article[zwiprodukt.artikelnummer - 1] != undefined) {
+        zwiprodukt.aktueller_lagerbestand = data_warehousestock!.article[zwiprodukt.artikelnummer - 1].amount;
       }
 
       var sum_bearbeitung: number = 0;
 
       data_ordersinwork?.workplace!.forEach(element => {
-        if (element.item == temp_zwischenprodukt.artikelnummer) {
+        if (element.item == zwiprodukt.artikelnummer) {
           sum_bearbeitung = +sum_bearbeitung + +element.amount;
         }
       });
-      temp_zwischenprodukt.in_bearbeitung = sum_bearbeitung;
+      zwiprodukt.in_bearbeitung = sum_bearbeitung;
 
 
 
       this.total_waitinglist.forEach(waiting_item => {
 
-        if (temp_zwischenprodukt.artikelnummer == waiting_item.item) {
+        if (zwiprodukt.artikelnummer == waiting_item.item) {
 
           var filter = (this.vorhanden.filter(waiting_i => waiting_i.period === waiting_item.period && waiting_i.firstbatch === waiting_item.firstbatch
             && waiting_i.lastbatch === waiting_item.lastbatch && waiting_i.item === waiting_item.item && waiting_i.amount === waiting_item.amount
             && waiting_item.order === waiting_i.order));
 
           if (filter.length === 0) {
-            temp_zwischenprodukt.in_warteschlange = +temp_zwischenprodukt.in_warteschlange + +waiting_item.amount;
+            zwiprodukt.in_warteschlange = +zwiprodukt.in_warteschlange + +waiting_item.amount;
             this.vorhanden.push(waiting_item);
           };
         }
       })
 
-      console.log('26: asfcdofpoafaf: ' + artikelZuordnung.get(26));
       //Vertriebswunsch
-      if (temp_zwischenprodukt.artikelnummer == 26) {
-        artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)?.forEach(element => {
-          temp_zwischenprodukt.vertriebswunsch = temp_zwischenprodukt.vertriebswunsch + endprodukt_daten[element - 1].produktionsauftraege;
+      if (zwiprodukt.artikelnummer == 26) {
+        artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
+          console.log(element + ' ' + endprodukt_daten[element - 1 ].produktionsauftraege);
+          zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + endprodukt_daten[element - 1].produktionsauftraege;
+          console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
         })
-      } else if (temp_zwischenprodukt.artikelnummer == 16 || temp_zwischenprodukt.artikelnummer == 17) {
-        artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)?.forEach(element => {
+      } else if (zwiprodukt.artikelnummer == 16 || zwiprodukt.artikelnummer == 17) {
+        artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
           var ver = zwischenprodukt_daten.find(x => x.artikelnummer == element);
           // temp_zwischenprodukt.vertriebswunsch = temp_zwischenprodukt.vertriebswunsch + zwischenprodukt_daten[element - 1].produktionsauftraege;
           if (ver != undefined) {
-            temp_zwischenprodukt.vertriebswunsch = temp_zwischenprodukt.vertriebswunsch + ver!.produktionsauftraege;
+            zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + ver!.produktionsauftraege;
           }
         })
       }
-      else if (temp_zwischenprodukt.artikelnummer == 51 || temp_zwischenprodukt.artikelnummer == 56
-        || temp_zwischenprodukt.artikelnummer == 31) {
-        temp_zwischenprodukt.vertriebswunsch = endprodukt_daten[artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)![0] - 1].produktionsauftraege;
+      else if (zwiprodukt.artikelnummer == 51 || zwiprodukt.artikelnummer == 56
+        || zwiprodukt.artikelnummer == 31) {
+          zwiprodukt.vertriebswunsch = endprodukt_daten[artikelZuordnung.get(zwiprodukt.artikelnummer)![0] - 1].produktionsauftraege;
       } else {
-        var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)![0]);
+        var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(zwiprodukt.artikelnummer)![0]);
         if (ver != undefined) {
-          temp_zwischenprodukt.vertriebswunsch = ver!.produktionsauftraege;
+          zwiprodukt.vertriebswunsch = ver!.produktionsauftraege;
         }
       };
 
       //Bedarfsmenge
-      if (temp_zwischenprodukt.artikelnummer == 26) {
-        artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)?.forEach(element => {
-          temp_zwischenprodukt.bedarfsmenge = temp_zwischenprodukt.bedarfsmenge + endprodukt_daten[element - 1].in_warteschlange;
+      if (zwiprodukt.artikelnummer == 26) {
+        artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
+          zwiprodukt.bedarfsmenge = zwiprodukt.bedarfsmenge + endprodukt_daten[element - 1].in_warteschlange;
         })
-      } else if (temp_zwischenprodukt.artikelnummer == 16 || temp_zwischenprodukt.artikelnummer == 17) {
-        artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)?.forEach(element => {
+      } else if (zwiprodukt.artikelnummer == 16 || zwiprodukt.artikelnummer == 17) {
+        artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
           var ver = zwischenprodukt_daten.find(x => x.artikelnummer == element);
           if (ver != undefined) {
-            temp_zwischenprodukt.bedarfsmenge = temp_zwischenprodukt.bedarfsmenge + ver!.in_warteschlange;
+            zwiprodukt.bedarfsmenge = zwiprodukt.bedarfsmenge + ver!.in_warteschlange;
           }
         })
       }
-      else if (temp_zwischenprodukt.artikelnummer == 51 || temp_zwischenprodukt.artikelnummer == 56
-        || temp_zwischenprodukt.artikelnummer == 31) {
-        temp_zwischenprodukt.bedarfsmenge = endprodukt_daten[artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)![0] - 1].in_warteschlange;
+      else if (zwiprodukt.artikelnummer == 51 || zwiprodukt.artikelnummer == 56
+        || zwiprodukt.artikelnummer == 31) {
+          zwiprodukt.bedarfsmenge = endprodukt_daten[artikelZuordnung.get(zwiprodukt.artikelnummer)![0] - 1].in_warteschlange;
       } else {
-        var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(temp_zwischenprodukt.artikelnummer)![0]);
+        var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(zwiprodukt.artikelnummer)![0]);
         if (ver != undefined) {
-          temp_zwischenprodukt.bedarfsmenge = ver!.in_warteschlange;
+          zwiprodukt.bedarfsmenge = ver!.in_warteschlange;
         }
       };
 
-      temp_zwischenprodukt.produktionsauftraege = +temp_zwischenprodukt.vertriebswunsch
-        + +temp_zwischenprodukt.geplanter_endbestand - +temp_zwischenprodukt.aktueller_lagerbestand
-        - +temp_zwischenprodukt.in_bearbeitung - +temp_zwischenprodukt.in_warteschlange;
+      zwiprodukt.produktionsauftraege = +zwiprodukt.vertriebswunsch
+        + +zwiprodukt.geplanter_endbestand - +zwiprodukt.aktueller_lagerbestand
+        - +zwiprodukt.in_bearbeitung - +zwiprodukt.in_warteschlange;
       sum_bearbeitung = 0;
 
-      zwischenprodukt_daten.push(temp_zwischenprodukt);
-
-      //console.log(zwischenprodukt_daten);
-
+      //zwischenprodukt_daten.push(zwiprodukt);
+      // zwischenprodukt_daten = zwischenprodukt_daten.concat([temp_zwischenprodukt]);
+      if (zwiprodukt.artikelnummer == 26){
+      console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
+      console.log('artikel' + zwiprodukt.artikelnummer);
+      }
     })
 
-    console.log('qrweqafdkcpoa');
-    console.log(zwischenprodukt_daten);
+
+   
     zwischenprodukt_daten.sort((a, b) => {
       if (b.artikelnummer < a.artikelnummer) return 1;
       if (b.artikelnummer > a.artikelnummer) return -1;
       return 0;
     });
-    console.log(zwischenprodukt_daten);
 
+ 
+    // this.tableZwi.renderRows();
   }
 }
