@@ -322,11 +322,11 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     // ------------- später auskommentieren ---------------
 
-    // this.productionlist$.subscribe((i) => (this.productionlist = i));
+     this.productionlist$.subscribe((i) => (this.productionlist = i));
     // TESTDATEN IN PRODUKTION LISTE LADEN
-    test_produktion.forEach(testdaten =>{
-      this.productionlist.push(testdaten);
-    })
+    // test_produktion.forEach(testdaten =>{
+    //   this.productionlist.push(testdaten);
+    // })
 
     if(this.d.data_loaded){}
     else{
