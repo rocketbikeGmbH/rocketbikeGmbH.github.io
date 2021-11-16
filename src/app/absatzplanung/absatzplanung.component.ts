@@ -54,78 +54,60 @@ export class AbsatzplanungComponent implements OnInit {
     this.Vabsatzplan_p1 = data!.p1;
     this.Vabsatzplan_p2 = data!.p2;
     this.Vabsatzplan_p3 = data!.p3;
-
-  
-
   }
 
 
 
   speichern(){
+
     const list_verkauf_item: Item[] = [];
+    const temp_verkauf_item1: Item = {attr_article: 0, attr_quantity: 0};
+    const temp_verkauf_item22: Item = {attr_article: 0, attr_quantity: 0};
+    const temp_verkauf_item3: Item = {attr_article: 0, attr_quantity: 0};
     
 
-    if(this.Vabsatzplan_p1 > 0){
-      const temp_verkauf_item: Item = {attr_article: 0, attr_quantity: 0};
-      temp_verkauf_item.attr_article = 1;
-      temp_verkauf_item.attr_quantity = this.Vabsatzplan_p1;
-      list_verkauf_item.push(temp_verkauf_item);
-      console.log(list_verkauf_item)
+      temp_verkauf_item1.attr_article = 1;
+      temp_verkauf_item1.attr_quantity = this.Vabsatzplan_p1;
+      list_verkauf_item.push(temp_verkauf_item1);
+    
+      temp_verkauf_item22.attr_article = 2;
+      temp_verkauf_item22.attr_quantity = this.Vabsatzplan_p2;
+      list_verkauf_item.push(temp_verkauf_item22);
 
-    }
-    if(this.Vabsatzplan_p2 > 0){
-      const temp_verkauf_item: Item = {attr_article: 0, attr_quantity: 0};
-      temp_verkauf_item.attr_article = 2;
-      temp_verkauf_item.attr_quantity = this.Vabsatzplan_p2;
-      list_verkauf_item.push(temp_verkauf_item);
-      console.log(list_verkauf_item)
+      
+      temp_verkauf_item3.attr_article = 3;
+      temp_verkauf_item3.attr_quantity = this.Vabsatzplan_p3;
+      list_verkauf_item.push(temp_verkauf_item3);
 
-    }
-    if(this.Vabsatzplan_p3 > 0){
-      const temp_verkauf_item: Item = {attr_article: 0, attr_quantity: 0};
-      temp_verkauf_item.attr_article = 3;
-      temp_verkauf_item.attr_quantity = this.Vabsatzplan_p3;
-      list_verkauf_item.push(temp_verkauf_item);
-      console.log(list_verkauf_item)
-
-    }
-
-    console.log("list verkauf item")
-    console.log(list_verkauf_item)
-
+  
     let sellwishliste: Sellwish = {item: list_verkauf_item};
-    console.log("sellwisch")
-    console.log(sellwishliste)
-
    this.exportstore.dispatch(addSellwish({sellwish: sellwishliste}))
 
-   const list_verkauf_item2: Item2[] = [];
-   const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
 
-   if(this.V_direkt_menge_p1 > 0){
-    const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
-     temp_verkauf_item2.attr_article = 1;
-     temp_verkauf_item2.attr_price = this.V_direkt_preis_p1
-     temp_verkauf_item2.attr_quantity = this.V_direkt_menge_p1;
-     temp_verkauf_item2.attr_penalty = this.V_direkt_strafe_p1
-     list_verkauf_item2.push(temp_verkauf_item2);
-   }
-   if(this.V_direkt_menge_p2 > 0){
-    const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
-    temp_verkauf_item2.attr_article = 2;
-    temp_verkauf_item2.attr_price = this.V_direkt_preis_p2
-    temp_verkauf_item2.attr_quantity = this.V_direkt_menge_p2;
-    temp_verkauf_item2.attr_penalty = this.V_direkt_strafe_p2
-    list_verkauf_item2.push(temp_verkauf_item2);
-  }
-  if(this.V_direkt_menge_p3 > 0){   
-    const temp_verkauf_item2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
-    temp_verkauf_item2.attr_article = 3;
-    temp_verkauf_item2.attr_price = this.V_direkt_preis_p3
-    temp_verkauf_item2.attr_quantity = this.V_direkt_menge_p3;
-    temp_verkauf_item2.attr_penalty = this.V_direkt_strafe_p3
-    list_verkauf_item2.push(temp_verkauf_item2);
-  }
+
+   const list_verkauf_item2: Item2[] = [];
+   const temp_verkauf_item2_1: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
+   const temp_verkauf_item2_2: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
+   const temp_verkauf_item2_3: Item2 = {attr_article: 0, attr_quantity:0, attr_penalty:0, attr_price:0}
+    
+     temp_verkauf_item2_1.attr_article = 1;
+     temp_verkauf_item2_1.attr_price = this.V_direkt_preis_p1
+     temp_verkauf_item2_1.attr_quantity = this.V_direkt_menge_p1;
+     temp_verkauf_item2_1.attr_penalty = this.V_direkt_strafe_p1
+     list_verkauf_item2.push(temp_verkauf_item2_1);
+   
+    temp_verkauf_item2_2.attr_article = 2;
+    temp_verkauf_item2_2.attr_price = this.V_direkt_preis_p2
+    temp_verkauf_item2_2.attr_quantity = this.V_direkt_menge_p2;
+    temp_verkauf_item2_2.attr_penalty = this.V_direkt_strafe_p2
+    list_verkauf_item2.push(temp_verkauf_item2_2);
+  
+    temp_verkauf_item2_3.attr_article = 3;
+    temp_verkauf_item2_3.attr_price = this.V_direkt_preis_p3
+    temp_verkauf_item2_3.attr_quantity = this.V_direkt_menge_p3;
+    temp_verkauf_item2_3.attr_penalty = this.V_direkt_strafe_p3
+    list_verkauf_item2.push(temp_verkauf_item2_3);
+  
   
 
   let sellwishliste2: Selldirect = {item: list_verkauf_item2};
