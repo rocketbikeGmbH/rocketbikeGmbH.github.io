@@ -44,6 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {SplitDialogOverview} from "./splitdialog/splitdialogoverview.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import { HomeComponent } from './home/home.component';
+import { DialogOverview } from './mengenplanung/dialog/dialogoverview.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { HomeComponent } from './home/home.component';
     SplitDialogOverview,
     MengenplanungComponent,
     ProgrammplanungComponent,
-    HomeComponent
+    HomeComponent,
+    DialogOverview,
   ],
   imports: [
     BrowserModule,

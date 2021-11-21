@@ -21,6 +21,8 @@ import { addOrderlist } from '../store/export/export.actions';
 import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogOverview } from './dialog/dialogoverview.component';
 
 class OrderImpl implements Order {
   attr_article: number;
@@ -33,6 +35,7 @@ class OrderImpl implements Order {
     this.attr_modus = attr_modus;
   }
 }
+export const options: Array<string> = ['Normal', 'Eil', 'Sonderbestellung'];
 
 @Component({
   selector: 'app-mengenplanung',
@@ -42,8 +45,12 @@ class OrderImpl implements Order {
 export class MengenplanungComponent implements OnInit {
   dataSource: Array<BestellArtikel> = bestellArtikelArray;
   dataSource2: Array<Bestellungen> = [];
-  options: Array<string> = [ 'Normal', 'Eil', 'Sonderbestellung'];
-  optionsMap = new Map([[ 'Normal', 5], ['Eil', 4], ['Sonderbestellung', 1]]);
+  options = options;
+  optionsMap = new Map([
+    ['Normal', 5],
+    ['Eil', 4],
+    ['Sonderbestellung', 1],
+  ]);
   displayedColumns = [
     'artikelnr',
     'lieferfrist',
@@ -84,6 +91,7 @@ export class MengenplanungComponent implements OnInit {
     private importStore: Store<ImportState>,
     private exportStore: Store<ExportState>,
     private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -130,7 +138,7 @@ export class MengenplanungComponent implements OnInit {
         //     modus = 'Eil';
         //   }
         // } else {
-          modus = 'Normal';
+        modus = 'Normal';
         // }
         const bestellungen = new Bestellungen(d.bruttobedarf, 0, modus);
         bestellungen.id = d.id;
@@ -140,28 +148,43 @@ export class MengenplanungComponent implements OnInit {
   }
 
   speichern() {
-    const orders : Array<Order> = [];
+    const orders: Array<Order> = [];
 
-    this.dataSource2.forEach( (d) => {
-      const order = new OrderImpl(d.id, d.anzahl, this.optionsMap.get(d.modus) ?? 5);
+    this.dataSource2.forEach((d) => {
+      const order = new OrderImpl(
+        d.id,
+        d.anzahl,
+        this.optionsMap.get(d.modus) ?? 5
+      );
       orders.push(order);
-    })
-    const orderlist : Orderlist = { order: orders};
-    this.exportStore.dispatch(addOrderlist({orderlist: orderlist}))
-    this.router.navigate(['losgroessenplanung'])
+    });
+    const orderlist: Orderlist = { order: orders };
+    this.exportStore.dispatch(addOrderlist({ orderlist: orderlist }));
+    this.router.navigate(['losgroessenplanung']);
   }
 
-  loeschen(element : Bestellungen) {
+  loeschen(element: Bestellungen) {
     const index = this.dataSource2.indexOf(element);
     if (index > -1) {
       this.dataSource2.splice(index, 1);
       this.table.renderRows();
     }
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverview, {
+      width: '350px',
+      data: new Bestellungen(0, 0, ''),
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.dataSource2.push(result);
+      this.table.renderRows();
+    });
+  }
 }
 
 const round = (value: number, precision: number) => {
   let multiplier = Math.pow(10, precision || 0);
   return Math.round(value * multiplier) / multiplier;
-}
-
+};

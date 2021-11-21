@@ -1,7 +1,5 @@
 <mat-accordion multi>
-  <mat-expansion-panel
-    [expanded]='false'
-  >
+  <mat-expansion-panel [expanded]="false">
     <mat-expansion-panel-header>
       <mat-card-title>{{ 'Bestellmengenplanung' | translate }}</mat-card-title>
     </mat-expansion-panel-header>
@@ -118,12 +116,14 @@
           'Menge' | translate
         }}</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <input
-            matInput
-            type="number"
-            step="10"
-            [(ngModel)]="element.anzahl"
-          />
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="number"
+              step="10"
+              [(ngModel)]="element.anzahl"
+            />
+          </mat-form-field>
         </mat-cell>
       </ng-container>
 
@@ -132,11 +132,13 @@
           'Modus' | translate
         }}</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <mat-select [(value)]="element.modus">
-            <mat-option *ngFor="let option of options" [value]="option">
-              {{ option }}
-            </mat-option>
-          </mat-select>
+          <mat-form-field appearance="fill">
+            <mat-select [(value)]="element.modus">
+              <mat-option *ngFor="let option of options" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </mat-cell>
       </ng-container>
 
@@ -155,6 +157,9 @@
 
       <mat-row *matRowDef="let row; columns: displayedColumns2"></mat-row>
     </mat-table>
+    <button mat-raised-button (click)="openDialog()">
+      {{ 'Neu anlegen' | translate }}
+    </button>
     <button mat-raised-button (click)="speichern()">
       {{ 'Speichern & Weiter' | translate }}
     </button>

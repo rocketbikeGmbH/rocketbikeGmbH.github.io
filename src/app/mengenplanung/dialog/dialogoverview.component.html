@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{'Neue Bestellung' | translate }}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Artikel Nummer</mat-label>
+    <mat-select [(ngModel)]="data.id">
+      <mat-option *ngFor="let option of ids" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Menge</mat-label>
+    <input matInput type="number" step='10' [(ngModel)]="data.anzahl">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Modus</mat-label>
+    <mat-select [(ngModel)]="data.modus">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Abbrechen</button>
+  <button mat-button [mat-dialog-close]="data" >Anlegen</button>
+</div>
