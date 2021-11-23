@@ -125,10 +125,25 @@ export class MengenplanungComponent implements OnInit {
         (d.bruttobedarf * (5 * d.lieferfrist + 5)) / 5,
         -1
       );
+      // @ts-ignore
+      const ab  = Number.parseInt(d.anfangsbestand ?? '0');
+      // @ts-ignore
+      const anz = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
+      const s = ab + anz;
 
       // @ts-ignore
-      if (d.anfangsbestand <= d.bestellpunkt) {
+      if ((ab + anz) <= d.bestellpunkt) {
         let modus;
+        if ((ab - (d.bruttobedarf * d.lieferfrist)) < 0) {
+          // @ts-ignore
+          if((ab - (d.bruttobedarf * (d.lieferfrist / 2))) < 0){
+            modus = 'Sonderbestellung';
+          } else {
+            modus = 'Eil';
+          }
+        } else {
+          modus = 'Normal';
+        }
 
         // if ((d.bruttobedarf * d.lieferfrist) <= d.bestellpunkt) {
         //   // @ts-ignore
@@ -138,7 +153,6 @@ export class MengenplanungComponent implements OnInit {
         //     modus = 'Eil';
         //   }
         // } else {
-        modus = 'Normal';
         // }
         const bestellungen = new Bestellungen(d.bruttobedarf, 0, modus);
         bestellungen.id = d.id;
@@ -178,8 +192,10 @@ export class MengenplanungComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.dataSource2.push(result);
-      this.table.renderRows();
+      if(result?.id && result?.modus  && result?.anzahl) {
+        this.dataSource2.push(result);
+        this.table.renderRows();
+      }
     });
   }
 }
