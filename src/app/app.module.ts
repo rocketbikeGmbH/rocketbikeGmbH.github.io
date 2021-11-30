@@ -45,6 +45,8 @@ import {SplitDialogOverview} from "./splitdialog/splitdialogoverview.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import { HomeComponent } from './home/home.component';
 import { DialogOverview } from './mengenplanung/dialog/dialogoverview.component';
+import { InfobuttonComponent } from './infobutton/infobutton.component';
+
 
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { DialogOverview } from './mengenplanung/dialog/dialogoverview.component'
     ProgrammplanungComponent,
     HomeComponent,
     DialogOverview,
+    InfobuttonComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,11 @@ import {
 } from '../model/import.model';
 import { Daten } from '../daten';
 import { Router } from '@angular/router';
+import { Inject} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { InfobuttonComponent } from '../infobutton/infobutton.component';
+
+
 
 
 export interface Kapaelement {
@@ -307,7 +312,7 @@ export class KapazitaetsplanungComponent implements OnInit {
 
 
 
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router) {}
+  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router,public dialog: MatDialog) {}
 
   ngOnInit(): void {
     console.log(this.summe_maschine)
@@ -611,4 +616,10 @@ export class KapazitaetsplanungComponent implements OnInit {
     this.router.navigate(['mengenplanung'])
   }
 
+  openDialog() {
+    this.dialog.open(InfobuttonComponent);
+  }
+
 }
+
+

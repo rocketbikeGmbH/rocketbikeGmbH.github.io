@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Erläuterung der Formeln</h2>
+<mat-dialog-content class="mat-typography">
+  <h3><u>Kapazitätsbedarf</u></h3>
+  <h4>Wird berechnet anhand der Produktionszahlen der Eigenfertigungsprodukte, multipliziert mit der Bearbeitungsdauer:</h4>
+  <h4>M1: (E49+E54+E29) * 6</h4>
+  <h4>M2: (E50+E55+E30) * 5</h4>
+  <h4>M3: E51 * 5 + (E56+31) * 6</h4>
+  <h4>M4: E1 * 6 + (E2+E3) * 7</h4>
+  <h4>M6: E16 * 2 + (E18+E19+E20) * 3</h4>
+  <h4>M7: (E10+E11+E12+E13+E14+E15+E18+E19+E20+E26) *2</h4>
+  <h4>M8: (E10+E13) + (E11+E12+E14+E15) * 2 + (E18+E19+E20) * 3</h4>
+  <h4>M9: (E18+E19+E20) * 2 + (E10+E11+E12+E13+E14+E15) * 3</h4>
+  <h4>M10: (E4+E5+E6+E7+E8+E9) * 4</h4>
+  <h4>M11: (E4+E5+E6+E7+E8+E9) * 3</h4>
+  <h4>M12: (E10+E11+E12+E13+E14+E15) * 3</h4>
+  <h4>M13: (E10+E11+E12+E13+E14+E15) * 2</h4>
+  <h4>M14: E16 * 3</h4>
+  <h4>M15: (E17+E26) * 3</h4>
+  <br>
+  <h3><u>Rüstzeit</u></h3>
+  <h4>Rüstzeit ermittelt sich anhand der durschnittlichen Rüstdauer je Arbeitsplatz multipliziert mit der Anzahl der Rüstevents aus der Vorperiode</h4>
+  <br>
+  <h3><u>Warteschlange Bedarf und Rüstzeit</u></h3>
+  <h4>Es werden die nicht bearbeiteten Aufträge aus der Vorperiode herangezogen und deren Bearbeitungsdauer ermittelt und deren Rüstzeit geschätzt. </h4>
+  <br>
+  <h3><u>Kapazitätsbedarf Gesamt</u></h3>
+  <h4>Summe aus: Kapazitätsbedarf neu + Rüstzeit neu + Kapazitätbedarf alt + Rüstzeit alt + Zusatz Minuten pro Tag</h4>
+
+  
+</mat-dialog-content>

@@ -1,5 +1,7 @@
+<button mat-raised-button (click)="openDialog()"><mat-icon>info</mat-icon></button>
 <br>
 <mat-card class="hintergrund">
+  
         <mat-card-title>{{'Kapazitätsplanung' | translate}}</mat-card-title>
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -58,7 +60,7 @@
                       <th mat-header-cell *matHeaderCellDef> {{'Zusatz Minuten pro Tag' | translate}} </th>
                       <td mat-cell *matCellDef="let element"> 
                         <mat-form-field class="example-form-field" appearance="fill">
-                          <input  matInput type="number" [(ngModel)]= element.zusatz_ueberstunden >
+                          <input  matInput type="number" [(ngModel)]= element.zusatz_ueberstunden (ngModelChange)="Bedarf_und_Schichten_berechnen()" >
                       </mat-form-field>
                       </td>
                     </ng-container>
@@ -69,10 +71,6 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
                 
-                <br>
-           
-        <button mat-raised-button (click)="neu_berechnen()">{{'Neu berechnen' | translate}}</button>
-        <br>
         <br>
         <button mat-raised-button (click)="speichern()"> {{'Speichern & Weiter' | translate}}</button>
 </mat-card>
