@@ -3,10 +3,10 @@
   <p>Bitte geben Sie die Splitmenge ein: </p>
   <mat-form-field appearance="fill">
     <mat-label>Splitmenge</mat-label>
-    <input matInput type="number" step='10' [(ngModel)]="data.attr_splitquant">
+    <input matInput type="number" min="0" step='10' [(ngModel)]="data.attr_splitquant">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-button [mat-dialog-close]="data.attr_splitquant" cdkFocusInitial>aufteilen</button>
+  <button mat-button [mat-dialog-close]="data.attr_splitquant">Aufteilen</button>
 </div>

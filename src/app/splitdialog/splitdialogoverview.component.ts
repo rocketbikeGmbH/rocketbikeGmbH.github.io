@@ -14,6 +14,6 @@ export class SplitDialogOverview {
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }
