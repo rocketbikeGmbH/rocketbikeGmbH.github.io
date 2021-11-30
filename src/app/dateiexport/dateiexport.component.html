@@ -1,1 +1,15 @@
-<a [href]="downloadUrl" download="{{filename}}.xml">{{'Herunterladen' | translate}}</a>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- <a [href]="downloadUrl" download="{{filename}}.xml">{{'Herunterladen' | translate}}</a> -->
+
+<div class="container-export">
+<mat-card class="card">
+    <mat-card-title>{{'Sie haben es geschafft!' | translate}}</mat-card-title>
+    <mat-card-subtitle>{{'Ihre für Sie zugeschnittene XML-Datei steht zum Download bereit' | translate}}</mat-card-subtitle>
+    <mat-card-actions>
+        <a [href]="downloadUrl" download="{{filename}}.xml" class="btn">
+            <i class="fa fa-download"></i>&nbsp;&nbsp;{{'Herunterladen' | translate}}
+        </a>
+    </mat-card-actions>
+  </mat-card>
+</div>
