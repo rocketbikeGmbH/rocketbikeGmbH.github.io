@@ -10,6 +10,7 @@ import {
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { SplitDialogOverview } from '../splitdialog/splitdialogoverview.component';
+import { StepperServiceService } from '../stepper-service.service';
 
 export interface LosgrossenElement {
   attr_article: number;
@@ -63,6 +64,7 @@ let Element_Data: LosgrossenElement[] = [
 export class LosgroessenplanungComponent implements OnInit {
   attr_name!: string;
   attr_splitquant: number | undefined;
+  type = 'losgroessenplanung'
 
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
@@ -74,7 +76,7 @@ export class LosgroessenplanungComponent implements OnInit {
   ];
   dataSource = Element_Data;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private stepperservice: StepperServiceService) {}
 
   dropTable(event: CdkDragDrop<LosgrossenElement[]>) {
     const prevIndex = this.dataSource.findIndex((d) => d === event.item.data);
@@ -129,5 +131,10 @@ export class LosgroessenplanungComponent implements OnInit {
 
     }
 
+  }
+
+  // Von Jan wegen dem Stepper
+  speichern() {
+    this.stepperservice.set_dateiimport(this.type);
   }
 }

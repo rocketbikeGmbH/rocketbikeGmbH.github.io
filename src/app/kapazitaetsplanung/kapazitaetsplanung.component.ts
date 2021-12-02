@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { Inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { InfobuttonComponent } from '../infobutton/infobutton.component';
+import { StepperServiceService } from '../stepper-service.service';
 
 
 
@@ -310,9 +311,11 @@ export class KapazitaetsplanungComponent implements OnInit {
   testproduktion = test_produktion;
   dataloaded: boolean = false;
 
+  type = 'kapaplanung'
 
 
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router,public dialog: MatDialog) {}
+
+  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router,public dialog: MatDialog, private stepperservice: StepperServiceService) {}
 
   ngOnInit(): void {
     console.log(this.summe_maschine)
@@ -591,6 +594,7 @@ export class KapazitaetsplanungComponent implements OnInit {
   }
 
   speichern(){
+    this.stepperservice.set_dateiimport(this.type);
 
     const working_time: Workingtime[] = [];
 

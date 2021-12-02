@@ -23,6 +23,7 @@ import { MatTable } from '@angular/material/table';
 import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogOverview } from './dialog/dialogoverview.component';
+import { StepperServiceService } from '../stepper-service.service';
 
 class OrderImpl implements Order {
   attr_article: number;
@@ -43,6 +44,8 @@ export const options: Array<string> = ['Normal', 'Eil', 'Sonderbestellung'];
   styleUrls: ['./mengenplanung.component.scss'],
 })
 export class MengenplanungComponent implements OnInit {
+  type = 'mengenplanung'
+
   dataSource: Array<BestellArtikel> = bestellArtikelArray;
   dataSource2: Array<Bestellungen> = [];
   options = options;
@@ -91,7 +94,8 @@ export class MengenplanungComponent implements OnInit {
     private importStore: Store<ImportState>,
     private exportStore: Store<ExportState>,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private stepperservice: StepperServiceService
   ) {}
 
   ngOnInit(): void {
@@ -162,6 +166,8 @@ export class MengenplanungComponent implements OnInit {
   }
 
   speichern() {
+    this.stepperservice.set_dateiimport(this.type);
+
     const orders: Array<Order> = [];
 
     this.dataSource2.forEach((d) => {

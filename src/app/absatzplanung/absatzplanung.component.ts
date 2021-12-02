@@ -8,6 +8,7 @@ import { Sellwish, Item, Item2, Selldirect } from '../model/export.model';
 import { ExportState } from '../store/export/export.reducer';
 import { addSelldirect, addSellwish, addSellwishItem } from '../store/export/export.actions';
 import { Router } from '@angular/router';
+import { StepperServiceService } from '../stepper-service.service';
 
 
 
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
 })
 export class AbsatzplanungComponent implements OnInit {
 
+  type = 'absatzplanung'
 
   Vabsatzplan_p1: number = 0;
   Vabsatzplan_p2: number = 0;
@@ -42,7 +44,7 @@ export class AbsatzplanungComponent implements OnInit {
   forecast$ = this.store.pipe(select(selectImportForecast));
   restults$ = this.store.pipe(select(selectImportResults));
 
-  constructor(public D: Daten, private store : Store<ImportState>, private exportstore: Store<ExportState>, private router: Router) {
+  constructor(public D: Daten, private store : Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService) {
 
    }
 
@@ -59,6 +61,8 @@ export class AbsatzplanungComponent implements OnInit {
 
 
   speichern(){
+
+    this.stepperservice.set_dateiimport(this.type);
 
     const list_verkauf_item: Item[] = [];
     const temp_verkauf_item1: Item = {attr_article: 0, attr_quantity: 0};

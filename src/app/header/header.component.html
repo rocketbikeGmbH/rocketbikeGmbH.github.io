@@ -1,37 +1,41 @@
 <!-- class="example-stepper"
 [orientation]="(stepperOrientation | async)!" -->
 
-<mat-horizontal-stepper (selectionChange)="onStepChange($event)" *ngIf="header_anzeigen">
-  <mat-step>
+
+<mat-horizontal-stepper id="nav-stepper" (selectionChange)="onStepChange($event)" *ngIf="header_anzeigen" linear #stepper>
+  <ng-template matStepperIcon="edit">
+		<mat-icon>done</mat-icon>
+	</ng-template>
+  <mat-step [completed]="completed_dateiimport">
     <ng-template matStepLabel>
       <p>{{'Dateiimport' | translate}}</p>
     </ng-template>
   </mat-step>
-  <mat-step>
+  <mat-step [completed]="completed_absatzplanung">
     <ng-template matStepLabel>
       <p>{{'Absatzplanung' | translate}}</p>
     </ng-template>
   </mat-step>
 
-  <mat-step>
+  <mat-step [completed]="completed_programmplanung">
     <ng-template matStepLabel>
       <p>{{'Programmplanung' | translate}}</p>
     </ng-template>
   </mat-step>
 
-  <mat-step>
+  <mat-step [completed]="completed_kapaplanung">
     <ng-template matStepLabel>
       <p>{{'Kapazitätsplanung' | translate}}</p>
     </ng-template>
   </mat-step>
 
-  <mat-step>
+  <mat-step [completed]="completed_mengenplanung">
     <ng-template matStepLabel>
       <p>{{'Mengenplanung' | translate}}</p>
     </ng-template>
   </mat-step>
 
-  <mat-step>
+  <mat-step [completed]="completed_lossgroessenplanung">
     <ng-template matStepLabel>
       <p>{{'Losgrößenplanung' | translate}}</p>
     </ng-template>

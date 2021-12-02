@@ -10,6 +10,7 @@ import { MatTable } from '@angular/material/table';
 import { addProductionlist } from '../store/export/export.actions';
 import { Production, Productionlist } from '../model/export.model';
 import { Router } from '@angular/router';
+import { StepperServiceService } from '../stepper-service.service';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -106,6 +107,8 @@ const wunsch_lager: number[] = [80, 80, 80, 100, 100, 100, 100, 100, 100, 100, 1
 })
 
 export class ProgrammplanungComponent implements OnInit {
+  type = 'programmplanung'
+
   @ViewChild(MatTable) tableZwi!: MatTable<any>;
   // Tabelle
   displayedColumns: string[] = ['artikelnummer', 'vertriebswunsch', 'direktverkauf', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
@@ -128,7 +131,7 @@ export class ProgrammplanungComponent implements OnInit {
   data_wishlist: Selldirect | undefined;
 
     
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router) {
+  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService) {
     this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
@@ -399,6 +402,9 @@ export class ProgrammplanungComponent implements OnInit {
   }
 
   speichern(){
+
+    this.stepperservice.set_dateiimport(this.type);
+
     const produkttionliste: Production[] = [];
 
     endprodukt_daten.forEach(endprodukt =>{

@@ -38,3 +38,8 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
  </table>
+
+ <!-- Von Jan eingefügt wegen dem Stepper, kannst den Button und die Funktion gerne für's speichern verwenden-->
+ <button mat-raised-button (click)="speichern()">
+  {{ 'Speichern & Weiter' | translate }}
+</button>
