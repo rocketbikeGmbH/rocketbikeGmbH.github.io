@@ -1,16 +1,26 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { SplitDialogOverview } from '../splitdialog/splitdialogoverview.component';
 import { StepperServiceService } from '../stepper-service.service';
+import { Production, Productionlist } from '../model/export.model';
+import { select, Store } from '@ngrx/store';
+import { ExportState } from '../store/export/export.reducer';
+import { addProductionlist } from '../store/export/export.actions';
+import { Router } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
+import { selectProductionlist } from '../store/export/export.selector';
+
+class Prodlist implements Production {
+  attr_article: number;
+  attr_quantity: number;
+
+  constructor(attr_article: number, attr_quantity: number) {
+    this.attr_article = attr_article;
+    this.attr_quantity = attr_quantity;
+  }
+}
 
 export interface LosgrossenElement {
   attr_article: number;
@@ -24,36 +34,36 @@ export interface SplitDialog {
 }
 
 let Element_Data: LosgrossenElement[] = [
-  { attr_article: 13, attr_quantity: 210, delbutton: false },
-  { attr_article: 14, attr_quantity: 140, delbutton: false },
-  { attr_article: 15, attr_quantity: 100, delbutton: false },
-  { attr_article: 18, attr_quantity: 200, delbutton: false },
-  { attr_article: 19, attr_quantity: 150, delbutton: false },
-  { attr_article: 20, attr_quantity: 100, delbutton: false },
-  { attr_article: 7, attr_quantity: 200, delbutton: false },
-  { attr_article: 8, attr_quantity: 150, delbutton: false },
-  { attr_article: 9, attr_quantity: 100, delbutton: false },
-  { attr_article: 49, attr_quantity: 200, delbutton: false },
-  { attr_article: 54, attr_quantity: 150, delbutton: false },
-  { attr_article: 29, attr_quantity: 100, delbutton: false },
-  { attr_article: 4, attr_quantity: 200, delbutton: false },
-  { attr_article: 5, attr_quantity: 150, delbutton: false },
-  { attr_article: 6, attr_quantity: 100, delbutton: false },
-  { attr_article: 10, attr_quantity: 200, delbutton: false },
-  { attr_article: 11, attr_quantity: 150, delbutton: false },
-  { attr_article: 12, attr_quantity: 100, delbutton: false },
-  { attr_article: 17, attr_quantity: 450, delbutton: false },
-  { attr_article: 16, attr_quantity: 460, delbutton: false },
-  { attr_article: 50, attr_quantity: 200, delbutton: false },
-  { attr_article: 55, attr_quantity: 150, delbutton: false },
-  { attr_article: 30, attr_quantity: 100, delbutton: false },
-  { attr_article: 51, attr_quantity: 200, delbutton: false },
-  { attr_article: 56, attr_quantity: 150, delbutton: false },
-  { attr_article: 31, attr_quantity: 100, delbutton: false },
-  { attr_article: 26, attr_quantity: 449, delbutton: false },
-  { attr_article: 1, attr_quantity: 200, delbutton: false },
-  { attr_article: 2, attr_quantity: 150, delbutton: false },
-  { attr_article: 3, attr_quantity: 100, delbutton: false },
+  { attr_article: 13, attr_quantity: 0, delbutton: false },
+  { attr_article: 14, attr_quantity: 0, delbutton: false },
+  { attr_article: 15, attr_quantity: 0, delbutton: false },
+  { attr_article: 18, attr_quantity: 0, delbutton: false },
+  { attr_article: 19, attr_quantity: 0, delbutton: false },
+  { attr_article: 20, attr_quantity: 0, delbutton: false },
+  { attr_article: 7, attr_quantity: 0, delbutton: false },
+  { attr_article: 8, attr_quantity: 0, delbutton: false },
+  { attr_article: 9, attr_quantity: 0, delbutton: false },
+  { attr_article: 49, attr_quantity: 0, delbutton: false },
+  { attr_article: 54, attr_quantity: 0, delbutton: false },
+  { attr_article: 29, attr_quantity: 0, delbutton: false },
+  { attr_article: 4, attr_quantity: 0, delbutton: false },
+  { attr_article: 5, attr_quantity: 0, delbutton: false },
+  { attr_article: 6, attr_quantity: 0, delbutton: false },
+  { attr_article: 10, attr_quantity: 0, delbutton: false },
+  { attr_article: 11, attr_quantity: 0, delbutton: false },
+  { attr_article: 12, attr_quantity: 0, delbutton: false },
+  { attr_article: 17, attr_quantity: 0, delbutton: false },
+  { attr_article: 16, attr_quantity: 0, delbutton: false },
+  { attr_article: 50, attr_quantity: 0, delbutton: false },
+  { attr_article: 55, attr_quantity: 0, delbutton: false },
+  { attr_article: 30, attr_quantity: 0, delbutton: false },
+  { attr_article: 51, attr_quantity: 0, delbutton: false },
+  { attr_article: 56, attr_quantity: 0, delbutton: false },
+  { attr_article: 31, attr_quantity: 0, delbutton: false },
+  { attr_article: 26, attr_quantity: 9, delbutton: false },
+  { attr_article: 1, attr_quantity: 0, delbutton: false },
+  { attr_article: 2, attr_quantity: 0, delbutton: false },
+  { attr_article: 3, attr_quantity: 0, delbutton: false },
 ];
 
 @Component({
@@ -64,8 +74,10 @@ let Element_Data: LosgrossenElement[] = [
 export class LosgroessenplanungComponent implements OnInit {
   attr_name!: string;
   attr_splitquant: number | undefined;
-  type = 'losgroessenplanung'
+  type = 'losgroessenplanung';
+  productionlist$ = this.exportStore.pipe(select(selectProductionlist));
 
+  productionlist: Production[] = [];
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
   displayedColumns: string[] = [
@@ -76,15 +88,28 @@ export class LosgroessenplanungComponent implements OnInit {
   ];
   dataSource = Element_Data;
 
-  constructor(public dialog: MatDialog, private stepperservice: StepperServiceService) {}
+  constructor(
+    public dialog: MatDialog,
+    private stepperservice: StepperServiceService,
+    private exportStore: Store<ExportState>,
+    private router: Router
+  ) {}
 
   dropTable(event: CdkDragDrop<LosgrossenElement[]>) {
     const prevIndex = this.dataSource.findIndex((d) => d === event.item.data);
     moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
     this.table.renderRows();
   }
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.productionlist$.subscribe((i) => (this.productionlist = i));
+    this.productionlist.forEach((i) =>
+      this.dataSource.forEach((d) => {
+        if (d.attr_article == i.attr_article) {
+          d.attr_quantity = i.attr_quantity;
+        }
+      })
+    );
+  }
 
   // Loop if(article gibts mindestes 2 mal) -> dann Lösch-Button anzeigen
   openDialog(element: LosgrossenElement): void {
@@ -105,6 +130,9 @@ export class LosgroessenplanungComponent implements OnInit {
           (d) => d.attr_article === article_attr
         );
         // @ts-ignore
+        const control = new FormControl(0, Validators.max(prod.attr_quantity));
+        console.log(control.errors);
+        // @ts-ignore
         prod.attr_quantity = quant_attr - result;
         this.dataSource.push({
           attr_article: article_attr,
@@ -117,7 +145,6 @@ export class LosgroessenplanungComponent implements OnInit {
   }
 
   deletesplit(element: LosgrossenElement) {
-
     const index = this.dataSource.indexOf(element);
     if (index > -1) {
       const datasource = this.dataSource[index];
@@ -128,13 +155,22 @@ export class LosgroessenplanungComponent implements OnInit {
       prod.attr_quantity += datasource.attr_quantity;
       this.dataSource.splice(index, 1);
       this.table.renderRows();
-
     }
-
   }
 
   // Von Jan wegen dem Stepper
   speichern() {
     this.stepperservice.set_dateiimport(this.type);
+
+    const productionlist: Array<Production> = [];
+
+    this.dataSource.forEach((d) => {
+      const production = new Prodlist(d.attr_article, d.attr_quantity);
+
+      productionlist.push(production);
+    });
+    const prodlist: Productionlist = { production: productionlist };
+    this.exportStore.dispatch(addProductionlist({ productionlist: prodlist }));
+    this.router.navigate(['dateiexport']);
   }
 }

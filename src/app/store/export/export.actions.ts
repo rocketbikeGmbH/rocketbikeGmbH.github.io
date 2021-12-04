@@ -7,7 +7,7 @@ import {
   Selldirect,
   Orderlist,
   Qualitycontrol,
-  Productionlist, Workingtimelist
+  Productionlist, Workingtimelist,
 } from '../../model/export.model';
 
 export const addExportXml = createAction(
@@ -46,3 +46,7 @@ export const addProductionlist = createAction(
 export const addWorkingtimelist = createAction(
   '[Dateiexport Component] ADD Workingtimelist', (props<{ workingtimelist: Workingtimelist }>())
 );
+
+//export const addProductionseries = createAction(
+ // '[Dateiexport Component] ADD Productionseries', (props<{ productionseries: Productionlist }>())
+//)
