@@ -34,3 +34,15 @@
     width: 100%;
     display: flex;
   }
+
+  ::ng-deep .mat-focused .mat-form-field-label {
+    color: #e8505b !important;
+   }
+  
+   ::ng-deep.mat-form-field-underline {
+    background-color: #e8505b !important;
+  } 
+  
+  ::ng-deep.mat-form-field-ripple {
+   background-color: #e8505b !important;;
+  }

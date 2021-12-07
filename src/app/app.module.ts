@@ -46,6 +46,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { HomeComponent } from './home/home.component';
 import { DialogOverview } from './mengenplanung/dialog/dialogoverview.component';
 import { InfobuttonComponent } from './infobutton/infobutton.component';
+import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung/infobutton-programmplanung.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { InfobuttonComponent } from './infobutton/infobutton.component';
     HomeComponent,
     DialogOverview,
     InfobuttonComponent,
+    InfobuttonProgrammplanungComponent,
   ],
   imports: [
     BrowserModule,

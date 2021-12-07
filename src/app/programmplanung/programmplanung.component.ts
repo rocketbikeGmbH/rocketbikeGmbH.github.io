@@ -12,6 +12,7 @@ import { Production, Productionlist } from '../model/export.model';
 import { Router } from '@angular/router';
 import { StepperServiceService } from '../stepper-service.service';
 import { InfobuttonComponent } from '../infobutton/infobutton.component';
+import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanung/infobutton-programmplanung.component';
 import { MatDialog } from '@angular/material/dialog';
 
 export interface Endprodukte {
@@ -163,6 +164,7 @@ export class ProgrammplanungComponent implements OnInit {
   changeend(newValue: number, artikel: number) {
     // No longer need to cast to any - hooray for react!
     // this.setState({temperature: e.target.value});
+    console.log("HIIIIIIIIIIEEEEEEEEEEER" + newValue)
     endprodukt_daten[artikel - 1].geplanter_endbestand = newValue;
 
     wunsch_lager[artikel - 1] = newValue;
@@ -429,6 +431,6 @@ export class ProgrammplanungComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(InfobuttonComponent);
+    this.dialog.open(InfobuttonProgrammplanungComponent);
   }
 }
