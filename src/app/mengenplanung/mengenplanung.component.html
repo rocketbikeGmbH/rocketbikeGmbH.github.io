@@ -1,181 +1,188 @@
-<mat-accordion multi>
-  <mat-expansion-panel [expanded]="false">
-    <mat-expansion-panel-header>
-      <mat-card-title>{{ 'Bestellmengenplanung' | translate }}</mat-card-title>
-    </mat-expansion-panel-header>
-    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
-      <ng-container matColumnDef="artikelnr">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Artikel Nummer' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
-      </ng-container>
+<mat-card class="hintergrund">
+  <mat-accordion multi>
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-card-title>{{
+          'Bestellmengenplanung' | translate
+        }}</mat-card-title>
+      </mat-expansion-panel-header>
+      <mat-table
+        class="lessons-table mat-elevation-z8"
+        [dataSource]="dataSource"
+      >
+        <ng-container matColumnDef="artikelnr">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Artikel Nummer' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="lieferfrist">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Lieferfrist' | translate
-        }}</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let element">{{
-          element.lieferfrist
-        }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="lieferfrist">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Lieferfrist' | translate
+          }}</mat-header-cell>
+          <mat-cell class="description-cell" *matCellDef="let element">{{
+            element.lieferfrist
+          }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="abweichung">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Abweichung' | translate
-        }}</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">{{
-          element.abweichung
-        }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="abweichung">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Abweichung' | translate
+          }}</mat-header-cell>
+          <mat-cell class="duration-cell" *matCellDef="let element">{{
+            element.abweichung
+          }}</mat-cell>
+        </ng-container>
 
-<!--      <ng-container matColumnDef="verwendung">-->
-<!--        <mat-header-cell *matHeaderCellDef>{{-->
-<!--          'Verwendung' | translate-->
-<!--        }}</mat-header-cell>-->
-<!--        <mat-cell class="duration-cell" *matCellDef="let element"-->
-<!--          >{{ element.verwendung.p1 }} {{ element.verwendung.p2 }}-->
-<!--          {{ element.verwendung.p3 }}</mat-cell-->
-<!--        >-->
-<!--      </ng-container>-->
+        <!--      <ng-container matColumnDef="verwendung">-->
+        <!--        <mat-header-cell *matHeaderCellDef>{{-->
+        <!--          'Verwendung' | translate-->
+        <!--        }}</mat-header-cell>-->
+        <!--        <mat-cell class="duration-cell" *matCellDef="let element"-->
+        <!--          >{{ element.verwendung.p1 }} {{ element.verwendung.p2 }}-->
+        <!--          {{ element.verwendung.p3 }}</mat-cell-->
+        <!--        >-->
+        <!--      </ng-container>-->
 
-      <ng-container matColumnDef="diskont">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Diskont' | translate
-        }}</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">{{
-          element.diskont
-        }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="diskont">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Diskont' | translate
+          }}</mat-header-cell>
+          <mat-cell class="duration-cell" *matCellDef="let element">{{
+            element.diskont
+          }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="lagerbestand">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Lagerbestand' | translate
-        }}</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">{{
-          element.lagerbestand
-        }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="lagerbestand">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Lagerbestand' | translate
+          }}</mat-header-cell>
+          <mat-cell class="duration-cell" *matCellDef="let element">{{
+            element.lagerbestand
+          }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="eintreffendeBestellung">
-        <mat-header-cell *matHeaderCellDef>
-          eintreffende Bestellungen
-        </mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">
-          {{ element.eintreffendeBestellung }}
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="eintreffendeBestellung">
+          <mat-header-cell *matHeaderCellDef>
+            eintreffende Bestellungen
+          </mat-header-cell>
+          <mat-cell class="duration-cell" *matCellDef="let element">
+            {{ element.eintreffendeBestellung }}
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="offeneBestellung">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Bestellungen' | translate
-        }}</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Anzahl</th>
-              <th>Periode</th>
-              <th>Modus</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr  *ngFor="let o of element?.offeneBestellung">
-              <td>{{o.anzahl}}</td>
-              <td>{{o.periode}}</td>
-              <td>{{o.modus}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="offeneBestellung">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Bestellungen' | translate
+          }}</mat-header-cell>
+          <mat-cell class="duration-cell" *matCellDef="let element">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Anzahl</th>
+                  <th>Periode</th>
+                  <th>Modus</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let o of element?.offeneBestellung">
+                  <td>{{ o.anzahl }}</td>
+                  <td>{{ o.periode }}</td>
+                  <td>{{ o.modus }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="bruttobedarf">
-        <mat-header-cell *matHeaderCellDef>Bruttobedarf </mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">{{
-          element.bruttobedarf
-        }}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="bruttobedarf">
+          <mat-header-cell *matHeaderCellDef>Bruttobedarf </mat-header-cell>
+          <mat-cell class="duration-cell" *matCellDef="let element">{{
+            element.bruttobedarf
+          }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="bestellpunkt">
-        <mat-header-cell *matHeaderCellDef>Bestellpunkt</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">{{
-          element.bestellpunkt
-        }}</mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <ng-container matColumnDef="bestellpunkt">
+          <mat-header-cell *matHeaderCellDef>Bestellpunkt</mat-header-cell>
+          <mat-cell class="duration-cell" *matCellDef="let element">{{
+            element.bestellpunkt
+          }}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
-  </mat-expansion-panel>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-card-title>{{ 'Bestellungen' | translate }}</mat-card-title>
-    </mat-expansion-panel-header>
-    <mat-table
-      class="lessons-table mat-elevation-z8"
-      [dataSource]="dataSource2"
-      #table
-    >
-      <ng-container matColumnDef="artikelnr">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Artikel Nummer' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
-      </ng-container>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-card-title>{{ 'Bestellungen' | translate }}</mat-card-title>
+      </mat-expansion-panel-header>
+      <mat-table
+        class="lessons-table mat-elevation-z8"
+        [dataSource]="dataSource2"
+        #table
+      >
+        <ng-container matColumnDef="artikelnr">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Artikel Nummer' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="menge">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Menge' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <mat-form-field appearance="fill">
-            <input
-              matInput
-              type="number"
-              step="10"
-              [(ngModel)]="element.anzahl"
-            />
-          </mat-form-field>
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="menge">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Menge' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-form-field appearance="fill">
+              <input
+                matInput
+                type="number"
+                step="10"
+                [(ngModel)]="element.anzahl"
+              >
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="modus">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Modus' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <mat-form-field appearance="fill">
-            <mat-select [(value)]="element.modus">
-              <mat-option *ngFor="let option of options" [value]="option">
-                {{ option }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="modus">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Modus' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-form-field appearance="fill">
+              <mat-select [(value)]="element.modus">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="loeschen">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Löschen' | translate
-        }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-raised-button (click)="loeschen(element)">
-            <mat-icon>delete_outline</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="loeschen">
+          <mat-header-cell *matHeaderCellDef>{{
+            'Löschen' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-raised-button (click)="loeschen(element)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns2"></mat-row>
-    </mat-table>
-    <button mat-raised-button (click)="openDialog()">
-      {{ 'Neu anlegen' | translate }}
-    </button>
-    <button mat-raised-button (click)="speichern()">
-      {{ 'Speichern & Weiter' | translate }}
-    </button>
-  </mat-expansion-panel>
-</mat-accordion>
+        <mat-row *matRowDef="let row; columns: displayedColumns2"></mat-row>
+      </mat-table>
+      <button mat-raised-button (click)="openDialog()">
+        {{ 'Neu anlegen' | translate }}
+      </button>
+      <button mat-raised-button (click)="speichern()">
+        {{ 'Speichern & Weiter' | translate }}
+      </button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
