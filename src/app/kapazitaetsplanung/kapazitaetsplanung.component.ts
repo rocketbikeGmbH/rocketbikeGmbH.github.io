@@ -495,6 +495,8 @@ export class KapazitaetsplanungComponent implements OnInit {
     // Anzahl Rüstevents aus vorperiode übernehmen. (Zwischenspeichern in ruest_new und dann noch multiplizieren mit durschnittliche Dauer des Rüstvorgangs)
     let idlelist: idletimecosts | undefined;
     this.idletimecosts$.subscribe((i) => (idlelist = i));
+
+
     idlelist!.workplace.forEach((idleItem) => {
       this.dataSource.forEach((data) => {
         if (data.arbeitsplatz == idleItem.id) {
@@ -548,6 +550,10 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     // Gesamtbedarf berechnen
     this.dataSource.forEach((d) => {
+
+      if(d.zusatz_ueberstunden < 0){
+        d.zusatz_ueberstunden = 0;
+      }
       d.kapa_gesamt =
         Number(d.kapa_new) +
         Number(d.ruest_new) +

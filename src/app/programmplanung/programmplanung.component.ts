@@ -11,6 +11,7 @@ import { addProductionlist } from '../store/export/export.actions';
 import { Production, Productionlist } from '../model/export.model';
 import { Router } from '@angular/router';
 import { StepperServiceService } from '../stepper-service.service';
+import { arraysAreNotAllowedMsg } from '@ngrx/store/src/models';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -136,19 +137,17 @@ export class ProgrammplanungComponent implements OnInit {
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
 
-    // let data_waitingListWorkstations: waitinglistworkstations | undefined;
-    // this.waitingListWorkstations$.subscribe((i) => (data_waitingListWorkstations!= i));
+    console.log(this.data_ordersinwork)
 
+    // let temp: orders_workplace = {id: 0, period:0, order:0, batch:0, item:0, amount:0, timeneed:0}
+    //  this.data_ordersinwork!.workplace.push(temp)
 
-    this.waitingListWorkstations$.subscribe((i) => (this.data_waitingListWorkstations = i));
-
-
+  
+    this.waitingListWorkstations$.subscribe((i) => (this.data_waitingListWorkstations = i) );
+ 
     this.forecast$.subscribe((i) => (this.data_forecast = i));
 
-
     this.wishlist$.subscribe((i) => (this.data_wishlist = i));
-
-
 
     this.berechnungEndprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast, this.data_wishlist);
     this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
@@ -203,23 +202,30 @@ export class ProgrammplanungComponent implements OnInit {
     data_wishlist?: Selldirect | undefined) {
       console.log('END')
 
-    data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
-      const temp_workplace: waiting_workplace = { id: 0, timeneed: 0, waitinglist: [], };
+      console.log("type")
+      console.log(data_waitingListWorkstations);
+      console.log(typeof(data_waitingListWorkstations))
+
+      if(data_waitingListWorkstations != undefined){
+        data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
+          const temp_workplace: waiting_workplace = { id: 0, timeneed: 0, waitinglist: [], };
 
 
-      temp_workplace.id = workplace.id;
-      temp_workplace.timeneed = workplace.timeneed;
-      const wt = workplace.waitinglist;
+          temp_workplace.id = workplace.id;
+          temp_workplace.timeneed = workplace.timeneed;
+          const wt = workplace.waitinglist;
 
-      if (!(workplace.waitinglist == undefined)) {
-        if (Array.isArray(wt)) {
-          this.total_waitinglist.push(...wt);
-        } else {
-          this.total_waitinglist.push(wt)
-        }
+          if (!(workplace.waitinglist == undefined)) {
+            if (Array.isArray(wt)) {
+              this.total_waitinglist.push(...wt);
+            } else {
+              this.total_waitinglist.push(wt)
+            }
+          }
+
+        });
       }
-
-    });
+     
 
     var sum_bearbeitung: number = 0;
     if (typeof (data_warehousestock) === typeof (this.warehousestock$)) {
@@ -231,11 +237,19 @@ export class ProgrammplanungComponent implements OnInit {
         if (data_warehousestock!.article[i] != undefined) {
           endprodukt_daten[i].aktueller_lagerbestand = data_warehousestock!.article[i].amount;
 
+          if(Array.isArray(data_ordersinwork)){
           data_ordersinwork?.workplace!.forEach(element => {
             if (element.item === data_warehousestock!.article[i].id) {
               sum_bearbeitung = +sum_bearbeitung + +element.amount;
             }
           });
+        }else{
+          // @ts-ignore
+          if (data_ordersinwork?.workplace.item == data_warehousestock!.article[i].id) {
+           // @ts-ignore
+            sum_bearbeitung = +sum_bearbeitung + +data_ordersinwork.workplace.amount;
+          }
+        }
 
           endprodukt_daten[i].in_bearbeitung = sum_bearbeitung;
 
@@ -302,14 +316,35 @@ export class ProgrammplanungComponent implements OnInit {
       }
 
       var sum_bearbeitung: number = 0;
-
+      if(Array.isArray(data_ordersinwork)){
       data_ordersinwork?.workplace!.forEach(element => {
         if (element.item == zwiprodukt.artikelnummer) {
           sum_bearbeitung = +sum_bearbeitung + +element.amount;
         }
       });
+    }else{
+      // @ts-ignore
+        if (data_ordersinwork?.workplace.item == zwiprodukt.artikelnummer) {
+         // @ts-ignore
+          sum_bearbeitung = +sum_bearbeitung + +data_ordersinwork.workplace.amount;
+        }
+
+    }
       zwiprodukt.in_bearbeitung = sum_bearbeitung;
 
+      // if(Array.isArray(data_ordersinwork)){
+      //   data_ordersinwork?.workplace!.forEach(element => {
+      //     if (element.item === data_warehousestock!.article[i].id) {
+      //       sum_bearbeitung = +sum_bearbeitung + +element.amount;
+      //     }
+      //   });
+      // }else{
+      //   // @ts-ignore
+      //   if (data_ordersinwork?.workplace.item == data_warehousestock!.article[i].id) {
+      //    // @ts-ignore
+      //     sum_bearbeitung = +sum_bearbeitung + +data_ordersinwork.workplace.amount;
+      //   }
+      // }
 
 
       this.total_waitinglist.forEach(waiting_item => {
