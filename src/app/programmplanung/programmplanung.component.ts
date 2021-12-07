@@ -11,6 +11,8 @@ import { addProductionlist } from '../store/export/export.actions';
 import { Production, Productionlist } from '../model/export.model';
 import { Router } from '@angular/router';
 import { StepperServiceService } from '../stepper-service.service';
+import { InfobuttonComponent } from '../infobutton/infobutton.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -131,7 +133,7 @@ export class ProgrammplanungComponent implements OnInit {
   data_wishlist: Selldirect | undefined;
 
     
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService) {
+  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,) {
     this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
@@ -424,5 +426,9 @@ export class ProgrammplanungComponent implements OnInit {
 
     this.router.navigate(['kapazitaetsplanung'])
 
+  }
+
+  openDialog() {
+    this.dialog.open(InfobuttonComponent);
   }
 }
