@@ -26,3 +26,11 @@
   background-color: #263238;
   color: rgb(255, 255, 255);
 }
+
+.stepper-text {
+  font-size: xx-large;
+}
+
+::ng-deep .mat-step-label {
+  font-size: large;
+}
