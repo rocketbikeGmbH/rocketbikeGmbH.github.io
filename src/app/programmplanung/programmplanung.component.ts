@@ -6,7 +6,7 @@ import { ImportState } from '../store/import/import.reducer';
 import { ExportState } from '../store/export/export.reducer';
 import { Selldirect } from '../model/export.model';
 import { selectWishList } from '../store/export/export.selector';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { addProductionlist } from '../store/export/export.actions';
 import { Production, Productionlist } from '../model/export.model';
 import { Router } from '@angular/router';
@@ -33,33 +33,63 @@ var endprodukt_daten: Endprodukte[] = [
 ];
 
 var zwischenprodukt_daten: Endprodukte[] = [
-  {artikelnummer: 26, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 51, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 56, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 31, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 16, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 17, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 50, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 55, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 30, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 4, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 10, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 49, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 5, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 11, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 54, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 6, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 12, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 29, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 7, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 13, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 18, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 8, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 14, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 19, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 9, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 15, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
-  {artikelnummer: 20, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0},
+  { artikelnummer: 26, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 51, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 56, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 31, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 16, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 17, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 50, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 55, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 30, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 4, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 10, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 49, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 5, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 11, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 54, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 6, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 12, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 29, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 7, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 13, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 18, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 8, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 14, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 19, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 9, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 15, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 20, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+];
+
+var zwischenprodukt_daten_sort: Endprodukte[] = [
+  { artikelnummer: 26, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 51, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 56, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 31, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 16, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 17, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 240, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 50, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 55, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 30, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 4, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 10, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 49, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 5, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 11, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 54, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 6, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 12, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 29, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 7, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 13, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 18, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 8, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 14, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 19, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 9, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 15, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
+  { artikelnummer: 20, aktueller_lagerbestand: 0, in_bearbeitung: 0, in_warteschlange: 0, geplanter_endbestand: 80, vertriebswunsch: 0, direktverkauf: 0, produktionsauftraege: 0, bedarfsmenge: 0 },
 ];
 const zwischen_artikel_sort: number[] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 26, 29, 30, 31, 49, 50, 51, 54, 55, 56];
 const zwischen_artikel: number[] = [26, 51, 56, 31, 16, 17, 50, 55, 30, 4, 10, 49, 5, 11, 54, 6, 12, 29, 7, 13, 18, 8, 14, 19, 9, 15, 20];
@@ -110,11 +140,13 @@ export class ProgrammplanungComponent implements OnInit {
   type = 'programmplanung'
 
   @ViewChild(MatTable) tableZwi!: MatTable<any>;
+  @ViewChild('table', { static: true }) table: any;
   // Tabelle
   displayedColumns: string[] = ['artikelnummer', 'vertriebswunsch', 'direktverkauf', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
   displayedColumnsZwi: string[] = ['artikelnummer', 'vertriebswunsch', 'bedarfsmenge', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
   dataSourceEnd = endprodukt_daten;
-  dataSourceZwi = zwischenprodukt_daten;
+  dataSourceZwi = zwischenprodukt_daten_sort;
+  dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort);
   warehousestock$ = this.store.pipe(select(selectImportWarehousestock));
   ordersInWork$ = this.store.pipe(select(selectImportOrdersInWork));
   waitingListWorkstations$ = this.store.pipe(select(selectWaitingListWorkstations));
@@ -130,7 +162,7 @@ export class ProgrammplanungComponent implements OnInit {
   data_forecast: forecast | undefined;
   data_wishlist: Selldirect | undefined;
 
-    
+
   constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService) {
     this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
 
@@ -155,7 +187,7 @@ export class ProgrammplanungComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   changeend(newValue: number, artikel: number) {
@@ -171,29 +203,36 @@ export class ProgrammplanungComponent implements OnInit {
       - +endprodukt_daten[artikel - 1].aktueller_lagerbestand
       - +endprodukt_daten[artikel - 1].in_bearbeitung
       - +endprodukt_daten[artikel - 1].in_warteschlange;
- 
+
     //this.berechnungEndprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast, this.data_wishlist);
     // this.store.dispatch(addWorkingtimelist({workingtimelist: future_working_list}))
-    console.log('berechnungszwischenprodukte')
+    //console.log('berechnungszwischenprodukte')
     this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
-    // this.tableZwi.renderRows();
+    //this.tableZwi.renderRows();
+    //this.table.renderRows();
   };
 
   changezwi(newValue: number, artikel: number) {
     var wert = zwischen_artikel_sort.indexOf(artikel);
     // var wert = artikel - 1;
-    console.log('wert' + wert)
-    console.log(zwischenprodukt_daten[wert].artikelnummer);
-    zwischenprodukt_daten[wert].geplanter_endbestand = newValue;
-    console.log('val' + zwischenprodukt_daten[wert].geplanter_endbestand)
+    //console.log('wert' + wert)
+    //console.log(zwischenprodukt_daten[wert].artikelnummer);
+    zwischenprodukt_daten_sort[wert].geplanter_endbestand = newValue;
+    zwischenprodukt_daten[zwischenprodukt_daten.findIndex(element => element.artikelnummer == artikel)].geplanter_endbestand = newValue;
+    //console.log('val' + zwischenprodukt_daten[wert].geplanter_endbestand)
 
-    zwischenprodukt_daten[wert].produktionsauftraege =
-      +zwischenprodukt_daten[wert].vertriebswunsch
-      + +zwischenprodukt_daten[wert].geplanter_endbestand
-      - +zwischenprodukt_daten[wert].aktueller_lagerbestand
-      - +zwischenprodukt_daten[wert].in_bearbeitung
-      - +zwischenprodukt_daten[wert].in_warteschlange;
-      this.tableZwi.renderRows();
+    zwischenprodukt_daten_sort[wert].produktionsauftraege =
+      +zwischenprodukt_daten_sort[wert].vertriebswunsch
+      + +zwischenprodukt_daten_sort[wert].geplanter_endbestand
+      - +zwischenprodukt_daten_sort[wert].aktueller_lagerbestand
+      - +zwischenprodukt_daten_sort[wert].in_bearbeitung
+      - +zwischenprodukt_daten_sort[wert].in_warteschlange;
+      this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
+     // zwischenprodukt_daten_sort.length = 0;
+      //zwischenprodukt_daten.forEach(val => zwischenprodukt_daten_sort.push(Object.assign({}, val)));
+      //this.dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort)
+    // this.tableZwi.renderRows();
+    
   };
 
   berechnungEndprodukte(data_warehousestock?: warehousestock | undefined,
@@ -201,7 +240,7 @@ export class ProgrammplanungComponent implements OnInit {
     data_waitingListWorkstations?: waitinglistworkstations | undefined,
     data_forecast?: forecast | undefined,
     data_wishlist?: Selldirect | undefined) {
-      console.log('END')
+    //console.log('END')
 
     data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
       const temp_workplace: waiting_workplace = { id: 0, timeneed: 0, waitinglist: [], };
@@ -292,11 +331,17 @@ export class ProgrammplanungComponent implements OnInit {
     data_waitingListWorkstations?: waitinglistworkstations | undefined,
     data_forecast?: forecast | undefined) {
 
+    // zwischenprodukt_daten.sort((a, b) => {
+    //   if (b.artikelnummer < a.artikelnummer) return 1;
+    //   if (b.artikelnummer > a.artikelnummer) return -1;
+    //   return 0;
+    // });
+
     // zwischenprodukt_daten.length = 0;
-      console.log(zwischenprodukt_daten);
+    console.log('zwischenprodukt_daten zuvor')
+    console.log(zwischenprodukt_daten);
 
-      zwischenprodukt_daten.forEach(zwiprodukt => {
-
+    zwischenprodukt_daten.forEach(zwiprodukt => {
       if (data_warehousestock!.article[zwiprodukt.artikelnummer - 1] != undefined) {
         zwiprodukt.aktueller_lagerbestand = data_warehousestock!.article[zwiprodukt.artikelnummer - 1].amount;
       }
@@ -330,9 +375,9 @@ export class ProgrammplanungComponent implements OnInit {
       //Vertriebswunsch
       if (zwiprodukt.artikelnummer == 26) {
         artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
-          console.log(element + ' ' + endprodukt_daten[element - 1 ].produktionsauftraege);
+          //console.log(element + ' ' + endprodukt_daten[element - 1 ].produktionsauftraege);
           zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + endprodukt_daten[element - 1].produktionsauftraege;
-          console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
+          //console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
         })
       } else if (zwiprodukt.artikelnummer == 16 || zwiprodukt.artikelnummer == 17) {
         artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
@@ -345,9 +390,15 @@ export class ProgrammplanungComponent implements OnInit {
       }
       else if (zwiprodukt.artikelnummer == 51 || zwiprodukt.artikelnummer == 56
         || zwiprodukt.artikelnummer == 31) {
-          zwiprodukt.vertriebswunsch = endprodukt_daten[artikelZuordnung.get(zwiprodukt.artikelnummer)![0] - 1].produktionsauftraege;
+        zwiprodukt.vertriebswunsch = endprodukt_daten[artikelZuordnung.get(zwiprodukt.artikelnummer)![0] - 1].produktionsauftraege;
       } else {
         var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(zwiprodukt.artikelnummer)![0]);
+        if (zwiprodukt.artikelnummer == 4) {
+          console.log('artikel müsste 4 sein: ' + ver?.artikelnummer)
+          console.log('ver')
+          console.log(ver)
+        }
+
         if (ver != undefined) {
           zwiprodukt.vertriebswunsch = ver!.produktionsauftraege;
         }
@@ -368,7 +419,7 @@ export class ProgrammplanungComponent implements OnInit {
       }
       else if (zwiprodukt.artikelnummer == 51 || zwiprodukt.artikelnummer == 56
         || zwiprodukt.artikelnummer == 31) {
-          zwiprodukt.bedarfsmenge = endprodukt_daten[artikelZuordnung.get(zwiprodukt.artikelnummer)![0] - 1].in_warteschlange;
+        zwiprodukt.bedarfsmenge = endprodukt_daten[artikelZuordnung.get(zwiprodukt.artikelnummer)![0] - 1].in_warteschlange;
       } else {
         var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(zwiprodukt.artikelnummer)![0]);
         if (ver != undefined) {
@@ -383,46 +434,85 @@ export class ProgrammplanungComponent implements OnInit {
 
       //zwischenprodukt_daten.push(zwiprodukt);
       // zwischenprodukt_daten = zwischenprodukt_daten.concat([temp_zwischenprodukt]);
-      if (zwiprodukt.artikelnummer == 26){
-      console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
-      console.log('artikel' + zwiprodukt.artikelnummer);
+      if (zwiprodukt.artikelnummer == 26) {
+        //console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
+        //console.log('artikel' + zwiprodukt.artikelnummer);
+      }
+
+
+      var zwiIndex = zwischenprodukt_daten.findIndex(element => element.artikelnummer === zwiprodukt.artikelnummer)
+      if (zwiprodukt.artikelnummer == 51) {
+        console.log('51' + zwiprodukt.produktionsauftraege)
+      }
+      if (zwiprodukt.artikelnummer == 50) {
+        console.log('50' + zwiprodukt.produktionsauftraege)
+      }
+      if (zwiprodukt.artikelnummer == 50) {
+        console.log('zwiProduktASDASDASDASD');
+        console.log(zwischenprodukt_daten[zwiIndex])
+      }
+      zwischenprodukt_daten[zwiIndex] = zwiprodukt;
+      if (zwiprodukt.artikelnummer == 50) {
+        console.log(zwischenprodukt_daten[zwiIndex])
       }
     })
 
 
-   
-    zwischenprodukt_daten.sort((a, b) => {
+
+
+    // zwischenprodukt_daten.sort((a, b) => {
+    //   if (b.artikelnummer < a.artikelnummer) return 1;
+    //   if (b.artikelnummer > a.artikelnummer) return -1;
+    //   return 0;
+    // });
+    // zwischenprodukt_daten_sort = zwischenprodukt_daten;
+    
+    // zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index].push(Object.assign({}, val)));
+    zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index] = zwischenprodukt_daten[index]);
+    //zwischenprodukt_daten.findIndex(element =>
+    //element.artikelnummer == (zwischen_artikel_sort[index]))
+    console.log(zwischenprodukt_daten)
+    console.log('zwischenoprodutk sort')
+    console.log(zwischenprodukt_daten_sort)
+    zwischenprodukt_daten_sort.sort((a, b) => {
       if (b.artikelnummer < a.artikelnummer) return 1;
       if (b.artikelnummer > a.artikelnummer) return -1;
       return 0;
     });
 
- 
+    console.log('zwischenprodukt_daten danach')
+    console.log(zwischenprodukt_daten);
     // this.tableZwi.renderRows();
+    //this.dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort);
+    console.log('HIER; ASDOKASCFPOKASDFKASDFOPKASDPÜFLQWEÜPTLGWEOÜTGFOWEMIO=TGF')
+    //this.dataSourceZwiMat = this.dataSourceZwiMat;
+    //this.dataSourceZwiMat.data = this.dataSourceZwiMat.data;
+    this.dataSourceZwiMat._updateChangeSubscription;
   }
 
-  speichern(){
+  speichern() {
 
     this.stepperservice.set_dateiimport(this.type);
 
     const produkttionliste: Production[] = [];
 
-    endprodukt_daten.forEach(endprodukt =>{
-      const temp_item: Production = { attr_article: Number(endprodukt.artikelnummer), attr_quantity: endprodukt.produktionsauftraege}
+    endprodukt_daten.forEach(endprodukt => {
+      const temp_item: Production = { attr_article: Number(endprodukt.artikelnummer), attr_quantity: endprodukt.produktionsauftraege }
       produkttionliste.push(temp_item);
     })
 
-    zwischenprodukt_daten.forEach(zwischenp =>{
-      const temp_z: Production = { attr_article: zwischenp.artikelnummer, attr_quantity: zwischenp.produktionsauftraege}
+    zwischenprodukt_daten.forEach(zwischenp => {
+      const temp_z: Production = { attr_article: zwischenp.artikelnummer, attr_quantity: zwischenp.produktionsauftraege }
       produkttionliste.push(temp_z)
     })
 
     let PL: Productionlist | undefined;
-    PL = { production: produkttionliste}
+    PL = { production: produkttionliste }
 
-    this.exportstore.dispatch(addProductionlist({productionlist: PL}))
+    this.exportstore.dispatch(addProductionlist({ productionlist: PL }))
 
     this.router.navigate(['kapazitaetsplanung'])
 
   }
 }
+

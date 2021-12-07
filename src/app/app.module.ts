@@ -47,7 +47,6 @@ import { HomeComponent } from './home/home.component';
 import { DialogOverview } from './mengenplanung/dialog/dialogoverview.component';
 import { InfobuttonComponent } from './infobutton/infobutton.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
