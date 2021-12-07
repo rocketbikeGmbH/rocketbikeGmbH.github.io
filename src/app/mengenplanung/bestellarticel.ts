@@ -18,10 +18,10 @@ export class BestellArtikel {
   private readonly _abweichung: number;
   private readonly _verwendung: ProduktType;
   private readonly _diskont: number;
-  private _anfangsbestand: number | undefined;
+  private _lagerbestand: number | undefined;
   private _bruttobedarf: number | undefined;
-  private _offeneBestellung: number | undefined;
-  private _eintreffendeBestellung: Bestellungen | undefined;
+  private _offeneBestellung: Array<Bestellungen> | undefined;
+  private _eintreffendeBestellung: number | undefined;
   private _laufendeAuftraege: number | undefined;
   private _bestellpunkt: number | undefined;
   private _bestellungen: Array<Bestellungen> | undefined;
@@ -59,23 +59,23 @@ export class BestellArtikel {
     this._laufendeAuftraege = value;
   }
 
-  set anfangsbestand(value: number | undefined) {
-    this._anfangsbestand = value;
+  set lagerbestand(value: number | undefined) {
+    this._lagerbestand = value;
   }
 
   set bruttobedarf(value: number | undefined) {
     this._bruttobedarf = value;
   }
 
-  get eintreffendeBestellung(): Bestellungen | undefined {
+  get eintreffendeBestellung(): number | undefined {
     return this._eintreffendeBestellung;
   }
 
-  set eintreffendeBestellung(value: Bestellungen | undefined) {
+  set eintreffendeBestellung(value: number | undefined) {
     this._eintreffendeBestellung = value;
   }
 
-  set offeneBestellung(value: number | undefined) {
+  set offeneBestellung(value: Array<Bestellungen> | undefined) {
     this._offeneBestellung = value;
   }
 
@@ -99,15 +99,15 @@ export class BestellArtikel {
     return this._diskont;
   }
 
-  get anfangsbestand(): number | undefined {
-    return this._anfangsbestand;
+  get lagerbestand(): number | undefined {
+    return this._lagerbestand;
   }
 
   get bruttobedarf(): number | undefined {
     return this._bruttobedarf;
   }
 
-  get offeneBestellung(): number | undefined {
+  get offeneBestellung(): Array<Bestellungen> | undefined {
     return this._offeneBestellung;
   }
 }

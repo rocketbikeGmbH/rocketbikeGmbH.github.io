@@ -29,6 +29,7 @@ export class AppComponent {
   ngOnInit() {
 
     this.route.events.subscribe((event) => {
+      
       if (event instanceof NavigationStart) {
           this.temp = ((event as NavigationStart).url)
           console.log(this.temp);
@@ -36,6 +37,8 @@ export class AppComponent {
           if (this.temp == '/mengenplanung' || this.temp == '/programmplanung' || this.temp == '/absatzplanung' || this.temp == '/kapazitaetsplanung'
           || this.temp == '/losgroessenplanung' || this.temp == '/dateiimport' || this.temp == '/dateiexport') {
             this.tester = true;
+          } else {
+            this.tester = false;
           }
       }
     });

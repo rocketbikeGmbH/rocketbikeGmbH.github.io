@@ -1,8 +1,48 @@
-table {
+  table {
     width: 100%;
   }
   
-.hintergrund{
+  .hintergrund {
     background-color:rgb(255, 255, 255);
-    
+  }
+
+  .btn {
+    background-color: #e8505b;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .btn:hover {
+    background-color: #c4464f;
+  }
+
+  .info {
+    background-color: #e8505b;
+    color: white;
+    height: 40px;
+    width: 40px;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .flex {
+    width: 100%;
+    display: flex;
+  }
+
+  ::ng-deep .mat-focused .mat-form-field-label {
+    color: #e8505b !important;
+   }
+  
+   ::ng-deep.mat-form-field-underline {
+    background-color: #e8505b !important;
+  } 
+  
+  ::ng-deep.mat-form-field-ripple {
+   background-color: #e8505b !important;;
   }

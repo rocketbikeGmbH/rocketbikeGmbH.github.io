@@ -29,15 +29,15 @@
         }}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="verwendung">
-        <mat-header-cell *matHeaderCellDef>{{
-          'Verwendung' | translate
-        }}</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element"
-          >{{ element.verwendung.p1 }} {{ element.verwendung.p2 }}
-          {{ element.verwendung.p3 }}</mat-cell
-        >
-      </ng-container>
+<!--      <ng-container matColumnDef="verwendung">-->
+<!--        <mat-header-cell *matHeaderCellDef>{{-->
+<!--          'Verwendung' | translate-->
+<!--        }}</mat-header-cell>-->
+<!--        <mat-cell class="duration-cell" *matCellDef="let element"-->
+<!--          >{{ element.verwendung.p1 }} {{ element.verwendung.p2 }}-->
+<!--          {{ element.verwendung.p3 }}</mat-cell-->
+<!--        >-->
+<!--      </ng-container>-->
 
       <ng-container matColumnDef="diskont">
         <mat-header-cell *matHeaderCellDef>{{
@@ -48,32 +48,46 @@
         }}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="anfangsbestand">
+      <ng-container matColumnDef="lagerbestand">
         <mat-header-cell *matHeaderCellDef>{{
-          'Anfangsbestand' | translate
+          'Lagerbestand' | translate
         }}</mat-header-cell>
         <mat-cell class="duration-cell" *matCellDef="let element">{{
-          element.anfangsbestand
+          element.lagerbestand
         }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="eintreffendeBestellung">
-        <mat-header-cell *matHeaderCellDef
-          >eintreffende Bestellungen</mat-header-cell
-        >
-        <mat-cell class="duration-cell" *matCellDef="let element"
-          >{{ element.eintreffendeBestellung?.periode }}:
-          {{ element.eintreffendeBestellung?.anzahl }}</mat-cell
-        >
+        <mat-header-cell *matHeaderCellDef>
+          eintreffende Bestellungen
+        </mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let element">
+          {{ element.eintreffendeBestellung }}
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="offeneBestellung">
         <mat-header-cell *matHeaderCellDef>{{
           'Bestellungen' | translate
         }}</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">{{
-          element.offeneBestellung
-        }}</mat-cell>
+        <mat-cell class="duration-cell" *matCellDef="let element">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Anzahl</th>
+              <th>Periode</th>
+              <th>Modus</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  *ngFor="let o of element?.offeneBestellung">
+              <td>{{o.anzahl}}</td>
+              <td>{{o.periode}}</td>
+              <td>{{o.modus}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="bruttobedarf">

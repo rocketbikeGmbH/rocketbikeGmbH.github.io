@@ -58,9 +58,9 @@ export class MengenplanungComponent implements OnInit {
     'artikelnr',
     'lieferfrist',
     'abweichung',
-    'verwendung',
+    // 'verwendung',
     'diskont',
-    'anfangsbestand',
+    'lagerbestand',
     'eintreffendeBestellung',
     'offeneBestellung',
     'bruttobedarf',
@@ -101,22 +101,31 @@ export class MengenplanungComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource.forEach((d) => {
       const article = this._articles?.find((article) => article.id == d.id);
-      d.anfangsbestand = article?.amount;
+      d.lagerbestand = article?.amount;
       // überprüfen ob es ein Array ist
       const order = this._orders?.find((o) => o.article == d.id);
 
       if (order) {
-        d.eintreffendeBestellung = new Bestellungen(
-          order?.amount,
-          order?.orderperiod,
-          ''
-        );
+        d.eintreffendeBestellung = order?.amount;
       }
 
-      // überprüfen ob es ein Array ist
-      const futureOrder = this._futureorders?.find((fo) => fo.article == d.id);
-      if (futureOrder) {
-        d.offeneBestellung = futureOrder?.amount;
+      if(Array.isArray(this._futureorders)){
+        const futureOrders = this._futureorders?.filter(e => e.article == d.id);
+        //const futureOrder = this._futureorders?.find((fo) => fo.article == d.id);
+
+        if (futureOrders) {
+          const ob : Array<Bestellungen> = [];
+           futureOrders.forEach(e => {
+             // @ts-ignore
+             const lieferfrist = Number.parseInt(e?.orderperiod ?? '0');
+             ob.push(new Bestellungen(
+               e?.amount,
+               lieferfrist + d.lieferfrist,
+               getKeyByValue(this.optionsMap,e.mode)
+             ));
+           })
+          d.offeneBestellung = ob;
+        }
       }
 
       const { p1, p2, p3 } = this._forecast ?? {};
@@ -130,13 +139,13 @@ export class MengenplanungComponent implements OnInit {
         -1
       );
       // @ts-ignore
-      const ab  = Number.parseInt(d.anfangsbestand ?? '0');
+      const ab  = Number.parseInt(d.lagerbestand ?? '0');
       // @ts-ignore
       const anz = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
       const s = ab + anz;
 
       // @ts-ignore
-      if ((ab + anz) <= d.bestellpunkt) {
+      if (d.bruttobedarf != 0 && (ab + anz) <= d.bestellpunkt) {
         let modus;
         if ((ab - (d.bruttobedarf * d.lieferfrist)) < 0) {
           // @ts-ignore
@@ -149,15 +158,6 @@ export class MengenplanungComponent implements OnInit {
           modus = 'Normal';
         }
 
-        // if ((d.bruttobedarf * d.lieferfrist) <= d.bestellpunkt) {
-        //   // @ts-ignore
-        //   if((d.anfangsbestand * (d.lieferfrist / 2)) <= d.bestellpunkt){
-        //     modus = 'Sonderbestellung';
-        //   } else {
-        //     modus = 'Eil';
-        //   }
-        // } else {
-        // }
         const bestellungen = new Bestellungen(d.bruttobedarf, 0, modus);
         bestellungen.id = d.id;
         this.dataSource2.push(bestellungen);
@@ -210,3 +210,13 @@ const round = (value: number, precision: number) => {
   let multiplier = Math.pow(10, precision || 0);
   return Math.round(value * multiplier) / multiplier;
 };
+
+const getKeyByValue = (map: Map<string, number>, searchValue: number) => {
+  for (let [key, value] of map.entries()) {
+    console.log(value);
+    console.log(searchValue);
+    if (value == searchValue)
+      return key;
+  }
+  return "";
+}

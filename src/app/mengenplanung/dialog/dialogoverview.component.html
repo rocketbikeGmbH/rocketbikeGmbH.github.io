@@ -10,7 +10,7 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Menge</mat-label>
-    <input matInput type="number" step='10' [(ngModel)]="data.anzahl">
+    <input matInput type="number" min='0' step='10' [(ngModel)]="data.anzahl">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
