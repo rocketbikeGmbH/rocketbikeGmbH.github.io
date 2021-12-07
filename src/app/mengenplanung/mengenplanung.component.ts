@@ -142,7 +142,6 @@ export class MengenplanungComponent implements OnInit {
       const ab  = Number.parseInt(d.lagerbestand ?? '0');
       // @ts-ignore
       const anz = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
-      const s = ab + anz;
 
       // @ts-ignore
       if (d.bruttobedarf != 0 && (ab + anz) <= d.bestellpunkt) {
