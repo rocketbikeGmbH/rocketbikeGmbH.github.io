@@ -14,6 +14,7 @@ import { StepperServiceService } from '../stepper-service.service';
 import { InfobuttonComponent } from '../infobutton/infobutton.component';
 import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanung/infobutton-programmplanung.component';
 import { MatDialog } from '@angular/material/dialog';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -129,6 +130,9 @@ var artikelZuordnung = new Map([
   [56, [2]],
 ])
 
+const isExpanded: Array<boolean> = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,]
+
 const wunsch_lager: number[] = [80, 80, 80, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
   100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,]
 
@@ -136,7 +140,14 @@ const wunsch_lager: number[] = [80, 80, 80, 100, 100, 100, 100, 100, 100, 100, 1
 @Component({
   selector: 'app-programmplanung',
   templateUrl: './programmplanung.component.html',
-  styleUrls: ['./programmplanung.component.scss']
+  styleUrls: ['./programmplanung.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
 export class ProgrammplanungComponent implements OnInit {
@@ -146,7 +157,7 @@ export class ProgrammplanungComponent implements OnInit {
   @ViewChild('table', { static: true }) table: any;
   // Tabelle
   displayedColumns: string[] = ['artikelnummer', 'vertriebswunsch', 'direktverkauf', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
-  displayedColumnsZwi: string[] = ['artikelnummer', 'vertriebswunsch', 'bedarfsmenge', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
+  displayedColumnsZwi: string[] = ['artikelnummer', 'vertriebswunsch', 'bedarfsmenge', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege', 'actions'];
   dataSourceEnd = endprodukt_daten;
   dataSourceZwi = zwischenprodukt_daten_sort;
   dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort);
@@ -164,6 +175,7 @@ export class ProgrammplanungComponent implements OnInit {
   data_waitingListWorkstations: waitinglistworkstations | undefined;
   data_forecast: forecast | undefined;
   data_wishlist: Selldirect | undefined;
+  isTableExpanded = false;
 
     
   constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,) {
@@ -521,5 +533,28 @@ export class ProgrammplanungComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(InfobuttonProgrammplanungComponent);
+  }
+
+  toggleTableRows() {
+    this.isTableExpanded = !this.isTableExpanded;
+
+    zwischenprodukt_daten_sort.forEach((row: any) => {
+      row.isExpanded = this.isTableExpanded;
+    })
+  }
+
+  isExpanded(id: number): boolean {
+    return isExpanded[id];
+  }
+
+  clickExpand(id: number) {
+    console.log(id);
+    if(isExpanded[id]){
+    isExpanded[id] = false;
+    } else {
+      isExpanded[id] = true;
+    }
+    console.log('EXPAND');
+    console.log(isExpanded)
   }
 }

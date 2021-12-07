@@ -67,6 +67,7 @@ import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     AppRoutingModule,
     MatButtonModule,
