@@ -5,6 +5,8 @@ import { addImportXml } from '../store/import/import.actions';
 import { ImportState } from '../store/import/import.reducer';
 import { ImportModel } from '../model/import.model';
 import { StepperServiceService } from '../stepper-service.service';
+import { browserRefresh } from '../app.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dateiimport',
@@ -16,8 +18,9 @@ export class DateiimportComponent {
   dateiimport_file_auswahl = '';
 
   type = 'dateiimport'
+  browserRefresh: boolean = false;
 
-  constructor(private store: Store<ImportState>, private stepperservice: StepperServiceService) {}
+  constructor(private store: Store<ImportState>, private stepperservice: StepperServiceService, private route: Router) {}
 
   // @ts-ignore
   onFileSelected({ target }): void {
@@ -37,6 +40,14 @@ export class DateiimportComponent {
         this.store.dispatch(addImportXml(xmlDataAsJson));
         this.stepperservice.set_dateiimport(this.type);
       };
+    }
+  }
+
+  ngOnInit() {
+    this.browserRefresh = browserRefresh;
+    console.log('refreshed?:', browserRefresh);
+    if (browserRefresh) {
+      this.route.navigate(['/dateiimport'])
     }
   }
 }

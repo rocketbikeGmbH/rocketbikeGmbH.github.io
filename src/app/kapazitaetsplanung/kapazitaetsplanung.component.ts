@@ -24,6 +24,7 @@ import { Inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { InfobuttonComponent } from '../infobutton/infobutton.component';
 import { StepperServiceService } from '../stepper-service.service';
+import { browserRefresh } from '../app.component';
 
 
 
@@ -315,9 +316,13 @@ export class KapazitaetsplanungComponent implements OnInit {
 
 
 
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router,public dialog: MatDialog, private stepperservice: StepperServiceService) {}
+  constructor(private route: Router, private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router,public dialog: MatDialog, private stepperservice: StepperServiceService) {}
 
   ngOnInit(): void {
+    console.log('refreshed?:', browserRefresh);
+    if (browserRefresh) {
+      this.route.navigate(['/dateiimport'])
+    }
     console.log(this.summe_maschine)
     this.initialisieren();
     this.Bedarf_und_Schichten_berechnen();

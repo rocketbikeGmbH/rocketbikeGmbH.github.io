@@ -14,6 +14,7 @@ import { StepperServiceService } from '../stepper-service.service';
 import { InfobuttonComponent } from '../infobutton/infobutton.component';
 import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanung/infobutton-programmplanung.component';
 import { MatDialog } from '@angular/material/dialog';
+import { browserRefresh } from '../app.component';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -166,7 +167,7 @@ export class ProgrammplanungComponent implements OnInit {
   data_wishlist: Selldirect | undefined;
 
     
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,) {
+  constructor(private route: Router, private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,) {
     this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
@@ -190,13 +191,15 @@ export class ProgrammplanungComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    if (browserRefresh) {
+      this.route.navigate(['/dateiimport'])
+    }
+    console.log('refreshed?:', browserRefresh);
   }
 
   changeend(newValue: number, artikel: number) {
     // No longer need to cast to any - hooray for react!
     // this.setState({temperature: e.target.value});
-    console.log("HIIIIIIIIIIEEEEEEEEEEER" + newValue)
     endprodukt_daten[artikel - 1].geplanter_endbestand = newValue;
 
     wunsch_lager[artikel - 1] = newValue;
@@ -342,8 +345,6 @@ export class ProgrammplanungComponent implements OnInit {
     // });
 
     // zwischenprodukt_daten.length = 0;
-    console.log('zwischenprodukt_daten zuvor')
-    console.log(zwischenprodukt_daten);
 
     zwischenprodukt_daten.forEach(zwiprodukt => {
       if (data_warehousestock!.article[zwiprodukt.artikelnummer - 1] != undefined) {
@@ -398,9 +399,6 @@ export class ProgrammplanungComponent implements OnInit {
       } else {
         var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(zwiprodukt.artikelnummer)![0]);
         if (zwiprodukt.artikelnummer == 4) {
-          console.log('artikel müsste 4 sein: ' + ver?.artikelnummer)
-          console.log('ver')
-          console.log(ver)
         }
 
         if (ver != undefined) {
@@ -446,18 +444,16 @@ export class ProgrammplanungComponent implements OnInit {
 
       var zwiIndex = zwischenprodukt_daten.findIndex(element => element.artikelnummer === zwiprodukt.artikelnummer)
       if (zwiprodukt.artikelnummer == 51) {
-        console.log('51' + zwiprodukt.produktionsauftraege)
+
       }
       if (zwiprodukt.artikelnummer == 50) {
-        console.log('50' + zwiprodukt.produktionsauftraege)
+
       }
       if (zwiprodukt.artikelnummer == 50) {
-        console.log('zwiProduktASDASDASDASD');
-        console.log(zwischenprodukt_daten[zwiIndex])
+
       }
       zwischenprodukt_daten[zwiIndex] = zwiprodukt;
       if (zwiprodukt.artikelnummer == 50) {
-        console.log(zwischenprodukt_daten[zwiIndex])
       }
     })
 
@@ -475,20 +471,17 @@ export class ProgrammplanungComponent implements OnInit {
     zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index] = zwischenprodukt_daten[index]);
     //zwischenprodukt_daten.findIndex(element =>
     //element.artikelnummer == (zwischen_artikel_sort[index]))
-    console.log(zwischenprodukt_daten)
-    console.log('zwischenoprodutk sort')
-    console.log(zwischenprodukt_daten_sort)
+
     zwischenprodukt_daten_sort.sort((a, b) => {
       if (b.artikelnummer < a.artikelnummer) return 1;
       if (b.artikelnummer > a.artikelnummer) return -1;
       return 0;
     });
 
-    console.log('zwischenprodukt_daten danach')
-    console.log(zwischenprodukt_daten);
+
     // this.tableZwi.renderRows();
     //this.dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort);
-    console.log('HIER; ASDOKASCFPOKASDFKASDFOPKASDPÜFLQWEÜPTLGWEOÜTGFOWEMIO=TGF')
+
     //this.dataSourceZwiMat = this.dataSourceZwiMat;
     //this.dataSourceZwiMat.data = this.dataSourceZwiMat.data;
     this.dataSourceZwiMat._updateChangeSubscription;

@@ -11,6 +11,7 @@ import { addProductionlist } from '../store/export/export.actions';
 import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { selectProductionlist } from '../store/export/export.selector';
+import { browserRefresh } from '../app.component';
 
 class Prodlist implements Production {
   attr_article: number;
@@ -101,6 +102,11 @@ export class LosgroessenplanungComponent implements OnInit {
     this.table.renderRows();
   }
   ngOnInit(): void {
+    console.log('refreshed?:', browserRefresh);
+    if (browserRefresh) {
+      this.router.navigate(['/dateiimport'])
+    }
+    
     this.productionlist$.subscribe((i) => (this.productionlist = i));
     this.productionlist.forEach((i) =>
       this.dataSource.forEach((d) => {
