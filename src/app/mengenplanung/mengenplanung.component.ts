@@ -24,6 +24,7 @@ import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.comp
 import { MatDialog } from '@angular/material/dialog';
 import { DialogOverview } from './dialog/dialogoverview.component';
 import { StepperServiceService } from '../stepper-service.service';
+import { browserRefresh } from '../app.component';
 
 class OrderImpl implements Order {
   attr_article: number;
@@ -99,6 +100,11 @@ export class MengenplanungComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (browserRefresh) {
+      this.router.navigate(['/dateiimport'])
+    }
+    console.log('refreshed?:', browserRefresh);
+
     this.dataSource.forEach((d) => {
       const article = this._articles?.find((article) => article.id == d.id);
       d.lagerbestand = article?.amount;
@@ -142,7 +148,6 @@ export class MengenplanungComponent implements OnInit {
       const ab  = Number.parseInt(d.lagerbestand ?? '0');
       // @ts-ignore
       const anz = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
-      const s = ab + anz;
 
       // @ts-ignore
       if (d.bruttobedarf != 0 && (ab + anz) <= d.bestellpunkt) {

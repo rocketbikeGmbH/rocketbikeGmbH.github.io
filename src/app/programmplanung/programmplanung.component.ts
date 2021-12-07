@@ -11,10 +11,12 @@ import { addProductionlist } from '../store/export/export.actions';
 import { Production, Productionlist } from '../model/export.model';
 import { Router } from '@angular/router';
 import { StepperServiceService } from '../stepper-service.service';
+import { arraysAreNotAllowedMsg } from '@ngrx/store/src/models';
 import { InfobuttonComponent } from '../infobutton/infobutton.component';
 import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanung/infobutton-programmplanung.component';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { browserRefresh } from '../app.component';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -178,37 +180,37 @@ export class ProgrammplanungComponent implements OnInit {
   isTableExpanded = false;
 
     
-  constructor(private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,) {
+  constructor(private route: Router, private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,) {
     this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
 
-    // let data_waitingListWorkstations: waitinglistworkstations | undefined;
-    // this.waitingListWorkstations$.subscribe((i) => (data_waitingListWorkstations!= i));
+    console.log(this.data_ordersinwork)
 
+    // let temp: orders_workplace = {id: 0, period:0, order:0, batch:0, item:0, amount:0, timeneed:0}
+    //  this.data_ordersinwork!.workplace.push(temp)
 
-    this.waitingListWorkstations$.subscribe((i) => (this.data_waitingListWorkstations = i));
-
-
+  
+    this.waitingListWorkstations$.subscribe((i) => (this.data_waitingListWorkstations = i) );
+ 
     this.forecast$.subscribe((i) => (this.data_forecast = i));
 
-
     this.wishlist$.subscribe((i) => (this.data_wishlist = i));
-
-
 
     this.berechnungEndprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast, this.data_wishlist);
     this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
   }
 
   ngOnInit(): void {
-
+    if (browserRefresh) {
+      this.route.navigate(['/dateiimport'])
+    }
+    console.log('refreshed?:', browserRefresh);
   }
 
   changeend(newValue: number, artikel: number) {
     // No longer need to cast to any - hooray for react!
     // this.setState({temperature: e.target.value});
-    console.log("HIIIIIIIIIIEEEEEEEEEEER" + newValue)
     endprodukt_daten[artikel - 1].geplanter_endbestand = newValue;
 
     wunsch_lager[artikel - 1] = newValue;
@@ -258,23 +260,30 @@ export class ProgrammplanungComponent implements OnInit {
     data_wishlist?: Selldirect | undefined) {
     //console.log('END')
 
-    data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
-      const temp_workplace: waiting_workplace = { id: 0, timeneed: 0, waitinglist: [], };
+      console.log("type")
+      console.log(data_waitingListWorkstations);
+      console.log(typeof(data_waitingListWorkstations))
+
+      if(data_waitingListWorkstations != undefined){
+        data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
+          const temp_workplace: waiting_workplace = { id: 0, timeneed: 0, waitinglist: [], };
 
 
-      temp_workplace.id = workplace.id;
-      temp_workplace.timeneed = workplace.timeneed;
-      const wt = workplace.waitinglist;
+          temp_workplace.id = workplace.id;
+          temp_workplace.timeneed = workplace.timeneed;
+          const wt = workplace.waitinglist;
 
-      if (!(workplace.waitinglist == undefined)) {
-        if (Array.isArray(wt)) {
-          this.total_waitinglist.push(...wt);
-        } else {
-          this.total_waitinglist.push(wt)
-        }
+          if (!(workplace.waitinglist == undefined)) {
+            if (Array.isArray(wt)) {
+              this.total_waitinglist.push(...wt);
+            } else {
+              this.total_waitinglist.push(wt)
+            }
+          }
+
+        });
       }
-
-    });
+     
 
     var sum_bearbeitung: number = 0;
     if (typeof (data_warehousestock) === typeof (this.warehousestock$)) {
@@ -286,11 +295,19 @@ export class ProgrammplanungComponent implements OnInit {
         if (data_warehousestock!.article[i] != undefined) {
           endprodukt_daten[i].aktueller_lagerbestand = data_warehousestock!.article[i].amount;
 
+          if(Array.isArray(data_ordersinwork)){
           data_ordersinwork?.workplace!.forEach(element => {
             if (element.item === data_warehousestock!.article[i].id) {
               sum_bearbeitung = +sum_bearbeitung + +element.amount;
             }
           });
+        }else{
+          // @ts-ignore
+          if (data_ordersinwork?.workplace.item == data_warehousestock!.article[i].id) {
+           // @ts-ignore
+            sum_bearbeitung = +sum_bearbeitung + +data_ordersinwork.workplace.amount;
+          }
+        }
 
           endprodukt_daten[i].in_bearbeitung = sum_bearbeitung;
 
@@ -354,8 +371,6 @@ export class ProgrammplanungComponent implements OnInit {
     // });
 
     // zwischenprodukt_daten.length = 0;
-    console.log('zwischenprodukt_daten zuvor')
-    console.log(zwischenprodukt_daten);
 
     zwischenprodukt_daten.forEach(zwiprodukt => {
       if (data_warehousestock!.article[zwiprodukt.artikelnummer - 1] != undefined) {
@@ -363,14 +378,35 @@ export class ProgrammplanungComponent implements OnInit {
       }
 
       var sum_bearbeitung: number = 0;
-
+      if(Array.isArray(data_ordersinwork)){
       data_ordersinwork?.workplace!.forEach(element => {
         if (element.item == zwiprodukt.artikelnummer) {
           sum_bearbeitung = +sum_bearbeitung + +element.amount;
         }
       });
+    }else{
+      // @ts-ignore
+        if (data_ordersinwork?.workplace.item == zwiprodukt.artikelnummer) {
+         // @ts-ignore
+          sum_bearbeitung = +sum_bearbeitung + +data_ordersinwork.workplace.amount;
+        }
+
+    }
       zwiprodukt.in_bearbeitung = sum_bearbeitung;
 
+      // if(Array.isArray(data_ordersinwork)){
+      //   data_ordersinwork?.workplace!.forEach(element => {
+      //     if (element.item === data_warehousestock!.article[i].id) {
+      //       sum_bearbeitung = +sum_bearbeitung + +element.amount;
+      //     }
+      //   });
+      // }else{
+      //   // @ts-ignore
+      //   if (data_ordersinwork?.workplace.item == data_warehousestock!.article[i].id) {
+      //    // @ts-ignore
+      //     sum_bearbeitung = +sum_bearbeitung + +data_ordersinwork.workplace.amount;
+      //   }
+      // }
 
 
       this.total_waitinglist.forEach(waiting_item => {
@@ -410,9 +446,6 @@ export class ProgrammplanungComponent implements OnInit {
       } else {
         var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(zwiprodukt.artikelnummer)![0]);
         if (zwiprodukt.artikelnummer == 4) {
-          console.log('artikel müsste 4 sein: ' + ver?.artikelnummer)
-          console.log('ver')
-          console.log(ver)
         }
 
         if (ver != undefined) {
@@ -458,18 +491,16 @@ export class ProgrammplanungComponent implements OnInit {
 
       var zwiIndex = zwischenprodukt_daten.findIndex(element => element.artikelnummer === zwiprodukt.artikelnummer)
       if (zwiprodukt.artikelnummer == 51) {
-        console.log('51' + zwiprodukt.produktionsauftraege)
+
       }
       if (zwiprodukt.artikelnummer == 50) {
-        console.log('50' + zwiprodukt.produktionsauftraege)
+
       }
       if (zwiprodukt.artikelnummer == 50) {
-        console.log('zwiProduktASDASDASDASD');
-        console.log(zwischenprodukt_daten[zwiIndex])
+
       }
       zwischenprodukt_daten[zwiIndex] = zwiprodukt;
       if (zwiprodukt.artikelnummer == 50) {
-        console.log(zwischenprodukt_daten[zwiIndex])
       }
     })
 
@@ -487,20 +518,17 @@ export class ProgrammplanungComponent implements OnInit {
     zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index] = zwischenprodukt_daten[index]);
     //zwischenprodukt_daten.findIndex(element =>
     //element.artikelnummer == (zwischen_artikel_sort[index]))
-    console.log(zwischenprodukt_daten)
-    console.log('zwischenoprodutk sort')
-    console.log(zwischenprodukt_daten_sort)
+
     zwischenprodukt_daten_sort.sort((a, b) => {
       if (b.artikelnummer < a.artikelnummer) return 1;
       if (b.artikelnummer > a.artikelnummer) return -1;
       return 0;
     });
 
-    console.log('zwischenprodukt_daten danach')
-    console.log(zwischenprodukt_daten);
+
     // this.tableZwi.renderRows();
     //this.dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort);
-    console.log('HIER; ASDOKASCFPOKASDFKASDFOPKASDPÜFLQWEÜPTLGWEOÜTGFOWEMIO=TGF')
+
     //this.dataSourceZwiMat = this.dataSourceZwiMat;
     //this.dataSourceZwiMat.data = this.dataSourceZwiMat.data;
     this.dataSourceZwiMat._updateChangeSubscription;

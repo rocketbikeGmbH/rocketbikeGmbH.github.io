@@ -17,26 +17,9 @@ export interface ExportState {
 export const initialState: ExportModel = {
   input: {
     qualitycontrol: {
-      attr_type: '',
+      attr_type: 'no',
       attr_losequantity: 0,
       attr_delay: 0,
-    },
-    orderlist: {
-      order: [
-        {
-          attr_article: 0,
-          attr_quantity: 0,
-          attr_modus: 0,
-        },
-      ],
-    },
-    productionlist: {
-      production: [
-        {
-          attr_article: 0,
-          attr_quantity: 1,
-        },
-      ],
     },
     sellwish: {
       item: [
@@ -53,6 +36,23 @@ export const initialState: ExportModel = {
           attr_quantity: 0,
           attr_price: 0,
           attr_penalty: 0,
+        },
+      ],
+    },
+    orderlist: {
+      order: [
+        {
+          attr_article: 0,
+          attr_quantity: 0,
+          attr_modus: 0,
+        },
+      ],
+    },
+    productionlist: {
+      production: [
+        {
+          attr_article: 0,
+          attr_quantity: 1,
         },
       ],
     },

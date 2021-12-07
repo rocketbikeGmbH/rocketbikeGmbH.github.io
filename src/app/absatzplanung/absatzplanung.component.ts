@@ -9,6 +9,7 @@ import { ExportState } from '../store/export/export.reducer';
 import { addSelldirect, addSellwish, addSellwishItem } from '../store/export/export.actions';
 import { Router } from '@angular/router';
 import { StepperServiceService } from '../stepper-service.service';
+import { browserRefresh } from '../app.component';
 
 
 
@@ -44,11 +45,15 @@ export class AbsatzplanungComponent implements OnInit {
   forecast$ = this.store.pipe(select(selectImportForecast));
   restults$ = this.store.pipe(select(selectImportResults));
 
-  constructor(public D: Daten, private store : Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService) {
+  constructor(private route: Router, public D: Daten, private store : Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService) {
 
    }
 
   ngOnInit(): void {
+    console.log('refreshed?:', browserRefresh);
+    if (browserRefresh) {
+      this.route.navigate(['/dateiimport'])
+    }
 
     // Prognose Werte auslesen
     let data: forecast | undefined;
