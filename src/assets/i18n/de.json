@@ -13,9 +13,11 @@
 	"Berechnen": "Berechnen",
 	"Bestellmengenplanung": "Bestellmengenplanung",
 	"Bestellungen": "Bestellungen",
+  "Bestellpunkt": "Bestellpunkt",
 	"Bewertung abgeben": "Bewertung abgeben",
 	"Bewertungen": "Bewertungen",
 	"Bewertungen 4.8": "Bewertungen 4.8",
+  "Bruttobedarf": "Bruttobedarf",
 	"Damit Sie als Endbenutzer Ihr auf Sie zugeschnittenes Produkt sinngemäß verwenden können, müssen Sie nicht zögern wenn es irgendwelche Fragen oder Problemstellungen gibt und können uns jeder Zeit kontaktieren.": "Damit Sie als Endbenutzer Ihr auf Sie zugeschnittenes Produkt sinngemäß verwenden können, müssen Sie nicht zögern wenn es irgendwelche Fragen oder Problemstellungen gibt und können uns jeder Zeit kontaktieren.",
 	"Das ermöglicht unser Tool": "Das ermöglicht unser Tool",
 	"Dateiexport": "Dateiexport",
@@ -52,7 +54,8 @@
 	"Konventionalstrafe P2": "Konventionalstrafe P2",
 	"Konventionalstrafe P3": "Konventionalstrafe P3",
 	"Laden Sie die XML-Datei der vergangenen Periode in das Tool, um die Analyse und Planung starten zu können.": "Laden Sie die XML-Datei der vergangenen Periode in das Tool, um die Analyse und Planung starten zu können.",
-	"Leistungen": "Leistungen",
+	"Lagerbestnad" : "Lagerbestand",
+  "Leistungen": "Leistungen",
 	"Lieferfrist": "Lieferfrist",
 	"Losgrößenplanung": "Losgrößenplanung",
 	"Löschen": "Löschen",
@@ -92,5 +95,7 @@
 	"Zwischenprodukte": "Zwischenprodukte",
 	"Über eine Bewertung würden wir uns freuen": "",
 	"Über uns": "Über uns",
-	"Überstunden Minuten pro Tag": "Überstunden Minuten pro Tag"
+	"Überstunden Minuten pro Tag": "Überstunden Minuten pro Tag",
+  "Wareneingang": "Wareneingang",
+  "zukünftige Wareneingang": "zukünftiger Wareneingang"
 }

@@ -16,7 +16,9 @@ import {
 } from '../model/import.model';
 import { BestellArtikel, Bestellungen } from './bestellarticel';
 import { bestellArtikelArray } from './BestellArtikelArray';
-import { Order, Orderlist } from '../model/export.model';
+// @ts-ignore
+import { verwendungen } from './verwendung';
+import { Order, Orderlist, Production } from '../model/export.model';
 import { addOrderlist } from '../store/export/export.actions';
 import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
@@ -24,6 +26,8 @@ import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.comp
 import { MatDialog } from '@angular/material/dialog';
 import { DialogOverview } from './dialog/dialogoverview.component';
 import { StepperServiceService } from '../stepper-service.service';
+import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanung/infobutton-programmplanung.component';
+import { selectProductionlist } from '../store/export/export.selector';
 import { browserRefresh } from '../app.component';
 
 class OrderImpl implements Order {
@@ -88,6 +92,9 @@ export class MengenplanungComponent implements OnInit {
     .pipe(select(selectImportForecast))
     .subscribe((i) => (this._forecast = i));
 
+  productionlist: Production[] = [];
+  productionlist$ = this.exportStore.pipe(select(selectProductionlist)).subscribe(i => this.productionlist = i);
+
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
 
@@ -100,6 +107,16 @@ export class MengenplanungComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.productionlist.forEach( p => {
+      // @ts-ignore
+      verwendungen.forEach( (v) => {
+        if(v.id === p.attr_article) {
+          v.quantity = p.attr_quantity;
+        }
+      })
+    });
+
     if (browserRefresh) {
       this.router.navigate(['/dateiimport'])
     }
@@ -108,16 +125,16 @@ export class MengenplanungComponent implements OnInit {
     this.dataSource.forEach((d) => {
       const article = this._articles?.find((article) => article.id == d.id);
       d.lagerbestand = article?.amount;
-      // überprüfen ob es ein Array ist
-      const order = this._orders?.find((o) => o.article == d.id);
 
-      if (order) {
-        d.eintreffendeBestellung = order?.amount;
+      if(Array.isArray(this._orders)){
+        const order = this._orders?.find((o) => o.article == d.id);
+        if (order) {
+          d.eintreffendeBestellung = order?.amount;
+        }
       }
 
       if(Array.isArray(this._futureorders)){
         const futureOrders = this._futureorders?.filter(e => e.article == d.id);
-        //const futureOrder = this._futureorders?.find((fo) => fo.article == d.id);
 
         if (futureOrders) {
           const ob : Array<Bestellungen> = [];
@@ -133,12 +150,23 @@ export class MengenplanungComponent implements OnInit {
           d.offeneBestellung = ob;
         }
       }
+      d.bruttobedarf = 0;
+      // @ts-ignore
+      verwendungen.forEach( v => {
+        // @ts-ignore
+        v.parts.forEach( parts => {
+          if(parts.id === d.id) {
+            // @ts-ignore
+            d.bruttobedarf += parts.faktor * v.quantity;
+          }
+        });
+      });
 
-      const { p1, p2, p3 } = this._forecast ?? {};
-      d.bruttobedarf =
-        d.verwendung.p1 * (p1 ?? 0) +
-        d.verwendung.p2 * (p2 ?? 0) +
-        d.verwendung.p3 * (p3 ?? 0);
+      // const { p1, p2, p3 } = this._forecast ?? {};
+      // d.bruttobedarf =
+      //   d.verwendung.p1 * (p1 ?? 0) +
+      //   d.verwendung.p2 * (p2 ?? 0) +
+      //   d.verwendung.p3 * (p3 ?? 0);
 
       d.bestellpunkt = round(
         (d.bruttobedarf * (5 * d.lieferfrist + 5)) / 5,
@@ -208,6 +236,10 @@ export class MengenplanungComponent implements OnInit {
         this.table.renderRows();
       }
     });
+  }
+
+  openInfoDialog(): void {
+    this.dialog.open(InfobuttonProgrammplanungComponent);
   }
 }
 

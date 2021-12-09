@@ -1,11 +1,16 @@
 <mat-card class="hintergrund">
   <mat-accordion multi>
     <mat-expansion-panel [expanded]="false">
-      <mat-expansion-panel-header>
-        <mat-card-title>{{
-          'Bestellmengenplanung' | translate
-        }}</mat-card-title>
-      </mat-expansion-panel-header>
+          <mat-expansion-panel-header>
+            <mat-card-title>{{
+              'Bestellmengenplanung' | translate
+            }}</mat-card-title>
+          </mat-expansion-panel-header>
+      <div class='flex'>
+        <button mat-raised-button class="info" (click)="openInfoDialog()">
+          <mat-icon>info</mat-icon>
+        </button>
+      </div>
       <mat-table
         class="lessons-table mat-elevation-z8"
         [dataSource]="dataSource"
@@ -65,7 +70,7 @@
 
         <ng-container matColumnDef="eintreffendeBestellung">
           <mat-header-cell *matHeaderCellDef>
-            eintreffende Bestellungen
+            {{'Wareneingang' | translate}}
           </mat-header-cell>
           <mat-cell class="duration-cell" *matCellDef="let element">
             {{ element.eintreffendeBestellung }}
@@ -74,7 +79,7 @@
 
         <ng-container matColumnDef="offeneBestellung">
           <mat-header-cell *matHeaderCellDef>{{
-            'Bestellungen' | translate
+            'zukünftige Wareneingang' | translate
           }}</mat-header-cell>
           <mat-cell class="duration-cell" *matCellDef="let element">
             <table class="table">
@@ -97,14 +102,18 @@
         </ng-container>
 
         <ng-container matColumnDef="bruttobedarf">
-          <mat-header-cell *matHeaderCellDef>Bruttobedarf </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'Bruttobedarf' | translate
+            }} </mat-header-cell>
           <mat-cell class="duration-cell" *matCellDef="let element">{{
             element.bruttobedarf
           }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="bestellpunkt">
-          <mat-header-cell *matHeaderCellDef>Bestellpunkt</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>{{
+            'Bestellpunkt' | translate
+            }}</mat-header-cell>
           <mat-cell class="duration-cell" *matCellDef="let element">{{
             element.bestellpunkt
           }}</mat-cell>
@@ -177,10 +186,10 @@
 
         <mat-row *matRowDef="let row; columns: displayedColumns2"></mat-row>
       </mat-table>
-      <button mat-raised-button (click)="openDialog()">
+      <button mat-raised-button class="btn" (click)="openDialog()">
         {{ 'Neu anlegen' | translate }}
       </button>
-      <button mat-raised-button (click)="speichern()">
+      <button mat-raised-button class="btn" (click)="speichern()">
         {{ 'Speichern & Weiter' | translate }}
       </button>
     </mat-expansion-panel>
