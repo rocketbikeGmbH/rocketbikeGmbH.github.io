@@ -17,6 +17,8 @@ import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanun
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { browserRefresh } from '../app.component';
+import {MatPaginator} from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 export interface Endprodukte {
   artikelnummer: number;
@@ -157,10 +159,25 @@ export class ProgrammplanungComponent implements OnInit {
 
   @ViewChild(MatTable) tableZwi!: MatTable<any>;
   @ViewChild('table', { static: true }) table: any;
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  // @ViewChild(MatSort, {static: false})
+  // sort!: MatSort;
+  // @ViewChild(MatSort, {static: false})
+  // sort!: MatSort;
+  @ViewChild('tableEnd', { read: MatSort, static: true })
+  sort1!: MatSort;
+  // @ViewChild('tableZwi')
+  // public secondsTableSort!: MatSort;
+  // @ViewChild('tableZwi')
+  // public secondsTableSort!: MatSort;
+  @ViewChild('tablezwi', { read: MatSort, static: true })
+  sort2!: MatSort;
   // Tabelle
   displayedColumns: string[] = ['artikelnummer', 'vertriebswunsch', 'direktverkauf', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege'];
   displayedColumnsZwi: string[] = ['artikelnummer', 'vertriebswunsch', 'bedarfsmenge', 'aktueller_lagerbestand', 'in_bearbeitung', 'in_warteschlange', 'geplanter_endbestand', 'produktionsauftraege', 'actions'];
   dataSourceEnd = endprodukt_daten;
+  dataSourceEndMat = new MatTableDataSource(endprodukt_daten);
   dataSourceZwi = zwischenprodukt_daten_sort;
   dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort);
   warehousestock$ = this.store.pipe(select(selectImportWarehousestock));
@@ -180,7 +197,8 @@ export class ProgrammplanungComponent implements OnInit {
   isTableExpanded = false;
 
     
-  constructor(private route: Router, private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,) {
+  constructor(private route: Router, private store: Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService, public dialog: MatDialog,
+    ) {
     this.warehousestock$.subscribe((i) => (this.data_warehousestock = i));
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
@@ -206,6 +224,22 @@ export class ProgrammplanungComponent implements OnInit {
       this.route.navigate(['/dateiimport'])
     }
     console.log('refreshed?:', browserRefresh);
+    console.log(this.dataSourceEndMat);
+    this.dataSourceEndMat.sort = this.sort1;
+    console.log(this.dataSourceEndMat)
+    this.dataSourceZwiMat.sort = this.sort2;
+  }
+
+  ngAfterViewInit() {
+    // this.sort.sortChange.subscribe(() =>{ console.log('WIRD AUFGERUFEN');} );
+    // this.dataSourceZwiMat.sort = this.secondsTableSort;
+    this.dataSourceZwiMat.paginator = this.paginator;
+    // // this.dataSourceZwiMat.sort = this.sort;
+    // this.dataSourceEndMat.sort = this.sort;
+  }
+
+  ngAfterViewChecked() {
+    
   }
 
   changeend(newValue: number, artikel: number) {
@@ -515,10 +549,11 @@ export class ProgrammplanungComponent implements OnInit {
     // zwischenprodukt_daten_sort = zwischenprodukt_daten;
     
     // zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index].push(Object.assign({}, val)));
-    zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index] = zwischenprodukt_daten[index]);
+    
     //zwischenprodukt_daten.findIndex(element =>
     //element.artikelnummer == (zwischen_artikel_sort[index]))
 
+    zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index] = zwischenprodukt_daten[index]);
     zwischenprodukt_daten_sort.sort((a, b) => {
       if (b.artikelnummer < a.artikelnummer) return 1;
       if (b.artikelnummer > a.artikelnummer) return -1;
@@ -574,7 +609,7 @@ export class ProgrammplanungComponent implements OnInit {
   isExpanded(id: number): boolean {
     return isExpanded[id];
   }
-
+ 
   clickExpand(id: number) {
     console.log(id);
     if(isExpanded[id]){
@@ -584,5 +619,21 @@ export class ProgrammplanungComponent implements OnInit {
     }
     console.log('EXPAND');
     console.log(isExpanded)
+  }
+
+  getVertriebswunsch(artikelnummer: number): string {
+    var länge = 0;
+    if(artikelZuordnung.get(artikelnummer) != undefined) {
+      länge = artikelZuordnung!.get(artikelnummer)!.length;
+    }
+    var nummern: string = '';
+    nummern = 'Vertriebswunsch hängt ab von den Produkten ' 
+    artikelZuordnung.get(artikelnummer)?.forEach((element, index) => {
+        (index == (länge - 1) && länge > 1) ? nummern = nummern + ' und' : nummern = nummern;
+        nummern = nummern + ' ' + element;
+        (index != (länge - 1) && länge > 1) ? nummern = nummern + ' ,' : nummern = nummern;
+        
+      })
+    return nummern;
   }
 }

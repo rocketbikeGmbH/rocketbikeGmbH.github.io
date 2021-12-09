@@ -47,6 +47,8 @@ import { HomeComponent } from './home/home.component';
 import { DialogOverview } from './mengenplanung/dialog/dialogoverview.component';
 import { InfobuttonComponent } from './infobutton/infobutton.component';
 import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung/infobutton-programmplanung.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,7 @@ import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung
   ],
   imports: [
     BrowserModule,
+    MatSortModule,
     BrowserAnimationsModule,
     CommonModule,
     AppRoutingModule,
@@ -74,7 +77,6 @@ import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung
     MatIconModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatTableModule,
     MatToolbarModule,
     FormsModule,
     MatCardModule,
@@ -87,6 +89,7 @@ import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung
     MatListModule,
     CdkStepperModule,
     MatTableModule,
+    MatPaginatorModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

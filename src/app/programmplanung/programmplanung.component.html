@@ -1,8 +1,6 @@
 <br>
 <mat-card class="hintergrund">
 
-  <a mat-raised-button href="javascript:void(0)" (click)="toggleTableRows()" color="primary">Toggle Rows</a>
-
   <div class="flex">
     <div>
       <mat-card-title>{{'Programmplanung' | translate}}</mat-card-title>
@@ -14,35 +12,36 @@
     </button>
   </div>
 
-  <table mat-table [dataSource]="dataSourceEnd" class="mat-elevation-z8">
+ 
+  <table #tableEnd mat-table [dataSource]="dataSourceEndMat" class="mat-elevation-z8" matSort>
 
     <!-- Artikelnummer -->
     <ng-container matColumnDef="artikelnummer">
-      <th mat-header-cell *matHeaderCellDef> {{'Artikelnummer' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Artikelnummer' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.artikelnummer}} </td>
     </ng-container>
 
     <!-- Aktueller Lagerbestand -->
     <ng-container matColumnDef="aktueller_lagerbestand">
-      <th mat-header-cell *matHeaderCellDef> {{'Aktueller Lagerbestand' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Aktueller Lagerbestand' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.aktueller_lagerbestand}} </td>
     </ng-container>
 
     <!-- In Bearbeitung -->
     <ng-container matColumnDef="in_bearbeitung">
-      <th mat-header-cell *matHeaderCellDef> {{'In Bearbeitung' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'In Bearbeitung' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.in_bearbeitung}} </td>
     </ng-container>
 
     <!-- In Warteschlange -->
     <ng-container matColumnDef="in_warteschlange">
-      <th mat-header-cell *matHeaderCellDef> {{'In Warteschlange' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'In Warteschlange' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.in_warteschlange}} </td>
     </ng-container>
 
     <!-- Geplanter Endbestand -->
     <ng-container matColumnDef="geplanter_endbestand">
-      <th mat-header-cell *matHeaderCellDef> {{'Geplanter Endbestand' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Geplanter Endbestand' | translate}} </th>
       <td mat-cell *matCellDef="let element">
         <mat-form-field class="example-form-field" appearance="fill">
           <mat-label>{{'Geben Sie ihre Daten ein:' | translate}}</mat-label>
@@ -58,19 +57,19 @@
 
     <!-- Vertriebswunsch  -->
     <ng-container matColumnDef="vertriebswunsch">
-      <th mat-header-cell *matHeaderCellDef> {{'Vertriebswunsch' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Vertriebswunsch' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.vertriebswunsch}} </td>
     </ng-container>
 
     <!-- Direktverkauf  -->
     <ng-container matColumnDef="direktverkauf">
-      <th mat-header-cell *matHeaderCellDef> {{'Direktverkauf' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Direktverkauf' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.direktverkauf}} </td>
     </ng-container>
 
     <!-- Produktionsauftraege  -->
     <ng-container matColumnDef="produktionsauftraege">
-      <th mat-header-cell *matHeaderCellDef> {{'Produktionsaufträge' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Produktionsaufträge' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.produktionsauftraege}} </td>
     </ng-container>
 
@@ -78,38 +77,38 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <br>
-
+  
   <mat-card-subtitle>{{'Zwischenprodukte' | translate}}</mat-card-subtitle>
-
-  <table #tablezwi mat-table [dataSource]="dataSourceZwiMat" class="mat-elevation-z8" multiTemplateDataRows>
+  <div class="mat-elevation-z8">
+  <table #tablezwi mat-table [dataSource]="dataSourceZwiMat" class="mat-elevation-z8" multiTemplateDataRows matSort>
 
     <!-- Artikelnummer -->
     <ng-container matColumnDef="artikelnummer">
-      <th mat-header-cell *matHeaderCellDef> {{'Artikelnummer' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header> {{'Artikelnummer' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.artikelnummer}} </td>
     </ng-container>
 
     <!-- Aktueller Lagerbestand -->
     <ng-container matColumnDef="aktueller_lagerbestand">
-      <th mat-header-cell *matHeaderCellDef> {{'Aktueller Lagerbestand' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Aktueller Lagerbestand' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.aktueller_lagerbestand}} </td>
     </ng-container>
 
     <!-- In Bearbeitung -->
     <ng-container matColumnDef="in_bearbeitung">
-      <th mat-header-cell *matHeaderCellDef> {{'In Bearbeitung' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'In Bearbeitung' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.in_bearbeitung}} </td>
     </ng-container>
 
     <!-- In Warteschlange -->
     <ng-container matColumnDef="in_warteschlange">
-      <th mat-header-cell *matHeaderCellDef> {{'In Warteschlange' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'In Warteschlange' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.in_warteschlange}} </td>
     </ng-container>
 
     <!-- Geplanter Endbestand -->
     <ng-container matColumnDef="geplanter_endbestand">
-      <th mat-header-cell *matHeaderCellDef> {{'Geplanter Endbestand' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Geplanter Endbestand' | translate}} </th>
       <td mat-cell *matCellDef="let element">
         <mat-form-field class="example-form-field" appearance="fill">
           <mat-label>{{'Geben Sie ihre Daten ein:' | translate}}</mat-label>
@@ -125,33 +124,32 @@
 
     <!-- Vertriebswunsch  -->
     <ng-container matColumnDef="vertriebswunsch">
-      <th mat-header-cell *matHeaderCellDef> {{'Vertriebswunsch' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Vertriebswunsch' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.vertriebswunsch}} </td>
     </ng-container>
 
     <!-- Direktverkauf  -->
     <ng-container matColumnDef="direktverkauf">
-      <th mat-header-cell *matHeaderCellDef> {{'Direktverkauf' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Direktverkauf' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.direktverkauf}} </td>
     </ng-container>
 
     <!-- Produktionsauftraege  -->
     <ng-container matColumnDef="produktionsauftraege">
-      <th mat-header-cell *matHeaderCellDef> {{'Produktionsaufträge' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Produktionsaufträge' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.produktionsauftraege}} </td>
     </ng-container>
 
     <!-- Produktionsauftraege  -->
     <ng-container matColumnDef="bedarfsmenge">
-      <th mat-header-cell *matHeaderCellDef> {{'Bedarfsmenge' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Bedarfsmenge' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.bedarfsmenge}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <th mat-header-cell *matHeaderCellDef>  </th>
       <td mat-cell *matCellDef="let element">
-        <a mat-button (click)="clickExpand(element.artikelnummer)">View
-          Subjects</a>
+        <a mat-button (click)="clickExpand(element.artikelnummer)">Hilfe anzeigen</a>
       </td>
     </ng-container>
 
@@ -159,8 +157,9 @@
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsZwi.length">
         <div class="row student-element-detail" [@detailExpand]="isExpanded(element.artikelnummer) ? 'expanded' : 'collapsed'">
         <mat-list>
-          <div mat-subheader></div>
+          <!-- <div mat-subheader></div> -->
           <mat-list-item>
+            <div mat-line>{{getVertriebswunsch(element.artikelnummer)}}</div>
             <div mat-line> hallo</div>
             <div mat-line> </div>
           </mat-list-item>
@@ -175,6 +174,11 @@
 
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+  showFirstLastButtons 
+  aria-label="Select page of periodic elements">
+</mat-paginator>
+</div>
   <br>
 
   <!-- Button -->
