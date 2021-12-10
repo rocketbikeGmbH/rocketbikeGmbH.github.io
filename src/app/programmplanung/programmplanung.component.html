@@ -44,9 +44,9 @@
     <!-- Geplanter Endbestand -->
     <ng-container matColumnDef="geplanter_endbestand">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Geplanter Endbestand' | translate}} </th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" class="center">
         <mat-form-field class="example-form-field" appearance="fill">
-          <mat-label>{{'Geben Sie ihre Daten ein:' | translate}}</mat-label>
+          <mat-label>{{'Geben Sie die Menge ein:' | translate}}</mat-label>
           <input matInput type="number" [(ngModel)]=element.geplanter_endbestand
             (ngModelChange)="changeend($event, element.artikelnummer)">
           <button *ngIf="element.geplanter_endbestand" matSuffix mat-icon-button aria-label="Clear"
@@ -111,9 +111,10 @@
     <!-- Geplanter Endbestand -->
     <ng-container matColumnDef="geplanter_endbestand">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Geplanter Endbestand' | translate}} </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-form-field class="example-form-field" appearance="fill">
-          <mat-label>{{'Geben Sie ihre Daten ein:' | translate}}</mat-label>
+      <td mat-cell *matCellDef="let element" class="center">
+        <div class="center2">
+        <mat-form-field class="example-form-field" appearance="fill" class="matForm">
+          <mat-label>{{'Geben Sie die Menge ein:' | translate}}</mat-label>
           <input matInput type="number" [(ngModel)]=element.geplanter_endbestand
             (ngModelChange)="changezwi($event, element.artikelnummer)">
           <button *ngIf="element.geplanter_endbestand" matSuffix mat-icon-button aria-label="Clear"
@@ -121,13 +122,14 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
+      </div>
       </td>
     </ng-container>
 
     <!-- Vertriebswunsch  -->
     <ng-container matColumnDef="vertriebswunsch">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Vertriebswunsch' | translate}} </th>
-      <td mat-cell *matCellDef="let element"> {{element.vertriebswunsch}} </td>
+      <td mat-cell *matCellDef="let element" [ngClass]="getClassExpand(element.artikelnummer)"> {{element.vertriebswunsch}} </td>
     </ng-container>
 
     <!-- Direktverkauf  -->
@@ -145,13 +147,13 @@
     <!-- Produktionsauftraege  -->
     <ng-container matColumnDef="bedarfsmenge">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Bedarfsmenge' | translate}} </th>
-      <td mat-cell *matCellDef="let element"> {{element.bedarfsmenge}} </td>
+      <td mat-cell *matCellDef="let element" [ngClass]="getClassExpand(element.artikelnummer)"> {{element.bedarfsmenge}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>  </th>
       <td mat-cell *matCellDef="let element">
-        <a mat-button (click)="clickExpand(element.artikelnummer)">Hilfe anzeigen</a>
+        <a mat-button (click)="clickExpand(element.artikelnummer)">Erklärung anzeigen</a>
       </td>
     </ng-container>
 
@@ -161,8 +163,9 @@
         <mat-list>
           <!-- <div mat-subheader></div> -->
           <mat-list-item>
-            <div mat-line>{{getVertriebswunsch(element.artikelnummer)}}</div>
-            <div mat-line> hallo</div>
+            <div mat-line class="matlinefont"> <span [innerHTML]="getProduktName(element.artikelnummer)"></span></div>
+            <div mat-line class="matlinefont"> <span [innerHTML]="getVertriebswunsch(element.artikelnummer)"></span></div>
+            <div mat-line class="matlinefont"> <span [innerHTML]="getBedarfsmenge(element.artikelnummer)"></span></div>
             <div mat-line> </div>
           </mat-list-item>
         </mat-list>
@@ -171,7 +174,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumnsZwi sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumnsZwi;" class="student-element-row"
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsZwi;" [ngClass]=getClass(row.artikelnummer)
       [class.student-expanded-row]="row.isExpanded"></tr>
 
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></tr>

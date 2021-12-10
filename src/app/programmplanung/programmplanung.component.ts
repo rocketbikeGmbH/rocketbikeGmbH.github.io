@@ -134,6 +134,38 @@ var artikelZuordnung = new Map([
   [56, [2]],
 ])
 
+var produktNamen: Map<number, string> = new Map([
+  [1, "Kinderfahrrad"],
+  [2, "Damenfahrrad"],
+  [3, "Herrenfahrrad"],
+  [4, "Hinterradgruppe"],
+  [5, "Hinterradgruppe"],
+  [6, "Hinterradgruppe"],
+  [7, "Vorderradgruppe"],
+  [8, "Vorderradgruppe"],
+  [9, "Vorderradgruppe"],
+  [10, "Schutzblech h."],
+  [11, "Schutzblech h."],
+  [12, "Schutzblech h."],
+  [13, "Schutzblech v."],
+  [14, "Schutzblech v."],
+  [15, "Schutzblech v."],
+  [16, "Lenker cpl."],
+  [17, "Sattel cpl."],
+  [18, "Rahmen"],
+  [19, "Rahmen"],
+  [20, "Rahmen"],
+  [26, "Pedal cpl."],
+  [29, "Vorderrad mont."],
+  [30, "Rahmen u. Räder"],
+  [31, "Fahrrad o. Ped."],
+  [49, "Vorderrad cpl."],
+  [50, "Rahmen u. Räder"],
+  [51, "Fahrrad o. Pedal"],
+  [54, "Vorderrad cpl."],
+  [55, "Rahmen u. Räder"],
+  [56, "Fahrrad o. Pedal"],
+]);
 const isExpanded: Array<boolean> = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
   false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,]
 
@@ -251,6 +283,7 @@ export class ProgrammplanungComponent implements OnInit {
 
     endprodukt_daten[artikel - 1].produktionsauftraege =
       +endprodukt_daten[artikel - 1].vertriebswunsch
+      + +endprodukt_daten[artikel -1].direktverkauf
       + +endprodukt_daten[artikel - 1].geplanter_endbestand
       - +endprodukt_daten[artikel - 1].aktueller_lagerbestand
       - +endprodukt_daten[artikel - 1].in_bearbeitung
@@ -386,7 +419,7 @@ export class ProgrammplanungComponent implements OnInit {
             endprodukt_daten[i].direktverkauf = data_wishlist!.item[i].attr_quantity;
           }
 
-          endprodukt_daten[i].produktionsauftraege = +endprodukt_daten[i].vertriebswunsch + +endprodukt_daten[i].geplanter_endbestand - +endprodukt_daten[i].aktueller_lagerbestand
+          endprodukt_daten[i].produktionsauftraege = +endprodukt_daten[i].vertriebswunsch + +endprodukt_daten[i].direktverkauf + +endprodukt_daten[i].geplanter_endbestand - +endprodukt_daten[i].aktueller_lagerbestand
             - +endprodukt_daten[i].in_bearbeitung - +endprodukt_daten[i].in_warteschlange;
           sum_bearbeitung = 0;
         };
@@ -632,13 +665,60 @@ export class ProgrammplanungComponent implements OnInit {
       länge = artikelZuordnung!.get(artikelnummer)!.length;
     }
     var nummern: string = '';
-    nummern = 'Vertriebswunsch hängt ab von den Produkten ' 
+    länge > 1 
+    ? nummern = `<span class="testclass"> Vertriebswunsch </span> hängt ab von den <span class="testclass"> Produktionsaufträgen </span> der Produkte ` 
+    : nummern = `<span class="testclass"> Vertriebswunsch </span> hängt ab von den <span class="testclass"> Produktionsaufträgen </span> des Produktes`;
     artikelZuordnung.get(artikelnummer)?.forEach((element, index) => {
         (index == (länge - 1) && länge > 1) ? nummern = nummern + ' und' : nummern = nummern;
-        nummern = nummern + ' ' + element;
-        (index != (länge - 1) && länge > 1) ? nummern = nummern + ' ,' : nummern = nummern;
-        
+        nummern = nummern + ' ' + `<span class="testclass"> ${element} </span>`;
+
+        artikelZuordnung.get(artikelnummer)![0] != 1 &&  artikelZuordnung.get(artikelnummer)![0] != 2 && artikelZuordnung.get(artikelnummer)![0] != 3 
+        ? nummern = nummern + ' (Anzahl: ' + `${zwischenprodukt_daten_sort.find(zwischenprodukt => zwischenprodukt.artikelnummer == element)?.produktionsauftraege})`
+        : nummern = nummern + ' ' + endprodukt_daten.find(endprodukt => endprodukt.artikelnummer == element)?.produktionsauftraege;
+
+        (index < (länge - 2) && länge > 1) ? nummern = nummern + ',' : nummern = nummern;
       })
+      //nummern = `<span class="testclass"> ${nummern} </span>`
     return nummern;
+  }
+
+  getBedarfsmenge(artikelnummer: number): string {
+    var länge = 0;
+    if(artikelZuordnung.get(artikelnummer) != undefined) {
+      länge = artikelZuordnung!.get(artikelnummer)!.length;
+    }
+    var bedarfsmenge: string = '';
+    länge > 1 
+    ? bedarfsmenge = `<span class="testclass"> Bedarfsmenge </span> hängt ab von den <span class="testclass"> Aufträgen </span> in den Warteschlangen der Produkte `
+    : bedarfsmenge = `<span class="testclass"> Bedarfsmenge</span> hängt ab von den <span class="testclass"> Aufträgen </span> in der Warteschlange des Produktes`;
+    artikelZuordnung.get(artikelnummer)?.forEach((element, index) => {
+        (index == (länge - 1) && länge > 1) ? bedarfsmenge = bedarfsmenge + ' und' : bedarfsmenge = bedarfsmenge;
+        bedarfsmenge = bedarfsmenge + ' ' + `<span class="testclass"> ${element} </span>`;
+
+        artikelZuordnung.get(artikelnummer)![0] != 1 &&  artikelZuordnung.get(artikelnummer)![0] != 2 && artikelZuordnung.get(artikelnummer)![0] != 3 
+        ? bedarfsmenge = bedarfsmenge + ' (Anzahl: ' + `${zwischenprodukt_daten_sort.find(zwischenprodukt => zwischenprodukt.artikelnummer == element)?.in_warteschlange})`
+        : bedarfsmenge = bedarfsmenge + ' ' + endprodukt_daten.find(endprodukt => endprodukt.artikelnummer == element)?.in_warteschlange;
+
+        (index < (länge - 2) && länge > 1) ? bedarfsmenge = bedarfsmenge + ',' : bedarfsmenge = bedarfsmenge;
+      })
+    return bedarfsmenge;
+  }
+
+  getClass(row: number): string {
+    if(isExpanded[row]){
+      return 'colored'
+    }
+    return ''
+  }
+
+  getClassExpand(artikel: number): string {
+    if(isExpanded[artikel]){
+      return 'boldVertrieb';
+    }
+    return '';
+  }
+
+  getProduktName(artikel:number): string {
+    return `Artikel ${artikel}: ${produktNamen.get(artikel)!}`;
   }
 }

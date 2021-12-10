@@ -96,3 +96,36 @@
   .student-element-description-attribution {
     opacity: 0.5;
   }
+
+  .colored {
+    background-color: rgb(243, 243, 243);
+  }
+
+  .boldVertrieb {
+    font-weight: bold;
+    font-size: 15px;
+    color: #e8505b;
+  }
+
+  .matlinefont {
+    font-size: 18px !important;
+  }
+
+  .center {
+    vertical-align: middle !important;
+    padding-top: 20px;
+  }
+
+  .center2 {
+    display: flex;
+   align-items: center;
+  }
+  
+  ::ng-deep .mat-form-field-wrapper .mat-form-field {
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  mat-form-field {
+    width: 50%;
+  }
