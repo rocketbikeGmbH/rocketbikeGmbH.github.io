@@ -7,10 +7,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-mengenplanung',
-  templateUrl: './dialogoverview.component.html',
+  templateUrl: './bestellung.component.html',
 })
 
-export class DialogOverview {
+export class Bestellung {
   options = options;
   ids = bestellArtikelArray.map(i => i.id);
   bestellung = this.formBuilder.group({
@@ -36,7 +36,7 @@ export class DialogOverview {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverview>,
+    public dialogRef: MatDialogRef<Bestellung>,
     @Inject(MAT_DIALOG_DATA) public data: Bestellungen,
     private formBuilder: FormBuilder,
   ) {}

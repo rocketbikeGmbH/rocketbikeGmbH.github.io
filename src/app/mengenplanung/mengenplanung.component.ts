@@ -4,13 +4,11 @@ import { ExportState } from '../store/export/export.reducer';
 import { select, Store } from '@ngrx/store';
 import {
   selectImportArticle,
-  selectImportForecast,
   selectImportFutureInwardstockmovementOrder,
   selectImportInwardstockmovementOrder,
 } from '../store/import/import.selector';
 import {
   article,
-  forecast,
   futureinwardstockmovementorder,
   inwardstockmovementorder,
 } from '../model/import.model';
@@ -24,11 +22,12 @@ import { Router } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogOverview } from './dialog/dialogoverview.component';
+import { Bestellung } from './bestellung/bestellung.component';
 import { StepperServiceService } from '../stepper-service.service';
 import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanung/infobutton-programmplanung.component';
 import { selectProductionlist } from '../store/export/export.selector';
 import { browserRefresh } from '../app.component';
+import { Prognose } from './prognose/prognose.component';
 
 class OrderImpl implements Order {
   attr_article: number;
@@ -41,6 +40,31 @@ class OrderImpl implements Order {
     this.attr_modus = attr_modus;
   }
 }
+
+export class Forecast {
+  periode0: Periode;
+  periode1: Periode;
+  periode2: Periode;
+
+  constructor(periode0: Periode, periode1: Periode, periode2: Periode) {
+    this.periode0 = periode0;
+    this.periode1 = periode1;
+    this.periode2 = periode2;
+  }
+}
+class Periode {
+  p_number: number;
+  p1: number;
+  p2: number;
+  p3: number;
+
+  constructor(p_number: number, p1: number, p2: number, p3: number) {
+    this.p_number = p_number;
+    this.p1 = p1;
+    this.p2 = p2;
+    this.p3 = p3;
+  }
+}
 export const options: Array<string> = ['Normal', 'Eil', 'Sonderbestellung'];
 
 @Component({
@@ -49,7 +73,7 @@ export const options: Array<string> = ['Normal', 'Eil', 'Sonderbestellung'];
   styleUrls: ['./mengenplanung.component.scss'],
 })
 export class MengenplanungComponent implements OnInit {
-  type = 'mengenplanung'
+  type = 'mengenplanung';
 
   dataSource: Array<BestellArtikel> = bestellArtikelArray;
   dataSource2: Array<Bestellungen> = [];
@@ -87,13 +111,12 @@ export class MengenplanungComponent implements OnInit {
     .pipe(select(selectImportFutureInwardstockmovementOrder))
     .subscribe((i) => (this._futureorders = i));
 
-  _forecast: forecast | undefined;
-  forecast$ = this.importStore
-    .pipe(select(selectImportForecast))
-    .subscribe((i) => (this._forecast = i));
-
   productionlist: Production[] = [];
-  productionlist$ = this.exportStore.pipe(select(selectProductionlist)).subscribe(i => this.productionlist = i);
+  productionlist$ = this.exportStore
+    .pipe(select(selectProductionlist))
+    .subscribe((i) => (this.productionlist = i));
+
+  forecast: Forecast | undefined;
 
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
@@ -107,18 +130,17 @@ export class MengenplanungComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    this.productionlist.forEach( p => {
+    this.productionlist.forEach((p) => {
       // @ts-ignore
-      verwendungen.forEach( (v) => {
-        if(v.id === p.attr_article) {
+      verwendungen.forEach((v) => {
+        if (v.id === p.attr_article) {
           v.quantity = p.attr_quantity;
         }
-      })
+      });
     });
 
     if (browserRefresh) {
-      this.router.navigate(['/dateiimport'])
+      this.router.navigate(['/dateiimport']);
     }
     console.log('refreshed?:', browserRefresh);
 
@@ -126,36 +148,40 @@ export class MengenplanungComponent implements OnInit {
       const article = this._articles?.find((article) => article.id == d.id);
       d.lagerbestand = article?.amount;
 
-      if(Array.isArray(this._orders)){
+      if (Array.isArray(this._orders)) {
         const order = this._orders?.find((o) => o.article == d.id);
         if (order) {
           d.eintreffendeBestellung = order?.amount;
         }
       }
 
-      if(Array.isArray(this._futureorders)){
-        const futureOrders = this._futureorders?.filter(e => e.article == d.id);
+      if (Array.isArray(this._futureorders)) {
+        const futureOrders = this._futureorders?.filter(
+          (e) => e.article == d.id
+        );
 
         if (futureOrders) {
-          const ob : Array<Bestellungen> = [];
-           futureOrders.forEach(e => {
-             // @ts-ignore
-             const lieferfrist = Number.parseInt(e?.orderperiod ?? '0');
-             ob.push(new Bestellungen(
-               e?.amount,
-               lieferfrist + d.lieferfrist,
-               getKeyByValue(this.optionsMap,e.mode)
-             ));
-           })
+          const ob: Array<Bestellungen> = [];
+          futureOrders.forEach((e) => {
+            // @ts-ignore
+            const lieferfrist = Number.parseInt(e?.orderperiod ?? '0');
+            ob.push(
+              new Bestellungen(
+                e?.amount,
+                lieferfrist + d.lieferfrist,
+                getKeyByValue(this.optionsMap, e.mode)
+              )
+            );
+          });
           d.offeneBestellung = ob;
         }
       }
       d.bruttobedarf = 0;
       // @ts-ignore
-      verwendungen.forEach( v => {
+      verwendungen.forEach((v) => {
         // @ts-ignore
-        v.parts.forEach( parts => {
-          if(parts.id === d.id) {
+        v.parts.forEach((parts) => {
+          if (parts.id === d.id) {
             // @ts-ignore
             d.bruttobedarf += parts.faktor * v.quantity;
           }
@@ -173,7 +199,7 @@ export class MengenplanungComponent implements OnInit {
         -1
       );
       // @ts-ignore
-      const ab  = Number.parseInt(d.lagerbestand ?? '0');
+      const ab = Number.parseInt(d.lagerbestand ?? '0');
       // @ts-ignore
       const anz = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
 
@@ -195,6 +221,10 @@ export class MengenplanungComponent implements OnInit {
         bestellungen.id = d.id;
         this.dataSource2.push(bestellungen);
       }
+    });
+    this.dataSource2.sort((a, b) => {
+      // @ts-ignore
+      return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
     });
   }
 
@@ -224,14 +254,41 @@ export class MengenplanungComponent implements OnInit {
     }
   }
 
+  openPrognoseDialog(): void {
+    const dialogRef = this.dialog.open(Prognose, {
+      width: '750px',
+      data: new Forecast(
+        new Periode(1, 0, 0, 0),
+        new Periode(2, 0, 0, 0),
+        new Periode(3, 0, 0, 0)
+      ),
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.forecast = result;
+      this.dataSource.forEach((d) => {
+        // @ts-ignore
+        const p0 = this.forecast.periode0.p1 * d.verwendung.p1 + this.forecast.periode0.p2 * d.verwendung.p2 + this.forecast.periode0.p3 * d.verwendung.p3;
+        // @ts-ignore
+        const p1 = this.forecast.periode1.p1 * d.verwendung.p1 + this.forecast.periode1.p2 * d.verwendung.p2 + this.forecast.periode1.p3 * d.verwendung.p3;
+        // @ts-ignore
+        const p2 = this.forecast.periode2.p1 * d.verwendung.p1 + this.forecast.periode2.p2 * d.verwendung.p2 + this.forecast.periode2.p3 * d.verwendung.p3;
+        // @ts-ignore
+        const s = (d.bruttobedarf + p0 + p1 + p2) / 4;
+        d.bestellpunkt = round((s * (5 * d.lieferfrist + 5)) / 5, -1);
+      });
+      this.table.renderRows();
+    });
+  }
+
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverview, {
+    const dialogRef = this.dialog.open(Bestellung, {
       width: '350px',
       data: new Bestellungen(0, 0, ''),
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if(result?.id && result?.modus  && result?.anzahl) {
+      if (result?.id && result?.modus && result?.anzahl) {
         this.dataSource2.push(result);
         this.table.renderRows();
       }
@@ -250,10 +307,7 @@ const round = (value: number, precision: number) => {
 
 const getKeyByValue = (map: Map<string, number>, searchValue: number) => {
   for (let [key, value] of map.entries()) {
-    console.log(value);
-    console.log(searchValue);
-    if (value == searchValue)
-      return key;
+    if (value == searchValue) return key;
   }
-  return "";
-}
+  return '';
+};

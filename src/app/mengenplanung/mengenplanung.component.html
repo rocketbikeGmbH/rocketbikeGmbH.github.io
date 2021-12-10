@@ -10,6 +10,9 @@
         <button mat-raised-button class="info" (click)="openInfoDialog()">
           <mat-icon>info</mat-icon>
         </button>
+        <button mat-raised-button class="info" (click)="openPrognoseDialog()">
+          <mat-icon>note_add</mat-icon>
+        </button>
       </div>
       <mat-table
         class="lessons-table mat-elevation-z8"
@@ -134,10 +137,14 @@
         #table
       >
         <ng-container matColumnDef="artikelnr">
-          <mat-header-cell *matHeaderCellDef>{{
-            'Artikel Nummer' | translate
-          }}</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{'Artikel Nummer' | translate}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.id }}
+            <mat-icon class="icon-warn" *ngIf='element.modus === "Eil"'>warning</mat-icon>
+            <mat-icon class="icon-error" *ngIf='element.modus === "Sonderbestellung"'>error</mat-icon>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="menge">
@@ -150,6 +157,7 @@
                 matInput
                 type="number"
                 step="10"
+                min="0"
                 [(ngModel)]="element.anzahl"
               >
             </mat-form-field>

@@ -60,5 +60,15 @@ table {
 }
 
 ::ng-deep.mat-form-field-ripple {
-  background-color: #e8505b !important;;
+  background-color: #e8505b !important;
+}
+
+.icon-error {
+  color: #e8505b;
+  padding-left: 5px;
+}
+
+.icon-warn {
+  color: #FFFF00;
+  padding-left: 5px;
 }

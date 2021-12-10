@@ -44,7 +44,8 @@ import { MatSelectModule } from '@angular/material/select';
 import {SplitDialogOverview} from "./splitdialog/splitdialogoverview.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import { HomeComponent } from './home/home.component';
-import { DialogOverview } from './mengenplanung/dialog/dialogoverview.component';
+import { Bestellung } from './mengenplanung/bestellung/bestellung.component';
+import { Prognose } from './mengenplanung/prognose/prognose.component'
 import { InfobuttonComponent } from './infobutton/infobutton.component';
 import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung/infobutton-programmplanung.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -65,9 +66,10 @@ import { AbsatzplanInfobuttonComponent } from './absatzplan-infobutton/absatzpla
     MengenplanungComponent,
     ProgrammplanungComponent,
     HomeComponent,
-    DialogOverview,
+    Bestellung,
     InfobuttonComponent,
     InfobuttonProgrammplanungComponent,
+    Prognose,
     InfobuttonLosgrossenplanungComponent,
     AbsatzplanInfobuttonComponent,
     InfobuttonLosgrossenplanungComponent,
