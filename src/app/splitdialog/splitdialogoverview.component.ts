@@ -13,7 +13,9 @@ export class SplitDialogOverview {
     @Inject(MAT_DIALOG_DATA) public data: SplitDialog,
   ) {}
 
+
   onNoClick(): void {
     this.dialogRef.close()
   }
+
 }

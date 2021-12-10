@@ -9,9 +9,9 @@ import { select, Store } from '@ngrx/store';
 import { ExportState } from '../store/export/export.reducer';
 import { addProductionlist } from '../store/export/export.actions';
 import { Router } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
 import { selectProductionlist } from '../store/export/export.selector';
 import { browserRefresh } from '../app.component';
+import {InfobuttonLosgrossenplanungComponent} from "../infobutton-losgrossenplanung/infobutton-losgrossenplanung.component";
 
 class Prodlist implements Production {
   attr_article: number;
@@ -27,6 +27,7 @@ export interface LosgrossenElement {
   attr_article: number;
   attr_quantity: number;
   delbutton: boolean;
+  splitbutton: boolean;
 }
 
 export interface SplitDialog {
@@ -35,36 +36,36 @@ export interface SplitDialog {
 }
 
 let Element_Data: LosgrossenElement[] = [
-  { attr_article: 13, attr_quantity: 0, delbutton: false },
-  { attr_article: 14, attr_quantity: 0, delbutton: false },
-  { attr_article: 15, attr_quantity: 0, delbutton: false },
-  { attr_article: 18, attr_quantity: 0, delbutton: false },
-  { attr_article: 19, attr_quantity: 0, delbutton: false },
-  { attr_article: 20, attr_quantity: 0, delbutton: false },
-  { attr_article: 7, attr_quantity: 0, delbutton: false },
-  { attr_article: 8, attr_quantity: 0, delbutton: false },
-  { attr_article: 9, attr_quantity: 0, delbutton: false },
-  { attr_article: 49, attr_quantity: 0, delbutton: false },
-  { attr_article: 54, attr_quantity: 0, delbutton: false },
-  { attr_article: 29, attr_quantity: 0, delbutton: false },
-  { attr_article: 4, attr_quantity: 0, delbutton: false },
-  { attr_article: 5, attr_quantity: 0, delbutton: false },
-  { attr_article: 6, attr_quantity: 0, delbutton: false },
-  { attr_article: 10, attr_quantity: 0, delbutton: false },
-  { attr_article: 11, attr_quantity: 0, delbutton: false },
-  { attr_article: 12, attr_quantity: 0, delbutton: false },
-  { attr_article: 17, attr_quantity: 0, delbutton: false },
-  { attr_article: 16, attr_quantity: 0, delbutton: false },
-  { attr_article: 50, attr_quantity: 0, delbutton: false },
-  { attr_article: 55, attr_quantity: 0, delbutton: false },
-  { attr_article: 30, attr_quantity: 0, delbutton: false },
-  { attr_article: 51, attr_quantity: 0, delbutton: false },
-  { attr_article: 56, attr_quantity: 0, delbutton: false },
-  { attr_article: 31, attr_quantity: 0, delbutton: false },
-  { attr_article: 26, attr_quantity: 9, delbutton: false },
-  { attr_article: 1, attr_quantity: 0, delbutton: false },
-  { attr_article: 2, attr_quantity: 0, delbutton: false },
-  { attr_article: 3, attr_quantity: 0, delbutton: false },
+  { attr_article: 13, attr_quantity: 0, delbutton: false, splitbutton: true},
+  { attr_article: 14, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 15, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 18, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 19, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 20, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 7, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 8, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 9, attr_quantity: 0, delbutton: false, splitbutton: true},
+  { attr_article: 49, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 54, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 29, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 4, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 5, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 6, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 10, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 11, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 12, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 17, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 16, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 50, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 55, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 30, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 51, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 56, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 31, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 26, attr_quantity: 9, delbutton: false, splitbutton: true },
+  { attr_article: 1, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 2, attr_quantity: 0, delbutton: false, splitbutton: true },
+  { attr_article: 3, attr_quantity: 0, delbutton: false, splitbutton: true },
 ];
 
 @Component({
@@ -106,7 +107,7 @@ export class LosgroessenplanungComponent implements OnInit {
     if (browserRefresh) {
       this.router.navigate(['/dateiimport'])
     }
-    
+
     this.productionlist$.subscribe((i) => (this.productionlist = i));
     this.productionlist.forEach((i) =>
       this.dataSource.forEach((d) => {
@@ -136,14 +137,12 @@ export class LosgroessenplanungComponent implements OnInit {
           (d) => d.attr_article === article_attr
         );
         // @ts-ignore
-        const control = new FormControl(0, Validators.max(prod.attr_quantity));
-        console.log(control.errors);
-        // @ts-ignore
         prod.attr_quantity = quant_attr - result;
         this.dataSource.push({
           attr_article: article_attr,
           attr_quantity: result,
           delbutton: true,
+          splitbutton: false,
         });
         this.table.renderRows();
       }
@@ -178,5 +177,9 @@ export class LosgroessenplanungComponent implements OnInit {
     const prodlist: Productionlist = { production: productionlist };
     this.exportStore.dispatch(addProductionlist({ productionlist: prodlist }));
     this.router.navigate(['dateiexport']);
+  }
+
+  openInfoDialog() {
+    this.dialog.open(InfobuttonLosgrossenplanungComponent);
   }
 }

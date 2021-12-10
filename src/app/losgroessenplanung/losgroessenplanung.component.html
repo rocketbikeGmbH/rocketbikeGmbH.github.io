@@ -1,45 +1,76 @@
-<table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" cdkDropList
-       [cdkDropListData]="dataSource"
-       (cdkDropListDropped)="dropTable($event)">
+<br />
+<mat-card class="hintergrund">
+  <div class="flex">
+    <div>
+      <mat-card-title>{{ 'Losgrößenlanung' | translate }}</mat-card-title>
+    </div>
+    <span class="spacer"></span>
+    <button mat-raised-button class="info" (click)="openInfoDialog()">
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
 
-  <!-- Artikel Column -->
-  <ng-container matColumnDef="Artikel"  >
-    <th mat-header-cell *matHeaderCellDef > {{'Artikel' | translate}} </th>
-    <td mat-cell *matCellDef="let element"> {{element.attr_article}} </td>
-  </ng-container>
+  <table
+    mat-table
+    #table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+    cdkDropList
+    [cdkDropListData]="dataSource"
+    (cdkDropListDropped)="dropTable($event)"
+  >
+    <!-- Artikel Column -->
+    <ng-container matColumnDef="Artikel">
+      <th mat-header-cell *matHeaderCellDef>{{ 'Artikel' | translate }}</th>
+      <td mat-cell *matCellDef="let element">{{ element.attr_article }}</td>
+    </ng-container>
 
-  <!-- Produktionsmenge Column -->
-  <ng-container matColumnDef="Produktionsmenge" >
-    <th mat-header-cell *matHeaderCellDef > {{'Produktionsmenge' | translate}} </th>
-    <td mat-cell *matCellDef="let element"> {{element.attr_quantity}} </td>
-  </ng-container>
+    <!-- Produktionsmenge Column -->
+    <ng-container matColumnDef="Produktionsmenge">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'Produktionsmenge' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.attr_quantity }}</td>
+    </ng-container>
 
-  <!-- Aufteilen Column -->
-  <ng-container matColumnDef="Aufteilen" >
-    <th mat-header-cell *matHeaderCellDef > {{'Aufteilen' | translate}} </th>
-    <td mat-cell *matCellDef="let element">
-<!--        <button mat-raised-button (click)='onClick(element)'> -->
-      <button mat-raised-button (click)="openDialog(element)" >
+    <!-- Aufteilen Column -->
+    <ng-container matColumnDef="Aufteilen">
+      <th mat-header-cell *matHeaderCellDef>{{ 'Aufteilen' | translate }}</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-raised-button
+          *ngIf="element.splitbutton"
+          (click)="openDialog(element)">
           <mat-icon> call_split</mat-icon>
         </button>
-    </td>
-  </ng-container>
+      </td>
+    </ng-container>
 
-  <!-- Loeschen Column -->
-  <ng-container matColumnDef="Löschen">
-    <th mat-header-cell *matHeaderCellDef > {{'Löschen' | translate}} </th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-raised-button  *ngIf="element.delbutton" (click)="deletesplit(element)">
-        <mat-icon>delete_outline</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <!-- Loeschen Column -->
+    <ng-container matColumnDef="Löschen">
+      <th mat-header-cell *matHeaderCellDef>{{ 'Löschen' | translate }}</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-raised-button
+          *ngIf="element.delbutton"
+          (click)="deletesplit(element)"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
- </table>
-
- <!-- Von Jan eingefügt wegen dem Stepper, kannst den Button und die Funktion gerne für's speichern verwenden-->
- <button mat-raised-button (click)="speichern()">
-  {{ 'Speichern & Weiter' | translate }}
-</button>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      cdkDrag
+      [cdkDragData]="row"
+    ></tr>
+  </table>
+  <br>
+  <!-- Von Jan eingefügt wegen dem Stepper, kannst den Button und die Funktion gerne für's speichern verwenden-->
+  <button mat-raised-button class="btn" color="berechnen" (click)="speichern()">
+    <mat-icon>save</mat-icon>&nbsp;{{ 'Speichern & Weiter' | translate }}
+  </button>
+</mat-card>
