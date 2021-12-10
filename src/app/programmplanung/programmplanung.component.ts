@@ -448,10 +448,11 @@ export class ProgrammplanungComponent implements OnInit {
     // zwischenprodukt_daten.length = 0;
       console.log(zwischenprodukt_daten)
     zwischenprodukt_daten.forEach(zwiprodukt => {
+      if(data_warehousestock != undefined){
       if (data_warehousestock!.article[zwiprodukt.artikelnummer - 1] != undefined) {
         zwiprodukt.aktueller_lagerbestand = data_warehousestock!.article[zwiprodukt.artikelnummer - 1].amount;
       }
-
+    }
       var sum_bearbeitung: number = 0;
       if(Array.isArray(data_ordersinwork)){
       data_ordersinwork?.workplace!.forEach(element => {
