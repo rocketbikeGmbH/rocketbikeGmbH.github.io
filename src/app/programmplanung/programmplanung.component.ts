@@ -288,7 +288,9 @@ export class ProgrammplanungComponent implements OnInit {
       - +endprodukt_daten[artikel - 1].aktueller_lagerbestand
       - +endprodukt_daten[artikel - 1].in_bearbeitung
       - +endprodukt_daten[artikel - 1].in_warteschlange;
-
+    if(endprodukt_daten[artikel - 1].produktionsauftraege < 0){
+      endprodukt_daten[artikel - 1].produktionsauftraege = 0;
+    }
     //this.berechnungEndprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast, this.data_wishlist);
     // this.store.dispatch(addWorkingtimelist({workingtimelist: future_working_list}))
     //console.log('berechnungszwischenprodukte')
@@ -312,6 +314,9 @@ export class ProgrammplanungComponent implements OnInit {
       - +zwischenprodukt_daten_sort[wert].aktueller_lagerbestand
       - +zwischenprodukt_daten_sort[wert].in_bearbeitung
       - +zwischenprodukt_daten_sort[wert].in_warteschlange;
+      if(zwischenprodukt_daten_sort[wert].produktionsauftraege < 0){
+        zwischenprodukt_daten_sort[wert].produktionsauftraege = 0;
+      }
       this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
      // zwischenprodukt_daten_sort.length = 0;
       //zwischenprodukt_daten.forEach(val => zwischenprodukt_daten_sort.push(Object.assign({}, val)));
@@ -421,6 +426,9 @@ export class ProgrammplanungComponent implements OnInit {
 
           endprodukt_daten[i].produktionsauftraege = +endprodukt_daten[i].vertriebswunsch + +endprodukt_daten[i].direktverkauf + +endprodukt_daten[i].geplanter_endbestand - +endprodukt_daten[i].aktueller_lagerbestand
             - +endprodukt_daten[i].in_bearbeitung - +endprodukt_daten[i].in_warteschlange;
+          if(endprodukt_daten[i].produktionsauftraege < 0){
+            endprodukt_daten[i].produktionsauftraege = 0
+          }
           sum_bearbeitung = 0;
         };
       }
@@ -546,6 +554,10 @@ export class ProgrammplanungComponent implements OnInit {
       zwiprodukt.produktionsauftraege = +zwiprodukt.vertriebswunsch
         + +zwiprodukt.geplanter_endbestand - +zwiprodukt.aktueller_lagerbestand
         - +zwiprodukt.in_bearbeitung - +zwiprodukt.in_warteschlange;
+
+        if(zwiprodukt.produktionsauftraege < 0){
+          zwiprodukt.produktionsauftraege = 0;
+        }
       sum_bearbeitung = 0;
 
       //zwischenprodukt_daten.push(zwiprodukt);
