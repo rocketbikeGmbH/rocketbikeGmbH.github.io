@@ -1,3 +1,98 @@
 table {
-    width: 100%;
-  }
+  width: 100%;
+}
+
+.hintergrund {
+  background-color:rgb(255, 255, 255);
+}
+
+.btn {
+  background-color: #e8505b;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.btn:hover {
+  background-color: #c4464f;
+}
+
+.info {
+  background-color: #e8505b;
+  color: white;
+  height: 40px;
+  width: 40px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.flex {
+  width: 100%;
+  display: flex;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #e8505b !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  background-color: #e8505b !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ background-color: #e8505b !important;;
+}
+
+
+tr.student-detail-row {
+  height: 0;
+}
+
+tr.student-element-row:not(.student-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.student-element-row:not(.student-expanded-row):active {
+  background: #efefef;
+}
+
+.student-element-row td {
+  border-bottom-width: 0;
+}
+
+.student-element-detail {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: inset 2px 3px 8px #ffffff;
+  border-radius: 8px;
+}
+
+.student-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.student-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.student-element-description {
+  padding: 16px;
+}
+
+.student-element-description-attribution {
+  opacity: 0.5;
+}

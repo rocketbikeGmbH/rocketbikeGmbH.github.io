@@ -49,6 +49,7 @@ import { InfobuttonComponent } from './infobutton/infobutton.component';
 import { InfobuttonProgrammplanungComponent } from './infobutton-programmplanung/infobutton-programmplanung.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { AbsatzplanInfobuttonComponent } from './absatzplan-infobutton/absatzplan-infobutton.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { MatSortModule } from '@angular/material/sort';
     DialogOverview,
     InfobuttonComponent,
     InfobuttonProgrammplanungComponent,
+    AbsatzplanInfobuttonComponent,
   ],
   imports: [
     BrowserModule,

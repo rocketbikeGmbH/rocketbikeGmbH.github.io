@@ -539,6 +539,11 @@ export class ProgrammplanungComponent implements OnInit {
     })
 
 
+/** 
+ * @returns boolean 
+ * @param 
+ * Test kommentar
+*/
 
 
     // zwischenprodukt_daten.sort((a, b) => {

@@ -10,6 +10,8 @@ import { addSelldirect, addSellwish, addSellwishItem } from '../store/export/exp
 import { Router } from '@angular/router';
 import { StepperServiceService } from '../stepper-service.service';
 import { browserRefresh } from '../app.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AbsatzplanInfobuttonComponent } from '../absatzplan-infobutton/absatzplan-infobutton.component';
 
 
 
@@ -45,7 +47,7 @@ export class AbsatzplanungComponent implements OnInit {
   forecast$ = this.store.pipe(select(selectImportForecast));
   restults$ = this.store.pipe(select(selectImportResults));
 
-  constructor(private route: Router, public D: Daten, private store : Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService) {
+  constructor(private route: Router, public D: Daten, private store : Store<ImportState>, private exportstore: Store<ExportState>, private router: Router, private stepperservice: StepperServiceService,public dialog: MatDialog) {
 
    }
 
@@ -127,6 +129,10 @@ export class AbsatzplanungComponent implements OnInit {
 
    this.router.navigate(['programmplanung'])
 
+  }
+
+  openDialog() {
+    this.dialog.open(AbsatzplanInfobuttonComponent);
   }
 
 }
