@@ -1,7 +1,8 @@
 <h2 mat-dialog-title>Erläuterung der Formeln</h2>
 <mat-dialog-content class="mat-typography">
   <h3><u>Kapazitätsbedarf</u></h3>
-  <h4>Wird berechnet anhand der Produktionszahlen der Eigenfertigungsprodukte, multipliziert mit der Bearbeitungsdauer:</h4>
+  <h4>Wird berechnet anhand der Produktionszahlen der Eigenfertigungsprodukte, multipliziert mit der Bearbeitungsdauer die es bei jeder Maschine benötigt.</h4>
+  <h4>Anschließend werden diese Summen je Maschine M1 bis M15 aufsummiert und somit ergibt sich die benötigte Kapazität für die kommende Periode.</h4>
   <h4>M1: (E49+E54+E29) * 6</h4>
   <h4>M2: (E50+E55+E30) * 5</h4>
   <h4>M3: E51 * 5 + (E56+31) * 6</h4>
@@ -18,13 +19,27 @@
   <h4>M15: (E17+E26) * 3</h4>
   <br>
   <h3><u>Rüstzeit</u></h3>
-  <h4>Rüstzeit ermittelt sich anhand der durschnittlichen Rüstdauer je Arbeitsplatz multipliziert mit der Anzahl der Rüstevents aus der Vorperiode</h4>
+  <h4>Die Rüstzeit für die kommende Periode ermittelt sich anhand der durschnittlichen Rüstdauer je Arbeitsplatz multipliziert mit der Anzahl der Rüstevents aus der Vorperiode. </h4>
+  <h4>Die Anzahl an Rüstevents aus der Vorperiode werden deshalb genommen, da diese öfters schwankt und für eine bessere Kalkulation orientiert sich das Programm an de bisherigen Zahlen als Referenz.</h4>
   <br>
   <h3><u>Warteschlange Bedarf und Rüstzeit</u></h3>
-  <h4>Es werden die nicht bearbeiteten Aufträge aus der Vorperiode herangezogen und deren Bearbeitungsdauer ermittelt und deren Rüstzeit geschätzt. </h4>
+  <h4>Es werden die nicht bearbeiteten Aufträge aus der Vorperiode herangezogen und deren Bedarf zu den Maschinen aus der Inputdatei ausgelesen und dazu addiert.</h4>
+  <h4>Für die Rüstzeit dieser Aufträge wird folgende annäherungs Formel verwendet: </h4>
+  <h4>( (Kapazität der Vorperiode / Kapazitätbedarf der nächsten Periode) * Anzahl an Rüstevents in Vorperiode ) * Durschnittlicher Dauer der Maschinen Rüstzeit</h4>
   <br>
   <h3><u>Kapazitätsbedarf Gesamt</u></h3>
-  <h4>Summe aus: Kapazitätsbedarf neu + Rüstzeit neu + Kapazitätbedarf alt + Rüstzeit alt + Zusatz Minuten pro Tag</h4>
+  <h4>Summe aus: Kapazitätsbedarf neu + Rüstzeit neu + Kapazitätbedarf alt + Rüstzeit alt + Zusatz Minuten pro Tag.</h4>
+
+  <h3><u>Schichten und Überstunden-Minuten pro Tag</u></h3>
+
+  <h4>Anhand der Gesamtkazapität die benötigt wird, wird ermittelt wiviele Schichten je Arbeitsplatz benötigt werden um die Kapazität zu leisten.</h4>
+  <h4>Jeder Arbeitsplatz verfügt bis zu 3 Schichten a 2.400 Minuten pro Woche. Es können je Schicht auch noch Überstunden gemacht werden.</h4>
+  <h4>Das Programm anhand des Bedarf welche Besetzung geeignet ist um eine gute Auslastung zu haben und zugleich auch alle Produkte herstellen zu können</h4>
+
+  <h3><u>Zusatzminuten pro Tag</u></h3>
+  <h4>Sie als Kunde können noch zusätzliche Arbeitsminuten die je Tag geleistet werden solslen, hinzufügen. Diese fließen anschließend direkt in die Berechnungen mit ein.</h4>
+
+  
 
   
 </mat-dialog-content>

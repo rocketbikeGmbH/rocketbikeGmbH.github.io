@@ -1,8 +1,15 @@
-<button mat-raised-button (click)="openDialog()"><mat-icon>info</mat-icon></button>
 <br>
 <mat-card class="hintergrund">
-  
-        <mat-card-title>{{'Kapazitätsplanung' | translate}}</mat-card-title>
+
+        <div class="flex">
+          <div>
+            <mat-card-title>{{'Kapazitätsplanung' | translate}}</mat-card-title>
+          </div>
+          <span class="spacer"></span>
+          <button mat-raised-button class="info" (click)="openDialog()">
+            <mat-icon>info</mat-icon>
+          </button>
+        </div>
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -72,5 +79,7 @@
         </table>
                 
         <br>
-        <button mat-raised-button (click)="speichern()"> {{'Speichern & Weiter' | translate}}</button>
+        <button mat-raised-button class="btn" color="berechnen" (click)="speichern()">
+          <mat-icon>save</mat-icon>&nbsp;&nbsp;{{'Speichern & Weiter' | translate}}
+        </button>
 </mat-card>

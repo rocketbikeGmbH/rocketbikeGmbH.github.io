@@ -1,9 +1,16 @@
 
 <br>
 <mat-card class="hintergrund">
-        <mat-card-title>{{'Absatzplanung' | translate}}</mat-card-title>
-        <mat-card-subtitle>{{'Vertriebswunsch & Direktverkauf' | translate}}</mat-card-subtitle>
-
+        <div class="flex">
+                <div>
+                  <mat-card-title>{{'Absatzplanung' | translate}}</mat-card-title>
+                  <mat-card-subtitle>{{'Vertriebswunsch & Direktverkauf' | translate}}</mat-card-subtitle>
+                </div>
+                <span class="spacer"></span>
+                <button mat-raised-button class="info" (click)="openDialog()">
+                  <mat-icon>info</mat-icon>
+                </button>
+              </div>
         <form class="example-form">
                 <td><mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>{{'Produkt P1' | translate}}</mat-label>
@@ -73,6 +80,8 @@
                 
                 <br>
            
-        <button mat-raised-button (click)="speichern()">{{'Speichern & Weiter' | translate}}</button>
+                <button mat-raised-button class="btn" color="berechnen" (click)="speichern()">
+                        <mat-icon>save</mat-icon>&nbsp;&nbsp;{{'Speichern & Weiter' | translate}}
+                      </button>
 </form>
 </mat-card>

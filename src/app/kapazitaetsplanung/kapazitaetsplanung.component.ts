@@ -537,6 +537,7 @@ export class KapazitaetsplanungComponent implements OnInit {
           data.ruest_old = Math.ceil(Number((data.kapa_old/data.kapa_new)*data.ruest_old)) * ruest_zeit.dauer
         }
 
+
         if(data.arbeitsplatz == ruest_zeit.id && data.kapa_old != 0 && data.kapa_new == 0){
           data.ruest_old = Math.ceil(Number((ruest_zeit.dauer/data.kapa_old)*data.ruest_old)) * ruest_zeit.dauer
         }
