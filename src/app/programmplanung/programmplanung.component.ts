@@ -446,7 +446,7 @@ export class ProgrammplanungComponent implements OnInit {
     // });
 
     // zwischenprodukt_daten.length = 0;
-
+      console.log(zwischenprodukt_daten)
     zwischenprodukt_daten.forEach(zwiprodukt => {
       if (data_warehousestock!.article[zwiprodukt.artikelnummer - 1] != undefined) {
         zwiprodukt.aktueller_lagerbestand = data_warehousestock!.article[zwiprodukt.artikelnummer - 1].amount;
@@ -500,6 +500,7 @@ export class ProgrammplanungComponent implements OnInit {
       })
 
       //Vertriebswunsch
+      console.log(zwiprodukt);
       if (zwiprodukt.artikelnummer == 26) {
         artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
           //console.log(element + ' ' + endprodukt_daten[element - 1 ].produktionsauftraege);
@@ -511,7 +512,18 @@ export class ProgrammplanungComponent implements OnInit {
           var ver = zwischenprodukt_daten.find(x => x.artikelnummer == element);
           // temp_zwischenprodukt.vertriebswunsch = temp_zwischenprodukt.vertriebswunsch + zwischenprodukt_daten[element - 1].produktionsauftraege;
           if (ver != undefined) {
+            if(isNaN(zwiprodukt.vertriebswunsch)){
+              zwiprodukt.vertriebswunsch = 0;
+              ver!.produktionsauftraege = 0;
+              console.log(ver!.produktionsauftraege)
+            }
+            console.log('element')
+            console.log(element)
+            console.log(ver!.produktionsauftraege)
+            console.log(zwiprodukt.vertriebswunsch);
             zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + ver!.produktionsauftraege;
+            console.log(zwiprodukt.vertriebswunsch);
+            console.log(ver!.produktionsauftraege)
           }
         })
       }
@@ -520,13 +532,12 @@ export class ProgrammplanungComponent implements OnInit {
         zwiprodukt.vertriebswunsch = endprodukt_daten[artikelZuordnung.get(zwiprodukt.artikelnummer)![0] - 1].produktionsauftraege;
       } else {
         var ver = zwischenprodukt_daten.find(x => x.artikelnummer == artikelZuordnung.get(zwiprodukt.artikelnummer)![0]);
-        if (zwiprodukt.artikelnummer == 4) {
-        }
-
         if (ver != undefined) {
           zwiprodukt.vertriebswunsch = ver!.produktionsauftraege;
         }
       };
+      console.log('vertr')
+      console.log(zwiprodukt.vertriebswunsch);
 
       //Bedarfsmenge
       if (zwiprodukt.artikelnummer == 26) {
@@ -583,26 +594,6 @@ export class ProgrammplanungComponent implements OnInit {
       }
     })
 
-
-/** 
- * @returns boolean 
- * @param 
- * Test kommentar
-*/
-
-
-    // zwischenprodukt_daten.sort((a, b) => {
-    //   if (b.artikelnummer < a.artikelnummer) return 1;
-    //   if (b.artikelnummer > a.artikelnummer) return -1;
-    //   return 0;
-    // });
-    // zwischenprodukt_daten_sort = zwischenprodukt_daten;
-    
-    // zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index].push(Object.assign({}, val)));
-    
-    //zwischenprodukt_daten.findIndex(element =>
-    //element.artikelnummer == (zwischen_artikel_sort[index]))
-
     zwischenprodukt_daten.forEach((val, index) => zwischenprodukt_daten_sort[index] = zwischenprodukt_daten[index]);
     zwischenprodukt_daten_sort.sort((a, b) => {
       if (b.artikelnummer < a.artikelnummer) return 1;
@@ -610,12 +601,6 @@ export class ProgrammplanungComponent implements OnInit {
       return 0;
     });
 
-
-    // this.tableZwi.renderRows();
-    //this.dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort);
-
-    //this.dataSourceZwiMat = this.dataSourceZwiMat;
-    //this.dataSourceZwiMat.data = this.dataSourceZwiMat.data;
     this.dataSourceZwiMat._updateChangeSubscription;
   }
 
@@ -690,7 +675,6 @@ export class ProgrammplanungComponent implements OnInit {
 
         (index < (länge - 2) && länge > 1) ? nummern = nummern + ',' : nummern = nummern;
       })
-      //nummern = `<span class="testclass"> ${nummern} </span>`
     return nummern;
   }
 

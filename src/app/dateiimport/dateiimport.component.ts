@@ -18,7 +18,7 @@ export class DateiimportComponent {
   dateiimport_file_auswahl = '';
 
   type = 'dateiimport'
-  browserRefresh: boolean = false;
+  browserRefresh: boolean = true;
 
   constructor(private store: Store<ImportState>, private stepperservice: StepperServiceService, private route: Router) {}
 
@@ -46,8 +46,9 @@ export class DateiimportComponent {
   ngOnInit() {
     this.browserRefresh = browserRefresh;
     console.log('refreshed?:', browserRefresh);
-    if (browserRefresh) {
-      this.route.navigate(['/dateiimport'])
+    if (browserRefresh == false) {
+      window.location.reload();
+      this.browserRefresh = true;
     }
   }
 }
