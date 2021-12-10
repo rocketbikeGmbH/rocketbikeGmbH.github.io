@@ -1,16 +1,53 @@
-<h2 mat-dialog-title>Programmplanung</h2>
+<h2 class="headline" mat-dialog-title>Programmplanung</h2>
 <mat-dialog-content class="mat-typography">
-    <h3><u>Lorem Ipsum</u></h3>
-    <h4>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-        consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
-        diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-        takimata sanctus est Lorem ipsum dolor sit amet.</h4>
-    <div>
-        
-    </div>
+    <h4>Im Folgenden finden Sie eine Erklärung über die verschiedenen Spalten innerhalb der Programmplanung.
+        Neben dieser Informationsseite, finden Sie zusätzlich in den jeweiligen Zeilen bei dem Button "Erklärung
+        anzeigen"
+        weitere Informationen wie z.B. den Artikelnamen oder die aktuellen Mengenangaben.
+    </h4>
+    <h2 class="headline-2">Endprodukte</h2>
+    <h3><u>Artikelnummer</u></h3>
+    <h4>In der Spalte finden sich die Artikelnummern der vorhandenen Endprodukte.</h4>
+    <h3><u>Vertriebswunsch</u></h3>
+    <h4>Dieser kann in der Absatzplanung festgelegt werden und wird in dieser Spalte angezeigt.</h4>
+    <h3><u>Direktverkauf</u></h3>
+    <h4>Der Direktverkauf kann in der Absatzplanung festgelegt werden und wird in dieser Spalte angezeigt.</h4>
+    <h3><u>Aktueller Lagerbestand</u></h3>
+    <h4>Der aktuelle Lagerbestand wird aus dem XML-File ausgelesen und in dieser Spalte dargestellt.</h4>
+    <h3><u>In Bearbeitung</u></h3>
+    <h4>Die Aufträge, welche sich in Bearbeitung befinden werden automatisch aus dem XML-File ausgelesen.</h4>
+    <h3><u>In Warteschlange</u></h3>
+    <h4>Die Aufträge, welche sich in der Warteschlange befinden werden automatisch aus dem XML-File ausgelesen.</h4>
+    <h3><u>Geplanter Endbestand</u></h3>
+    <h4>In dieser Spalte können Sie den geplanten Endbestand eingeben. Das System schlägt lediglich einen
+        überschreibbaren Wert vor.</h4>
+    <h3><u>Produktionsaufträge</u></h3>
+    <h4>Die Produktionsaufträge werden vom System berechnet und setzten sich wie folgt zusammen: <br>
+        Vertriebswunsch + Direktverkauf – aktueller Lagerbestand – Aufträge in Bearbeitung – Aufträge in der
+        Warteschlange + geplanter Endbestand
+    </h4>
+    <h2 class="headline-2">Zwischenprodukte</h2>
+    <h3><u>Artikelnummer</u></h3>
+    <h4>In der Spalte finden sich die Artikelnummern der vorhandenen Zwischenprodukte.</h4>
+    <h3><u>Vertriebswunsch</u></h3>
+    <h4>Der Vertriebswunsch setzt sich aus den Produktionsaufträgen zusammen, welche das jeweilige Produkt benötigen.</h4>
+    <h3><u>Bedarfsmenge</u></h3>
+    <h4>Die Bedarfsmenge setzt sich aus den Aufträgen in der Warteschlange der Produkte zusammen, welche das jeweilige Produkt benötigen.</h4>
+    <h3><u>Aktueller Lagerbestand</u></h3>
+    <h4>Der Lagerbestand der Produkte wird aus dem hochgeladenen XML-File ausgelesen und in dieser Spalte dargestellt.</h4>
+    <h3><u>In Bearbeitung</u></h3>
+    <h4>In dieser Spalte werden die Aufträge angezeigt, welche sich noch in Bearbeitung befinden. Sie werden automatisch aus dem XML ausgelesen.</h4>
+    <h3><u>In Warteschlange</u></h3>
+    <h4>In dieser Spalte werden die Aufträge angezeigt, welche sich noch in in der Warteschlange befinden. Sie werden automatisch aus dem XML ausgelesen.</h4>
+    <h3><u>Geplanter Endbestand</u></h3>
+    <h4>In dieser Spalte können Sie den geplanten Endbestand eingeben. Das System schlägt lediglich einen überschreibbaren Wert vor.</h4>
+    <h3><u>Produktionsaufträge</u></h3>
+    <h4>Die Produktionsaufträge werden vom System berechnet und setzten sich wie folgt zusammen: <br>
+        Vertriebswunsch + Bedarfsmenge – aktueller Lagerbestand – Aufträge in Bearbeitung – Aufträge in der Warteschlange + geplanter Endbestand        
+    </h4>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button class="close" mat-button mat-dialog-close><mat-icon> close</mat-icon>Schließen</button>
+    <button class="close" mat-button mat-dialog-close>
+        <mat-icon> close</mat-icon>Schließen
+    </button>
 </mat-dialog-actions>
