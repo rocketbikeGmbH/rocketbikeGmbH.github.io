@@ -78,8 +78,7 @@ export class MengenplanungComponent implements OnInit {
 
   dataSource: MatTableDataSource<BestellArtikel>;
   dataSource2: MatTableDataSource<Bestellungen>;
-  // dataSource1: Array<BestellArtikel> = bestellArtikelArray;
-  //dataSource2: Array<Bestellungen> = [];
+
   options = options;
   optionsMap = new Map([
     ['Normal', 5],
@@ -229,13 +228,18 @@ export class MengenplanungComponent implements OnInit {
         } else {
           modus = 'Normal';
         }
+        let s: number;
+        if(d.bruttobedarf < d.diskont && (d.bruttobedarf / d.diskont) >= 0.9) {
+          s = d.diskont;
+        } else {
+          s = d.bruttobedarf;
+        }
 
-        const bestellungen = new Bestellungen(d.bruttobedarf, 0, modus);
+        const bestellungen = new Bestellungen(round((s * d.lieferfrist), -1), 0, modus);
         bestellungen.id = d.id;
         this.dataSource2.data.push(bestellungen);
       }
     });
-
 
     this.dataSource2.data.sort((a, b) => {
       // @ts-ignore
@@ -311,7 +315,12 @@ export class MengenplanungComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.id && result?.modus && result?.anzahl) {
+        result.anzahl = round(result.anzahl, -1);
         this.dataSource2.data.push(result);
+        this.dataSource2.data.sort((a, b) => {
+          // @ts-ignore
+          return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
+        });
         this.table.renderRows();
       }
     });

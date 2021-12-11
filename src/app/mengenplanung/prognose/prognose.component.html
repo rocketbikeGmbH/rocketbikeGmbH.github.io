@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ 'Neue Bestellung' | translate }}</h1>
-<form>
+<form [formGroup]="prognose">
   <div mat-dialog-content>
     <thead>
       <tr>
@@ -20,6 +20,7 @@
               step="10"
               name="Vabsatzplan_p1"
               [(ngModel)]="data.periode0.p1"
+              formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -33,6 +34,7 @@
               step="10"
               name="V_direkt_menge_p1"
               [(ngModel)]="data.periode1.p1"
+              formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -47,6 +49,7 @@
               step="10"
               name="V_direkt_preis_p1"
               [(ngModel)]="data.periode2.p1"
+              formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -62,6 +65,7 @@
               step="10"
               name="Vabsatzplan_p1"
               [(ngModel)]="data.periode0.p2"
+              formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -76,6 +80,7 @@
               step="10"
               name="V_direkt_menge_p1"
               [(ngModel)]="data.periode1.p2"
+              formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -88,6 +93,7 @@
                    step="10"
                    name="V_direkt_preis_p1"
                    [(ngModel)]="data.periode2.p2"
+                   formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -101,6 +107,7 @@
                    step="10"
                    name="Vabsatzplan_p1"
                    [(ngModel)]="data.periode0.p3"
+                   formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -113,6 +120,7 @@
                    step="10"
                    name="V_direkt_menge_p1"
                    [(ngModel)]="data.periode1.p3"
+                   formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -125,6 +133,7 @@
                    step="10"
                    name="V_direkt_preis_p1"
                    [(ngModel)]="data.periode2.p3"
+                   formControlName="menge"
             >
           </mat-form-field>
         </td>
@@ -133,7 +142,7 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Abbrechen</button>
-    <button mat-button [mat-dialog-close]="data" >
+    <button mat-button [mat-dialog-close]="data" [disabled]='!prognose.valid' >
       Anlegen
     </button>
   </div>

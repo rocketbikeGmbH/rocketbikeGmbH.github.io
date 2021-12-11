@@ -44,5 +44,4 @@ export class Bestellung {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
