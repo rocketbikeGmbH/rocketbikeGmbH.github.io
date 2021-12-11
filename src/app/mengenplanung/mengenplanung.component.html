@@ -1,18 +1,16 @@
 <mat-card class="hintergrund">
-  <mat-accordion multi>
-    <mat-expansion-panel [expanded]="false">
-          <mat-expansion-panel-header>
-            <mat-card-title>{{
-              'Bestellmengenplanung' | translate
-            }}</mat-card-title>
-          </mat-expansion-panel-header>
-      <div class='flex'>
-        <button mat-raised-button class="info" (click)="openInfoDialog()">
+  <div class='flex'>
+    <div>
+      <mat-card-title>{{'Bestellmengenplanung' | translate}}</mat-card-title>
+      <mat-card-subtitle>{{'Kaufteildisposition' | translate}}</mat-card-subtitle>
+    </div>
+    <span class="spacer"></span>
+    <button mat-raised-button class="info" (click)="openInfoDialog()">
           <mat-icon>info</mat-icon>
-        </button>
-        <button mat-raised-button class="info" (click)="openPrognoseDialog()">
+    </button>
+    <button mat-raised-button class="info" (click)="openPrognoseDialog()">
           <mat-icon>note_add</mat-icon>
-        </button>
+    </button>
       </div>
       <mat-table
         class="lessons-table mat-elevation-z8"
@@ -125,13 +123,15 @@
 
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </mat-table>
-    </mat-expansion-panel>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+                     showFirstLastButtons
+                     aria-label="Select page of periodic elements">
+      </mat-paginator>
+    <br>
 
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-card-title>{{ 'Bestellungen' | translate }}</mat-card-title>
-      </mat-expansion-panel-header>
-      <mat-table
+  <mat-card-subtitle>{{'Bestellungen' | translate}}</mat-card-subtitle>
+
+  <mat-table
         class="lessons-table mat-elevation-z8"
         [dataSource]="dataSource2"
         #table
@@ -194,12 +194,16 @@
 
         <mat-row *matRowDef="let row; columns: displayedColumns2"></mat-row>
       </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+
       <button mat-raised-button class="btn" (click)="openDialog()">
         {{ 'Neu anlegen' | translate }}
       </button>
       <button mat-raised-button class="btn" (click)="speichern()">
         {{ 'Speichern & Weiter' | translate }}
       </button>
-    </mat-expansion-panel>
-  </mat-accordion>
+
 </mat-card>

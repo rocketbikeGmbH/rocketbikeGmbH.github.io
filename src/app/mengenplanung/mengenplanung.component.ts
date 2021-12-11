@@ -19,7 +19,7 @@ import { verwendungen } from './verwendung';
 import { Order, Orderlist, Production } from '../model/export.model';
 import { addOrderlist } from '../store/export/export.actions';
 import { Router } from '@angular/router';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Bestellung } from './bestellung/bestellung.component';
@@ -28,6 +28,7 @@ import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanun
 import { selectProductionlist } from '../store/export/export.selector';
 import { browserRefresh } from '../app.component';
 import { Prognose } from './prognose/prognose.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 class OrderImpl implements Order {
   attr_article: number;
@@ -75,8 +76,10 @@ export const options: Array<string> = ['Normal', 'Eil', 'Sonderbestellung'];
 export class MengenplanungComponent implements OnInit {
   type = 'mengenplanung';
 
-  dataSource: Array<BestellArtikel> = bestellArtikelArray;
-  dataSource2: Array<Bestellungen> = [];
+  dataSource: MatTableDataSource<BestellArtikel>;
+  dataSource2: MatTableDataSource<Bestellungen>;
+  // dataSource1: Array<BestellArtikel> = bestellArtikelArray;
+  //dataSource2: Array<Bestellungen> = [];
   options = options;
   optionsMap = new Map([
     ['Normal', 5],
@@ -120,6 +123,10 @@ export class MengenplanungComponent implements OnInit {
 
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  @ViewChild(MatPaginator)
+  paginator2!: MatPaginator;
 
   constructor(
     private importStore: Store<ImportState>,
@@ -127,7 +134,10 @@ export class MengenplanungComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private stepperservice: StepperServiceService
-  ) {}
+  ) {
+    this.dataSource = new MatTableDataSource(bestellArtikelArray);
+    this.dataSource2 = new MatTableDataSource();
+  }
 
   ngOnInit(): void {
     this.productionlist.forEach((p) => {
@@ -144,7 +154,7 @@ export class MengenplanungComponent implements OnInit {
     }
     console.log('refreshed?:', browserRefresh);
 
-    this.dataSource.forEach((d) => {
+    this.dataSource.data.forEach((d) => {
       const article = this._articles?.find((article) => article.id == d.id);
       d.lagerbestand = article?.amount;
 
@@ -219,13 +229,18 @@ export class MengenplanungComponent implements OnInit {
 
         const bestellungen = new Bestellungen(d.bruttobedarf, 0, modus);
         bestellungen.id = d.id;
-        this.dataSource2.push(bestellungen);
+        this.dataSource2.data.push(bestellungen);
       }
     });
-    this.dataSource2.sort((a, b) => {
+    this.dataSource2.data.sort((a, b) => {
       // @ts-ignore
       return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator
+    this.dataSource2.paginator = this.paginator2;
   }
 
   speichern() {
@@ -233,7 +248,7 @@ export class MengenplanungComponent implements OnInit {
 
     const orders: Array<Order> = [];
 
-    this.dataSource2.forEach((d) => {
+    this.dataSource2.data.forEach((d) => {
       const order = new OrderImpl(
         d.id,
         d.anzahl,
@@ -247,9 +262,9 @@ export class MengenplanungComponent implements OnInit {
   }
 
   loeschen(element: Bestellungen) {
-    const index = this.dataSource2.indexOf(element);
+    const index = this.dataSource2.data.indexOf(element);
     if (index > -1) {
-      this.dataSource2.splice(index, 1);
+      this.dataSource2.data.splice(index, 1);
       this.table.renderRows();
     }
   }
@@ -266,7 +281,7 @@ export class MengenplanungComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.forecast = result;
-      this.dataSource.forEach((d) => {
+      this.dataSource.data.forEach((d) => {
         // @ts-ignore
         const p0 = this.forecast.periode0.p1 * d.verwendung.p1 + this.forecast.periode0.p2 * d.verwendung.p2 + this.forecast.periode0.p3 * d.verwendung.p3;
         // @ts-ignore
@@ -289,7 +304,7 @@ export class MengenplanungComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.id && result?.modus && result?.anzahl) {
-        this.dataSource2.push(result);
+        this.dataSource2.data.push(result);
         this.table.renderRows();
       }
     });
