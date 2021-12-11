@@ -3,9 +3,9 @@
   <div mat-dialog-content>
     <thead>
       <tr>
-        <th>Periode 2</th>
-        <th>Periode 3</th>
-        <th>Periode 4</th>
+        <th>Periode {{data.periode0.p_number}}</th>
+        <th>Periode {{data.periode1.p_number}}</th>
+        <th>Periode {{data.periode2.p_number}}</th>
       </tr>
     </thead>
     <tbody>
@@ -25,33 +25,18 @@
         </td>
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label> {{ 'Produkt P2' | translate }}</mat-label>
+            <mat-label> {{ 'Produkt P1' | translate }}</mat-label>
             <input
               matInput
               type="number"
               min="0"
               step="10"
               name="V_direkt_menge_p1"
-              [(ngModel)]="data.periode0.p2"
+              [(ngModel)]="data.periode1.p1"
             >
           </mat-form-field>
         </td>
 
-        <td>
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>{{ 'Produkt P3' | translate }}</mat-label>
-            <input
-              matInput
-              type="number"
-              min="0"
-              step="10"
-              name="V_direkt_preis_p1"
-              [(ngModel)]="data.periode0.p3"
-            >
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>{{ 'Produkt P1' | translate }}</mat-label>
@@ -60,8 +45,23 @@
               type="number"
               min="0"
               step="10"
+              name="V_direkt_preis_p1"
+              [(ngModel)]="data.periode2.p1"
+            >
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>{{ 'Produkt P2' | translate }}</mat-label>
+            <input
+              matInput
+              type="number"
+              min="0"
+              step="10"
               name="Vabsatzplan_p1"
-              [(ngModel)]="data.periode1.p1"
+              [(ngModel)]="data.periode0.p2"
             >
           </mat-form-field>
         </td>
@@ -82,12 +82,12 @@
 
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>{{ 'Produkt P3' | translate }}</mat-label>
+            <mat-label>{{ 'Produkt P2' | translate }}</mat-label>
             <input matInput type="number"
                    min="0"
                    step="10"
                    name="V_direkt_preis_p1"
-                   [(ngModel)]="data.periode1.p3"
+                   [(ngModel)]="data.periode2.p2"
             >
           </mat-form-field>
         </td>
@@ -95,24 +95,24 @@
       <tr>
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>{{ 'Produkt P1' | translate }}</mat-label>
+            <mat-label>{{ 'Produkt P3' | translate }}</mat-label>
             <input matInput type="number"
                    min="0"
                    step="10"
                    name="Vabsatzplan_p1"
-                   [(ngModel)]="data.periode2.p1"
+                   [(ngModel)]="data.periode0.p3"
             >
           </mat-form-field>
         </td>
 
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label> {{ 'Produkt P2' | translate }}</mat-label>
+            <mat-label> {{ 'Produkt P3' | translate }}</mat-label>
             <input matInput type="number"
                    min="0"
                    step="10"
                    name="V_direkt_menge_p1"
-                   [(ngModel)]="data.periode2.p2"
+                   [(ngModel)]="data.periode1.p3"
             >
           </mat-form-field>
         </td>

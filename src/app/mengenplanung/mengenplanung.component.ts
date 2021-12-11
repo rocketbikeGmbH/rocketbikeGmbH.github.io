@@ -5,12 +5,12 @@ import { select, Store } from '@ngrx/store';
 import {
   selectImportArticle,
   selectImportFutureInwardstockmovementOrder,
-  selectImportInwardstockmovementOrder,
+  selectImportInwardstockmovementOrder, selectImportResults
 } from '../store/import/import.selector';
 import {
   article,
   futureinwardstockmovementorder,
-  inwardstockmovementorder,
+  inwardstockmovementorder, Results
 } from '../model/import.model';
 import { BestellArtikel, Bestellungen } from './bestellarticel';
 import { bestellArtikelArray } from './BestellArtikelArray';
@@ -119,13 +119,18 @@ export class MengenplanungComponent implements OnInit {
     .pipe(select(selectProductionlist))
     .subscribe((i) => (this.productionlist = i));
 
+  _result: Results | undefined;
+  restults$ = this.importStore.pipe(select(selectImportResults)).subscribe(i => this._result = i);
+
   forecast: Forecast | undefined;
 
   @ViewChild('table')
   table!: MatTable<LosgrossenElement>;
-  @ViewChild(MatPaginator)
+
+  @ViewChild('pagonatoru')
   paginator!: MatPaginator;
-  @ViewChild(MatPaginator)
+
+  @ViewChild('paginatori')
   paginator2!: MatPaginator;
 
   constructor(
@@ -140,6 +145,9 @@ export class MengenplanungComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (browserRefresh) {
+      this.router.navigate(['/dateiimport']);
+    }
     this.productionlist.forEach((p) => {
       // @ts-ignore
       verwendungen.forEach((v) => {
@@ -148,11 +156,6 @@ export class MengenplanungComponent implements OnInit {
         }
       });
     });
-
-    if (browserRefresh) {
-      this.router.navigate(['/dateiimport']);
-    }
-    console.log('refreshed?:', browserRefresh);
 
     this.dataSource.data.forEach((d) => {
       const article = this._articles?.find((article) => article.id == d.id);
@@ -218,7 +221,7 @@ export class MengenplanungComponent implements OnInit {
         let modus;
         if ((ab - (d.bruttobedarf * d.lieferfrist)) < 0) {
           // @ts-ignore
-          if((ab - (d.bruttobedarf * (d.lieferfrist / 2))) < 0){
+          if ((ab - (d.bruttobedarf * (d.lieferfrist / 2))) < 0) {
             modus = 'Sonderbestellung';
           } else {
             modus = 'Eil';
@@ -232,6 +235,8 @@ export class MengenplanungComponent implements OnInit {
         this.dataSource2.data.push(bestellungen);
       }
     });
+
+
     this.dataSource2.data.sort((a, b) => {
       // @ts-ignore
       return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
@@ -270,12 +275,14 @@ export class MengenplanungComponent implements OnInit {
   }
 
   openPrognoseDialog(): void {
+    // @ts-ignore
+    const p_number = Number.parseInt(this._result.period ?? '0');
     const dialogRef = this.dialog.open(Prognose, {
       width: '750px',
       data: new Forecast(
-        new Periode(1, 0, 0, 0),
-        new Periode(2, 0, 0, 0),
-        new Periode(3, 0, 0, 0)
+        new Periode((p_number + 1), 0, 0, 0),
+        new Periode((p_number + 2), 0, 0, 0),
+        new Periode((p_number + 3), 0, 0, 0)
       ),
     });
 
@@ -313,6 +320,16 @@ export class MengenplanungComponent implements OnInit {
   openInfoDialog(): void {
     this.dialog.open(InfobuttonProgrammplanungComponent);
   }
+
+  iw(): void {
+    this.dataSource2.data.forEach((d) => {
+      if (d.anzahl <= 0 || isNaN(d.anzahl)) {
+        d.anzahl = 0;
+      }else {
+         d.anzahl = round(d.anzahl, -1);
+      }
+    });
+  }
 }
 
 const round = (value: number, precision: number) => {
@@ -326,3 +343,5 @@ const getKeyByValue = (map: Map<string, number>, searchValue: number) => {
   }
   return '';
 };
+
+

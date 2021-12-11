@@ -24,9 +24,9 @@ export interface Results {
   completedorders: {};
   cycletimes: {};
   result: {};
-  _game: number;
-  _group: number;
-  _period: number;
+  game: number;
+  group: number;
+  period: number;
 }
 
 export interface warehousestock {

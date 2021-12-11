@@ -113,9 +113,9 @@ export const initialState: ImportModel = {
     completedorders: {},
     cycletimes: {},
     result: {},
-    _game: 0,
-    _group: 0,
-    _period: 0,
+    game: 0,
+    group: 0,
+    period: 0,
   },
 };
 
