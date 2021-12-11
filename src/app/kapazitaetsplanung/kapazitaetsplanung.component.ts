@@ -441,21 +441,6 @@ export class KapazitaetsplanungComponent implements OnInit {
     this.d.data_loaded = true;
   }
 
-    // sum_m1 = (E49+E54+E29) * 6
-    // sum_m2 = (E50+E55+E30) * 5
-    // sum_m3 = E51 * 5 + (E56+31) * 6
-    // sum_m4 = E1 * 6 + (E2+E3) * 7
-    // sum_m6 = E16 * 2 + (E18+E19+E20) * 3
-    // sum_m7 = (E10+E11+E12+E13+E14+E15+E18+E19+E20+E26) *2
-    // sum_m8 = (E10+E13) + (E11+E12+E14+E15) * 2 + (E18+E19+E20) * 3
-    // sum_m9 = (E18+E19+E20) * 2 + (E10+E11+E12+E13+E14+E15) * 3
-    // sum_m10 = (E4+E5+E6+E7+E8+E9) * 4
-    // sum_m11 = (E4+E5+E6+E7+E8+E9) * 3
-    // sum_m12 = (E10+E11+E12+E13+E14+E15) * 3
-    // sum_m13 = (E10+E11+E12+E13+E14+E15) * 2
-    // sum_m14 = E16 * 3
-    // sum_m15 = (E17+E26) * 3
-
     // Waiting List auslesen
     let waiting_workstations: waitinglistworkstations | undefined;
     this.waitinglistworkstations$.subscribe((i) => (waiting_workstations = i));
