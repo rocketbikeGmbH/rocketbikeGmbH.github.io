@@ -1,0 +1,38 @@
+<h2 class="headline" mat-dialog-title>Programmplanung</h2>
+<mat-dialog-content class="mat-typography">
+    <h4>Im Folgenden finden Sie eine Erklärung für die verschiedenen Berechenungen für die Bestellmengenplanung.</h4>
+    <h4>Mit dem Button neben dem Info-Button, lässt sich die Vorhersage eintragen.
+      Durch die Eintragung der Werte der Folgeperioden, wird mit deinem durchschnittlichen Bruttobedarf für die Bestellungen gerechnet.
+      Damit sind die Berechnung für die Bestellungen genauer, sind aber optional.
+    </h4>
+  <h2 class="headline-2">Bruttobedarf</h2>
+    <h4>
+      Der Bruttobedarf berechnet sich aus dem Programmplan. Hierfür sind für jedes E und P -Produkt die Faktoren der K-Produkte hinterlegt.
+      Aus der Summe aller zu produzierenden Produkte errechnet sich der Bruttobedarf für jedes K-Produkt.
+    </h4>
+  <h4>
+    Der Bestellpunkt wird verwendet um zu bestimmen ob der Lagerbestand noch ausreichend ist oder eine Bestellung veranlasst werden muss.
+    <p>
+      Bestellpunkt = durchschnittlicher Bruttobedarf * (5 * Lieferfrist +5)) / 5
+    </p>
+  </h4>
+  <h2 class="headline-2">Bestellpunkt</h2>
+  <h2 class="headline-2">Bestellung</h2>
+    <h4>Eine Bestellung wird automatisch erstell, wenn der Lagerbestand inklusive des Wareneingangs in der aktuellen Periode
+      kleiner gleich ist als der Bestellpunkt
+      <p>Lagerbestand + Wareneingang <= Bestellpunkt </p>
+
+      Alle Bestellungen lassen sich manuell ändern und ggf. löschen. Außerdem können auch manuell Bestelungen angelegt werden mittels des "Neu Anlegen"-Button.
+    </h4>
+    <h3>Bestellmenge</h3>
+      <h4>Die Bestellmenge berechnet sich aus dem Bruttobedarf * Lieferfrist</h4>
+    <h3>Bestellmodus</h3>
+      <h4>Wenn der Lagerbestand mit dem durchschnittlichen Bruttobedarf vor der regulär eintreffenden Lieferung leer sein wird,
+        wird automatisch auf den Bestellmodus Eilbestellung gewechselt. Sollte die halbe Bestellzeit der Eilbestellung ebenfalls nicht ausreichen wird die Sonderbestellung ausgewählt.
+      </h4>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="close" mat-button mat-dialog-close>
+        <mat-icon> close</mat-icon>Schließen
+    </button>
+</mat-dialog-actions>

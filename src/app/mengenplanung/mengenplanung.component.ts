@@ -24,11 +24,11 @@ import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.comp
 import { MatDialog } from '@angular/material/dialog';
 import { Bestellung } from './bestellung/bestellung.component';
 import { StepperServiceService } from '../stepper-service.service';
-import { InfobuttonProgrammplanungComponent } from '../infobutton-programmplanung/infobutton-programmplanung.component';
 import { selectProductionlist } from '../store/export/export.selector';
 import { browserRefresh } from '../app.component';
 import { Prognose } from './prognose/prognose.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { InfobuttonMengenplanungComponent } from './infobutton/infobutton-mengenplanung.component';
 
 class OrderImpl implements Order {
   attr_article: number;
@@ -327,7 +327,7 @@ export class MengenplanungComponent implements OnInit {
   }
 
   openInfoDialog(): void {
-    this.dialog.open(InfobuttonProgrammplanungComponent);
+    this.dialog.open(InfobuttonMengenplanungComponent);
   }
 
   iw(): void {

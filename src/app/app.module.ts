@@ -52,6 +52,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { InfobuttonLosgrossenplanungComponent } from './infobutton-losgrossenplanung/infobutton-losgrossenplanung.component';
 import { AbsatzplanInfobuttonComponent } from './absatzplan-infobutton/absatzplan-infobutton.component';
+import { InfobuttonMengenplanungComponent } from './mengenplanung/infobutton/infobutton-mengenplanung.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { AbsatzplanInfobuttonComponent } from './absatzplan-infobutton/absatzpla
     Bestellung,
     InfobuttonComponent,
     InfobuttonProgrammplanungComponent,
+    InfobuttonMengenplanungComponent,
     Prognose,
     InfobuttonLosgrossenplanungComponent,
     AbsatzplanInfobuttonComponent,
