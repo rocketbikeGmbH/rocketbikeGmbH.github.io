@@ -235,12 +235,6 @@ export class ProgrammplanungComponent implements OnInit {
 
     this.ordersInWork$.subscribe((i) => (this.data_ordersinwork = i));
 
-    console.log(this.data_ordersinwork)
-
-    // let temp: orders_workplace = {id: 0, period:0, order:0, batch:0, item:0, amount:0, timeneed:0}
-    //  this.data_ordersinwork!.workplace.push(temp)
-
-  
     this.waitingListWorkstations$.subscribe((i) => (this.data_waitingListWorkstations = i) );
  
     this.forecast$.subscribe((i) => (this.data_forecast = i));
@@ -255,19 +249,12 @@ export class ProgrammplanungComponent implements OnInit {
     if (browserRefresh) {
       this.route.navigate(['/dateiimport'])
     }
-    console.log('refreshed?:', browserRefresh);
-    console.log(this.dataSourceEndMat);
     this.dataSourceEndMat.sort = this.sort1;
-    console.log(this.dataSourceEndMat)
     this.dataSourceZwiMat.sort = this.sort2;
   }
 
   ngAfterViewInit() {
-    // this.sort.sortChange.subscribe(() =>{ console.log('WIRD AUFGERUFEN');} );
-    // this.dataSourceZwiMat.sort = this.secondsTableSort;
     this.dataSourceZwiMat.paginator = this.paginator;
-    // // this.dataSourceZwiMat.sort = this.sort;
-    // this.dataSourceEndMat.sort = this.sort;
   }
 
   ngAfterViewChecked() {
@@ -275,8 +262,6 @@ export class ProgrammplanungComponent implements OnInit {
   }
 
   changeend(newValue: number, artikel: number) {
-    // No longer need to cast to any - hooray for react!
-    // this.setState({temperature: e.target.value});
     endprodukt_daten[artikel - 1].geplanter_endbestand = newValue;
 
     wunsch_lager[artikel - 1] = newValue;
@@ -291,22 +276,14 @@ export class ProgrammplanungComponent implements OnInit {
     if(endprodukt_daten[artikel - 1].produktionsauftraege < 0){
       endprodukt_daten[artikel - 1].produktionsauftraege = 0;
     }
-    //this.berechnungEndprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast, this.data_wishlist);
-    // this.store.dispatch(addWorkingtimelist({workingtimelist: future_working_list}))
-    //console.log('berechnungszwischenprodukte')
+
     this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
-    //this.tableZwi.renderRows();
-    //this.table.renderRows();
   };
 
   changezwi(newValue: number, artikel: number) {
     var wert = zwischen_artikel_sort.indexOf(artikel);
-    // var wert = artikel - 1;
-    //console.log('wert' + wert)
-    //console.log(zwischenprodukt_daten[wert].artikelnummer);
     zwischenprodukt_daten_sort[wert].geplanter_endbestand = newValue;
     zwischenprodukt_daten[zwischenprodukt_daten.findIndex(element => element.artikelnummer == artikel)].geplanter_endbestand = newValue;
-    //console.log('val' + zwischenprodukt_daten[wert].geplanter_endbestand)
 
     zwischenprodukt_daten_sort[wert].produktionsauftraege =
       +zwischenprodukt_daten_sort[wert].vertriebswunsch
@@ -318,10 +295,6 @@ export class ProgrammplanungComponent implements OnInit {
         zwischenprodukt_daten_sort[wert].produktionsauftraege = 0;
       }
       this.berechnungZwischenprodukte(this.data_warehousestock, this.data_ordersinwork, this.data_waitingListWorkstations, this.data_forecast);
-     // zwischenprodukt_daten_sort.length = 0;
-      //zwischenprodukt_daten.forEach(val => zwischenprodukt_daten_sort.push(Object.assign({}, val)));
-      //this.dataSourceZwiMat = new MatTableDataSource(zwischenprodukt_daten_sort)
-    // this.tableZwi.renderRows();
     
   };
 
@@ -330,11 +303,6 @@ export class ProgrammplanungComponent implements OnInit {
     data_waitingListWorkstations?: waitinglistworkstations | undefined,
     data_forecast?: forecast | undefined,
     data_wishlist?: Selldirect | undefined) {
-    //console.log('END')
-
-      console.log("type")
-      console.log(data_waitingListWorkstations);
-      console.log(typeof(data_waitingListWorkstations))
 
       if(data_waitingListWorkstations != undefined){
         data_waitingListWorkstations!.workplace.forEach((workplace: waiting_workplace) => {
@@ -439,14 +407,6 @@ export class ProgrammplanungComponent implements OnInit {
     data_waitingListWorkstations?: waitinglistworkstations | undefined,
     data_forecast?: forecast | undefined) {
 
-    // zwischenprodukt_daten.sort((a, b) => {
-    //   if (b.artikelnummer < a.artikelnummer) return 1;
-    //   if (b.artikelnummer > a.artikelnummer) return -1;
-    //   return 0;
-    // });
-
-    // zwischenprodukt_daten.length = 0;
-      console.log(zwischenprodukt_daten)
     zwischenprodukt_daten.forEach(zwiprodukt => {
       if(data_warehousestock != undefined){
       if (data_warehousestock!.article[zwiprodukt.artikelnummer - 1] != undefined) {
@@ -501,12 +461,9 @@ export class ProgrammplanungComponent implements OnInit {
       })
 
       //Vertriebswunsch
-      console.log(zwiprodukt);
       if (zwiprodukt.artikelnummer == 26) {
         artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
-          //console.log(element + ' ' + endprodukt_daten[element - 1 ].produktionsauftraege);
           zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + endprodukt_daten[element - 1].produktionsauftraege;
-          //console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
         })
       } else if (zwiprodukt.artikelnummer == 16 || zwiprodukt.artikelnummer == 17) {
         artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
@@ -516,15 +473,8 @@ export class ProgrammplanungComponent implements OnInit {
             if(isNaN(zwiprodukt.vertriebswunsch)){
               zwiprodukt.vertriebswunsch = 0;
               ver!.produktionsauftraege = 0;
-              console.log(ver!.produktionsauftraege)
             }
-            console.log('element')
-            console.log(element)
-            console.log(ver!.produktionsauftraege)
-            console.log(zwiprodukt.vertriebswunsch);
             zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + ver!.produktionsauftraege;
-            console.log(zwiprodukt.vertriebswunsch);
-            console.log(ver!.produktionsauftraege)
           }
         })
       }
@@ -537,8 +487,6 @@ export class ProgrammplanungComponent implements OnInit {
           zwiprodukt.vertriebswunsch = ver!.produktionsauftraege;
         }
       };
-      console.log('vertr')
-      console.log(zwiprodukt.vertriebswunsch);
 
       //Bedarfsmenge
       if (zwiprodukt.artikelnummer == 26) {
@@ -571,14 +519,6 @@ export class ProgrammplanungComponent implements OnInit {
           zwiprodukt.produktionsauftraege = 0;
         }
       sum_bearbeitung = 0;
-
-      //zwischenprodukt_daten.push(zwiprodukt);
-      // zwischenprodukt_daten = zwischenprodukt_daten.concat([temp_zwischenprodukt]);
-      if (zwiprodukt.artikelnummer == 26) {
-        //console.log('vertriebswunsch' + zwiprodukt.vertriebswunsch);
-        //console.log('artikel' + zwiprodukt.artikelnummer);
-      }
-
 
       var zwiIndex = zwischenprodukt_daten.findIndex(element => element.artikelnummer === zwiprodukt.artikelnummer)
       if (zwiprodukt.artikelnummer == 51) {
@@ -647,14 +587,11 @@ export class ProgrammplanungComponent implements OnInit {
   }
  
   clickExpand(id: number) {
-    console.log(id);
     if(isExpanded[id]){
     isExpanded[id] = false;
     } else {
       isExpanded[id] = true;
     }
-    console.log('EXPAND');
-    console.log(isExpanded)
   }
 
   getVertriebswunsch(artikelnummer: number): string {
