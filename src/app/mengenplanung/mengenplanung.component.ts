@@ -177,13 +177,11 @@ export class MengenplanungComponent implements OnInit {
           futureOrders.forEach((e) => {
             // @ts-ignore
             const lieferfrist = Number.parseInt(e?.orderperiod ?? '0');
-            ob.push(
-              new Bestellungen(
-                e?.amount,
-                lieferfrist + d.lieferfrist,
-                getKeyByValue(this.optionsMap, e.mode)
-              )
-            );
+            if(e.mode == 4){
+              ob.push(new Bestellungen(e?.amount, lieferfrist + (d.lieferfrist / 2), getKeyByValue(this.optionsMap, e.mode)));
+            } else {
+              ob.push(new Bestellungen(e?.amount, lieferfrist + d.lieferfrist, getKeyByValue(this.optionsMap, e.mode)));
+            }
           });
           d.offeneBestellung = ob;
         }
@@ -210,34 +208,29 @@ export class MengenplanungComponent implements OnInit {
         (d.bruttobedarf * (5 * d.lieferfrist + 5)) / 5,
         -1
       );
+      const bestellpunktEil = round((d.bruttobedarf * (5 * (d.lieferfrist/2))) / 5, -1);
       // @ts-ignore
-      const ab = Number.parseInt(d.lagerbestand ?? '0');
+      const lagerbestand = Number.parseInt(d.lagerbestand ?? '0');
       // @ts-ignore
-      const anz = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
+      const wareneingang = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
 
-      // @ts-ignore
-      if (d.bruttobedarf != 0 && (ab + anz) <= d.bestellpunkt) {
-        let modus;
-        if ((ab - (d.bruttobedarf * d.lieferfrist)) < 0) {
-          // @ts-ignore
-          if ((ab - (d.bruttobedarf * (d.lieferfrist / 2))) < 0) {
-            modus = 'Sonderbestellung';
-          } else {
-            modus = 'Eil';
-          }
-        } else {
-          modus = 'Normal';
+      if(d.bruttobedarf != 0) {
+        if((lagerbestand + wareneingang) <= d.bestellpunkt) {
+          const bestellungen = new Bestellungen(roundToDiskont(d.diskont, round(d.bruttobedarf * d.lieferfrist, -1)), 0, 'Normal');
+          bestellungen.id = d.id;
+          this.dataSource2.data.push(bestellungen);
         }
-        let s: number;
-        if(d.bruttobedarf < d.diskont && (d.bruttobedarf / d.diskont) >= 0.9) {
-          s = d.diskont;
-        } else {
-          s = d.bruttobedarf;
-        }
+        if((lagerbestand + wareneingang) <= bestellpunktEil) {
+          const bestellungen = new Bestellungen(roundToDiskont(d.diskont, d.bruttobedarf), 0, 'Eil');
+          bestellungen.id = d.id;
+          this.dataSource2.data.push(bestellungen);
 
-        const bestellungen = new Bestellungen(round((s * d.lieferfrist), -1), 0, modus);
-        bestellungen.id = d.id;
-        this.dataSource2.data.push(bestellungen);
+        }
+        if((lagerbestand + wareneingang) == 0) {
+          const bestellungen = new Bestellungen(roundToDiskont(d.diskont, d.bruttobedarf), 0, 'Sonderbestellung');
+          bestellungen.id = d.id;
+          this.dataSource2.data.push(bestellungen);
+        }
       }
     });
 
@@ -353,4 +346,9 @@ const getKeyByValue = (map: Map<string, number>, searchValue: number) => {
   return '';
 };
 
-
+const roundToDiskont = (diskont:number, bestellmenge:number) => {
+  if(bestellmenge < diskont && (bestellmenge / diskont) >= 0.8) {
+    return diskont;
+  }
+  return bestellmenge;
+}
