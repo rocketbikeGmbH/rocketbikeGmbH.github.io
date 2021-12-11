@@ -319,11 +319,11 @@ export class KapazitaetsplanungComponent implements OnInit {
   constructor(private route: Router, private store: Store<ImportState>, private exportstore: Store<ExportState>, private d: Daten, private router: Router,public dialog: MatDialog, private stepperservice: StepperServiceService) {}
 
   ngOnInit(): void {
-    console.log('refreshed?:', browserRefresh);
+    // console.log('refreshed?:', browserRefresh);
     if (browserRefresh) {
       this.route.navigate(['/dateiimport'])
     }
-    console.log(this.summe_maschine)
+    // console.log(this.summe_maschine)
     this.initialisieren();
     this.Bedarf_und_Schichten_berechnen();
 
@@ -604,13 +604,13 @@ export class KapazitaetsplanungComponent implements OnInit {
       working_time.push(temp_working_time);
 
     })
-    console.log("working time")
-    console.log(working_time)
+    // console.log("working time")
+    // console.log(working_time)
 
     let future_working_list: Workingtimelist | undefined
     future_working_list = { workingtime: working_time}
-    console.log("future working list")
-    console.log(future_working_list)
+    // console.log("future working list")
+    // console.log(future_working_list)
 
     this.exportstore.dispatch(addWorkingtimelist({workingtimelist: future_working_list}))
 
