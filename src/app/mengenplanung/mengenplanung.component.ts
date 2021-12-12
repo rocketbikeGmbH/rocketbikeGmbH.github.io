@@ -176,11 +176,21 @@ export class MengenplanungComponent implements OnInit {
           const ob: Array<Bestellungen> = [];
           futureOrders.forEach((e) => {
             // @ts-ignore
-            const lieferfrist = Number.parseInt(e?.orderperiod ?? '0');
-            if(e.mode == 4){
-              ob.push(new Bestellungen(e?.amount, lieferfrist + (d.lieferfrist / 2), getKeyByValue(this.optionsMap, e.mode)));
-            } else {
-              ob.push(new Bestellungen(e?.amount, lieferfrist + d.lieferfrist, getKeyByValue(this.optionsMap, e.mode)));
+            const orderperiod = Number.parseInt(e?.orderperiod ?? '0');
+            // @ts-ignore
+            const p_number = Number.parseInt(this._result.period ?? '0') +1;
+
+            if(Math.floor((orderperiod + d.lieferfrist)) == p_number){
+              d.eintreffendeBestellung = d.eintreffendeBestellung ?? 0;
+              // @ts-ignore
+              const amount = Number.parseInt(e?.amount ?? '0');
+              d.eintreffendeBestellung += amount;
+            }else{
+              if(e.mode == 4){
+                ob.push(new Bestellungen(e?.amount, orderperiod + (d.lieferfrist / 2), getKeyByValue(this.optionsMap, e.mode)));
+              } else {
+                ob.push(new Bestellungen(e?.amount, orderperiod + d.lieferfrist, getKeyByValue(this.optionsMap, e.mode)));
+              }
             }
           });
           d.offeneBestellung = ob;
@@ -205,14 +215,14 @@ export class MengenplanungComponent implements OnInit {
       //   d.verwendung.p3 * (p3 ?? 0);
 
       d.bestellpunkt = round(
-        (d.bruttobedarf * (5 * d.lieferfrist + 5)) / 5,
+        (d.bruttobedarf * (d.lieferfrist + 1)),
         -1
       );
-      const bestellpunktEil = round((d.bruttobedarf * (5 * (d.lieferfrist/2))) / 5, -1);
+      const bestellpunktEil = round((d.bruttobedarf * (d.lieferfrist/2)), -1);
       // @ts-ignore
       const lagerbestand = Number.parseInt(d.lagerbestand ?? '0');
       // @ts-ignore
-      const wareneingang = Number.parseInt(d.eintreffendeBestellung?.anzahl ?? '0');
+      const wareneingang = Number.parseInt(d.eintreffendeBestellung ?? '0');
 
       if(d.bruttobedarf != 0) {
         if((lagerbestand + wareneingang) <= d.bestellpunkt) {
@@ -220,7 +230,7 @@ export class MengenplanungComponent implements OnInit {
           bestellungen.id = d.id;
           this.dataSource2.data.push(bestellungen);
         }
-        if((lagerbestand + wareneingang) <= bestellpunktEil) {
+        if((lagerbestand + wareneingang) <= bestellpunktEil || (lagerbestand + wareneingang) == d.bruttobedarf) {
           const bestellungen = new Bestellungen(roundToDiskont(d.diskont, d.bruttobedarf), 0, 'Eil');
           bestellungen.id = d.id;
           this.dataSource2.data.push(bestellungen);
@@ -273,7 +283,7 @@ export class MengenplanungComponent implements OnInit {
 
   openPrognoseDialog(): void {
     // @ts-ignore
-    const p_number = Number.parseInt(this._result.period ?? '0');
+    const p_number = Number.parseInt(this._result.period ?? '0') +1;
     const dialogRef = this.dialog.open(Prognose, {
       width: '750px',
       data: new Forecast(
