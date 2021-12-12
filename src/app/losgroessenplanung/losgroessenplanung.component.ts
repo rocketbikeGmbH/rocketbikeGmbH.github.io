@@ -31,7 +31,6 @@ export interface LosgrossenElement {
 }
 
 export interface SplitDialog {
-  attr_name: string; //Gruppenname z. B. d1
   attr_splitquant: number;
 }
 
@@ -118,7 +117,6 @@ export class LosgroessenplanungComponent implements OnInit {
     );
   }
 
-  // Loop if(article gibts mindestes 2 mal) -> dann Lösch-Button anzeigen
   openDialog(element: LosgrossenElement): void {
     const dialogRef = this.dialog.open(SplitDialogOverview, {
       width: '350px',
@@ -137,18 +135,23 @@ export class LosgroessenplanungComponent implements OnInit {
           (d) => d.attr_article === article_attr
         );
         // @ts-ignore
-        prod.attr_quantity = quant_attr - result;
-        this.dataSource.push({
-          attr_article: article_attr,
-          attr_quantity: result,
-          delbutton: true,
-          splitbutton: false,
-        });
-        this.table.renderRows();
+        if (result <= quant_attr){
+          // @ts-ignore
+          prod.attr_quantity = quant_attr - result;
+
+          this.dataSource.push({
+            attr_article: article_attr,
+            attr_quantity: result,
+            delbutton: true,
+            splitbutton: false,
+          });
+          this.table.renderRows();
+        }
+
       }
     });
-  }
 
+  }
   deletesplit(element: LosgrossenElement) {
     const index = this.dataSource.indexOf(element);
     if (index > -1) {
@@ -171,8 +174,9 @@ export class LosgroessenplanungComponent implements OnInit {
 
     this.dataSource.forEach((d) => {
       const production = new Prodlist(d.attr_article, d.attr_quantity);
-
+    if (d.attr_quantity !== 0) {
       productionlist.push(production);
+    }
     });
     const prodlist: Productionlist = { production: productionlist };
     this.exportStore.dispatch(addProductionlist({ productionlist: prodlist }));
