@@ -231,7 +231,7 @@ export class MengenplanungComponent implements OnInit {
           this.dataSource2.data.push(bestellungen);
         }
         if((lagerbestand + wareneingang) <= bestellpunktEil || (lagerbestand + wareneingang) <= d.bruttobedarf) {
-          const bestellungen = new Bestellungen(roundToDiskont(d.diskont, d.bruttobedarf), 0, 'Eil');
+          const bestellungen = new Bestellungen(d.bruttobedarf, 0, 'Eil');
           bestellungen.id = d.id;
           this.dataSource2.data.push(bestellungen);
 
