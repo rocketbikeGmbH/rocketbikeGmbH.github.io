@@ -20,7 +20,6 @@ import { Order, Orderlist, Production } from '../model/export.model';
 import { addOrderlist } from '../store/export/export.actions';
 import { Router } from '@angular/router';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { LosgrossenElement } from '../losgroessenplanung/losgroessenplanung.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Bestellung } from './bestellung/bestellung.component';
 import { StepperServiceService } from '../stepper-service.service';
@@ -124,7 +123,7 @@ export class MengenplanungComponent implements OnInit {
   forecast: Forecast | undefined;
 
   @ViewChild('table')
-  table!: MatTable<LosgrossenElement>;
+  table!: MatTable<Bestellungen>;
 
   @ViewChild('pagonatoru')
   paginator!: MatPaginator;
@@ -244,10 +243,12 @@ export class MengenplanungComponent implements OnInit {
       }
     });
 
-    this.dataSource2.data.sort((a, b) => {
+    const s = this.dataSource2.data;
+    s.sort((a, b) => {
       // @ts-ignore
       return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
     });
+    this.dataSource2.data = s;
   }
 
   ngAfterViewInit() {
@@ -276,7 +277,9 @@ export class MengenplanungComponent implements OnInit {
   loeschen(element: Bestellungen) {
     const index = this.dataSource2.data.indexOf(element);
     if (index > -1) {
-      this.dataSource2.data.splice(index, 1);
+      const s = this.dataSource2.data;
+      s.splice(index, 1);
+      this.dataSource2.data = s;
       this.table.renderRows();
     }
   }
@@ -319,11 +322,13 @@ export class MengenplanungComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.id && result?.modus && result?.anzahl) {
         result.anzahl = round(result.anzahl, -1);
-        this.dataSource2.data.push(result);
-        this.dataSource2.data.sort((a, b) => {
-          // @ts-ignore
-          return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
-        });
+        const s = this.dataSource2.data;
+        s.push(result);
+        s.sort((a, b) => {
+             // @ts-ignore
+             return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
+           });
+        this.dataSource2.data = s;
         this.table.renderRows();
       }
     });
