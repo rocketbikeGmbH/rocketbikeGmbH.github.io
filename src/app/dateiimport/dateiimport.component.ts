@@ -47,7 +47,7 @@ export class DateiimportComponent {
     this.browserRefresh = browserRefresh;
     console.log('refreshed?:', browserRefresh);
     if (browserRefresh == false) {
-      window.location.reload();
+      // window.location.reload();
       this.browserRefresh = true;
     }
   }
