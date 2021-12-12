@@ -13,9 +13,24 @@ export class SplitDialogOverview {
     @Inject(MAT_DIALOG_DATA) public data: SplitDialog,
   ) {}
 
+  gueltig = false;
+
 
   onNoClick(): void {
     this.dialogRef.close()
+  }
+
+  Wertpruefen(){
+    if(this.data.attr_splitquant <= 0){
+      this.data.attr_splitquant = 0;
+      this.gueltig = false;
+      return;
+    }
+
+    if(this.data.attr_splitquant > 0 && this.data.attr_splitquant%10 == 0){
+      this.gueltig = true;
+    }
+    
   }
 
 }
