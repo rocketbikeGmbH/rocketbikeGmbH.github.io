@@ -230,17 +230,17 @@ export class MengenplanungComponent implements OnInit {
           bestellungen.id = d.id;
           this.dataSource2.data.push(bestellungen);
         }
-        if((lagerbestand + wareneingang) <= bestellpunktEil || (lagerbestand + wareneingang) == d.bruttobedarf) {
+        if((lagerbestand + wareneingang) <= bestellpunktEil || (lagerbestand + wareneingang) <= d.bruttobedarf) {
           const bestellungen = new Bestellungen(roundToDiskont(d.diskont, d.bruttobedarf), 0, 'Eil');
           bestellungen.id = d.id;
           this.dataSource2.data.push(bestellungen);
 
         }
-        if((lagerbestand + wareneingang) == 0) {
-          const bestellungen = new Bestellungen(roundToDiskont(d.diskont, d.bruttobedarf), 0, 'Sonderbestellung');
-          bestellungen.id = d.id;
-          this.dataSource2.data.push(bestellungen);
-        }
+        // if((lagerbestand + wareneingang) == 0) {
+        //   const bestellungen = new Bestellungen(roundToDiskont(d.diskont, d.bruttobedarf), 0, 'Sonderbestellung');
+        //   bestellungen.id = d.id;
+        //   this.dataSource2.data.push(bestellungen);
+        // }
       }
     });
 
