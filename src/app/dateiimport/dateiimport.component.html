@@ -1,12 +1,16 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <input type="file" class="file-input" accept="text/xml" (change)="onFileSelected($event)" #fileUpload>
-<div class="file-upload">
-  {{fileName || 'Keine Datei ausgewählt' | translate }}
-  
-  <button mat-mini-fab color="primary" class="upload-btn"
-          (click)="fileUpload.click()">
-    <mat-icon [ngStyle]="{'color': 'white'}">attach_file</mat-icon>
-  </button>
-</div>
 
-
+<div class="container-export">
+  <mat-card class="card">
+      <mat-card-title>{{'Bitte laden Sie Ihr Periodenergebnis hoch!' | translate}}</mat-card-title>
+      <mat-card-subtitle>{{'Die Datei muss das XML-Format haben. Nach dem Hochladen der Datei werden Sie automatisch weitergeleitet.' | translate}}</mat-card-subtitle>
+      <mat-card-actions>
+        <a (click)="fileUpload.click()" class="btn">
+          <i class="fa fa-upload" (click)="fileUpload.click()"></i>&nbsp;&nbsp;{{'Hochladen' | translate}}
+      </a>
+              
+      </mat-card-actions>
+    </mat-card>
+  </div>
 
