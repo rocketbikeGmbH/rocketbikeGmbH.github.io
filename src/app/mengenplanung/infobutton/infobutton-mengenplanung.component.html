@@ -10,25 +10,29 @@
       Der Bruttobedarf berechnet sich aus dem Programmplan. Hierfür sind für jedes E und P -Produkt die Faktoren der K-Produkte hinterlegt.
       Aus der Summe aller zu produzierenden Produkte errechnet sich der Bruttobedarf für jedes K-Produkt.
     </h4>
+  <h2 class="headline-2">Bestellpunkt</h2>
   <h4>
     Der Bestellpunkt wird verwendet um zu bestimmen ob der Lagerbestand noch ausreichend ist oder eine Bestellung veranlasst werden muss.
     <p>
-      Bestellpunkt = durchschnittlicher Bruttobedarf * (5 * Lieferfrist +5)) / 5
+      Bestellpunkt = durchschnittlicher Bruttobedarf * (Lieferfrist + 1)
     </p>
   </h4>
-  <h2 class="headline-2">Bestellpunkt</h2>
   <h2 class="headline-2">Bestellung</h2>
     <h4>Eine Bestellung wird automatisch erstell, wenn der Lagerbestand inklusive des Wareneingangs in der aktuellen Periode
       kleiner gleich ist als der Bestellpunkt
       <p>Lagerbestand + Wareneingang <= Bestellpunkt </p>
-
+      <h4>
+        Ist der Lagerbestand niedriger als der Bruttobedarf multipliziert der Lieferfrist der Eilbestellung (halbe Lieferfrist), wird zusätzlich eine Eil-Bestellung erstellt
+      </h4>
       Alle Bestellungen lassen sich manuell ändern und ggf. löschen. Außerdem können auch manuell Bestelungen angelegt werden mittels des "Neu Anlegen"-Button.
     </h4>
     <h3>Bestellmenge</h3>
-      <h4>Die Bestellmenge berechnet sich aus dem Bruttobedarf * Lieferfrist</h4>
+      <h4>Die Bestellmenge berechnet sich aus dem durchschnittlicher Bruttobedarf * Lieferfrist, bei einer Normal-Bestellung</h4>
+      <h4>Bei der Eil-Bestellung ist die Bestellmenge gleich des durchschnittlicher Bruttobedarf</h4>
     <h3>Bestellmodus</h3>
-      <h4>Wenn der Lagerbestand mit dem durchschnittlichen Bruttobedarf vor der regulär eintreffenden Lieferung leer sein wird,
-        wird automatisch auf den Bestellmodus Eilbestellung gewechselt. Sollte die halbe Bestellzeit der Eilbestellung ebenfalls nicht ausreichen wird die Sonderbestellung ausgewählt.
+      <h4>
+        Mit dem Bestellmodus Eil steigen die Kosten im Einkauf pro Teil um das 10-fache, dafür halbiert sich die Lieferfrist.
+        Die Sonderbestellung lässt die Kosten um das 100-fache steigen, dafür sind die Teile sofort vorhanden
       </h4>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

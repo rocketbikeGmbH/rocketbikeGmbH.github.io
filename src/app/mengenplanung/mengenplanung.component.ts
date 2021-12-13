@@ -120,7 +120,13 @@ export class MengenplanungComponent implements OnInit {
   _result: Results | undefined;
   restults$ = this.importStore.pipe(select(selectImportResults)).subscribe(i => this._result = i);
 
-  forecast: Forecast | undefined;
+  // @ts-ignore
+  p_number = Number.parseInt(this._result.period ?? '0') +1;
+  forecast: Forecast = new Forecast(
+    new Periode((this.p_number + 1), 0, 0, 0),
+    new Periode((this.p_number + 2), 0, 0, 0),
+    new Periode((this.p_number + 3), 0, 0, 0)
+  );
 
   @ViewChild('table')
   table!: MatTable<Bestellungen>;
@@ -154,17 +160,32 @@ export class MengenplanungComponent implements OnInit {
         }
       });
     });
+    this.calcOrder();
 
+    const s = this.dataSource2.data;
+    s.sort((a, b) => {
+      // @ts-ignore
+      return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
+    });
+    this.dataSource2.data = s;
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator
+    this.dataSource2.paginator = this.paginator2;
+  }
+
+  calcOrder() {
     this.dataSource.data.forEach((d) => {
       const article = this._articles?.find((article) => article.id == d.id);
       d.lagerbestand = article?.amount;
 
-      if (Array.isArray(this._orders)) {
-        const order = this._orders?.find((o) => o.article == d.id);
-        if (order) {
-          d.eintreffendeBestellung = order?.amount;
-        }
-      }
+      // if (Array.isArray(this._orders)) {
+      //   const order = this._orders?.find((o) => o.article == d.id);
+      //   if (order) {
+      //     d.eintreffendeBestellung = order?.amount;
+      //   }
+      // }
 
       if (Array.isArray(this._futureorders)) {
         const futureOrders = this._futureorders?.filter(
@@ -177,18 +198,25 @@ export class MengenplanungComponent implements OnInit {
             // @ts-ignore
             const orderperiod = Number.parseInt(e?.orderperiod ?? '0');
             // @ts-ignore
-            const p_number = Number.parseInt(this._result.period ?? '0') +1;
-
-            if(Math.floor((orderperiod + d.lieferfrist)) == p_number){
-              d.eintreffendeBestellung = d.eintreffendeBestellung ?? 0;
-              // @ts-ignore
-              const amount = Number.parseInt(e?.amount ?? '0');
-              d.eintreffendeBestellung += amount;
-            }else{
-              if(e.mode == 4){
-                ob.push(new Bestellungen(e?.amount, orderperiod + (d.lieferfrist / 2), getKeyByValue(this.optionsMap, e.mode)));
-              } else {
+            const p_number = Number.parseInt(this._result.period ?? '0') + 1;
+            if(e.mode == 5) {
+              if(Math.floor((orderperiod + d.lieferfrist)) == p_number || (orderperiod + d.lieferfrist) <= p_number){
+                d.eintreffendeBestellung = d.eintreffendeBestellung ?? 0;
+                // @ts-ignore
+                const amount: number = Number.parseInt(e?.amount ?? '0');
+                d.eintreffendeBestellung += amount;
+              }else{
                 ob.push(new Bestellungen(e?.amount, orderperiod + d.lieferfrist, getKeyByValue(this.optionsMap, e.mode)));
+              }
+            }
+            if(e.mode == 4) {
+              if (Math.floor((orderperiod + (d.lieferfrist / 2))) == p_number || (orderperiod + (d.lieferfrist / 2)) <= p_number) {
+                d.eintreffendeBestellung = d.eintreffendeBestellung ?? 0;
+                // @ts-ignore
+                const amount: number = Number.parseInt(e?.amount ?? '0');
+                d.eintreffendeBestellung += amount;
+              } else {
+                ob.push(new Bestellungen(e?.amount, orderperiod + (d.lieferfrist / 2), getKeyByValue(this.optionsMap, e.mode)));
               }
             }
           });
@@ -242,20 +270,7 @@ export class MengenplanungComponent implements OnInit {
         // }
       }
     });
-
-    const s = this.dataSource2.data;
-    s.sort((a, b) => {
-      // @ts-ignore
-      return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
-    });
-    this.dataSource2.data = s;
   }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator
-    this.dataSource2.paginator = this.paginator2;
-  }
-
   speichern() {
     this.stepperservice.set_dateiimport(this.type);
 
@@ -285,19 +300,14 @@ export class MengenplanungComponent implements OnInit {
   }
 
   openPrognoseDialog(): void {
-    // @ts-ignore
-    const p_number = Number.parseInt(this._result.period ?? '0') +1;
-    const dialogRef = this.dialog.open(Prognose, {
+        const dialogRef = this.dialog.open(Prognose, {
       width: '750px',
-      data: new Forecast(
-        new Periode((p_number + 1), 0, 0, 0),
-        new Periode((p_number + 2), 0, 0, 0),
-        new Periode((p_number + 3), 0, 0, 0)
-      ),
+      data: this.forecast,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       this.forecast = result;
+      const sa: Array<Bestellungen> = [];
       this.dataSource.data.forEach((d) => {
         // @ts-ignore
         const p0 = this.forecast.periode0.p1 * d.verwendung.p1 + this.forecast.periode0.p2 * d.verwendung.p2 + this.forecast.periode0.p3 * d.verwendung.p3;
@@ -307,8 +317,36 @@ export class MengenplanungComponent implements OnInit {
         const p2 = this.forecast.periode2.p1 * d.verwendung.p1 + this.forecast.periode2.p2 * d.verwendung.p2 + this.forecast.periode2.p3 * d.verwendung.p3;
         // @ts-ignore
         const s = (d.bruttobedarf + p0 + p1 + p2) / 4;
-        d.bestellpunkt = round((s * (5 * d.lieferfrist + 5)) / 5, -1);
+        d.bruttobedarf = round(s, -1);
+        d.bestellpunkt = round((d.bruttobedarf * (5 * d.lieferfrist + 5)) / 5, -1);
+
+        // @ts-ignore
+        const bestellpunktEil = round((d.bruttobedarf * (d.lieferfrist/2)), -1);
+        // @ts-ignore
+        const lagerbestand = Number.parseInt(d.lagerbestand ?? '0');
+        // @ts-ignore
+        const wareneingang = Number.parseInt(d.eintreffendeBestellung ?? '0');
+        if(d.bruttobedarf != 0) {
+          if ((lagerbestand + wareneingang) <= d.bestellpunkt) {
+            // @ts-ignore
+            const bestellungen = new Bestellungen(roundToDiskont(d.diskont, round(d.bruttobedarf * d.lieferfrist, -1)), 0, 'Normal');
+            bestellungen.id = d.id;
+            sa.push(bestellungen);
+          }
+          // @ts-ignore
+          if ((lagerbestand + wareneingang) <= bestellpunktEil || (lagerbestand + wareneingang) <= d.bruttobedarf) {
+            // @ts-ignore
+            const bestellungen = new Bestellungen(d.bruttobedarf, 0, 'Eil');
+            bestellungen.id = d.id;
+            sa.push(bestellungen);
+          }
+        }
       });
+      sa.sort((a, b) => {
+        // @ts-ignore
+        return this.optionsMap.get(a.modus) - this.optionsMap.get(b.modus);
+      });
+      this.dataSource2.data = sa;
       this.table.renderRows();
     });
   }
