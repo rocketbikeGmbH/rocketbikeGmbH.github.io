@@ -125,6 +125,23 @@ export interface summe_maschine {
    { id: 15, summe: 0,}
  ]
 
+ let leere_list_summe_maschine: summe_maschine[] = [
+  { id: 1, summe: 0, },
+  { id: 2, summe: 0,},
+  { id: 3, summe: 0, },
+  { id: 4, summe: 0,},
+  { id: 6, summe: 0,},
+  { id: 7, summe: 0,},
+  { id: 8, summe: 0, },
+  { id: 9, summe: 0, },
+  { id: 10, summe: 0, },
+  { id: 11, summe: 0, },
+  { id: 12, summe: 0, },
+  { id: 13, summe: 0, },
+  { id: 14, summe: 0,},
+  { id: 15, summe: 0,}
+]
+
 
 let ELEMENT_DATA: Kapaelement[] = [
   {
@@ -304,7 +321,6 @@ export class KapazitaetsplanungComponent implements OnInit {
   ];
   dataSource = ELEMENT_DATA;
   ruest_dauern = ruest_dauern;
-  idlewerte: idle[] = [];
   summe_maschine = list_summe_maschine;
   waiting_workplace: waiting_workplace[] = [];
   total_waitinglist: waitinglist[] = [];
@@ -324,6 +340,181 @@ export class KapazitaetsplanungComponent implements OnInit {
       this.route.navigate(['/dateiimport'])
     }
     // console.log(this.summe_maschine)
+    this.dataSource = [
+      {
+        arbeitsplatz: 1,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 2,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 3,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 4,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 6,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 7,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 8,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 9,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      { arbeitsplatz: 10,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,},
+      {
+        arbeitsplatz: 11,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 12,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 13,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 14,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+      {
+        arbeitsplatz: 15,
+        kapa_new: 0,
+        ruest_new: 1,
+        kapa_old: 0,
+        ruest_old: 0,
+        kapa_gesamt: 0,
+        anzahl_schichten: 1,
+        ueberstunden_min_tag: 0,
+        zusatz_ueberstunden: 0,
+      },
+    ];
+  
+    this.summe_maschine = [
+      { id: 1, summe: 0, },
+      { id: 2, summe: 0,},
+      { id: 3, summe: 0, },
+      { id: 4, summe: 0,},
+      { id: 6, summe: 0,},
+      { id: 7, summe: 0,},
+      { id: 8, summe: 0, },
+      { id: 9, summe: 0, },
+      { id: 10, summe: 0, },
+      { id: 11, summe: 0, },
+      { id: 12, summe: 0, },
+      { id: 13, summe: 0, },
+      { id: 14, summe: 0,},
+      { id: 15, summe: 0,}
+    ]
+    this.waiting_workplace = [];
+    this.total_waitinglist = [];
+    this.productionlist = [];
+    this.testproduktion = test_produktion;
     this.initialisieren();
     this.Bedarf_und_Schichten_berechnen();
 
@@ -341,8 +532,7 @@ export class KapazitaetsplanungComponent implements OnInit {
     //   this.productionlist.push(testdaten);
     // })
 
-    if(this.d.data_loaded){}
-    else{
+    
       // Berechnen der benötigten Kapa
     this.dataSource.forEach(element =>{
 
@@ -438,8 +628,8 @@ export class KapazitaetsplanungComponent implements OnInit {
 
     })
 
-    this.d.data_loaded = true;
-  }
+    
+  
 
     // Waiting List auslesen
     let waiting_workstations: waitinglistworkstations | undefined;
