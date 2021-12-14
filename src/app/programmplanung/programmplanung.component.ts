@@ -515,7 +515,7 @@ export class ProgrammplanungComponent implements OnInit {
         }
       };
 
-      zwiprodukt.produktionsauftraege = +zwiprodukt.vertriebswunsch
+      zwiprodukt.produktionsauftraege = +zwiprodukt.vertriebswunsch + +zwiprodukt.bedarfsmenge
         + +zwiprodukt.geplanter_endbestand - +zwiprodukt.aktueller_lagerbestand
         - +zwiprodukt.in_bearbeitung - +zwiprodukt.in_warteschlange;
 
