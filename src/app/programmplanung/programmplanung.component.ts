@@ -461,9 +461,12 @@ export class ProgrammplanungComponent implements OnInit {
       })
 
       //Vertriebswunsch
+      var addVertrieb = 0;
+      var addVertrieb2 = 0;
       if (zwiprodukt.artikelnummer == 26) {
         artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
-          zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + endprodukt_daten[element - 1].produktionsauftraege;
+          zwiprodukt.vertriebswunsch = addVertrieb + endprodukt_daten[element - 1].produktionsauftraege;
+          addVertrieb = zwiprodukt.vertriebswunsch;
         })
       } else if (zwiprodukt.artikelnummer == 16 || zwiprodukt.artikelnummer == 17) {
         artikelZuordnung.get(zwiprodukt.artikelnummer)?.forEach(element => {
@@ -474,7 +477,8 @@ export class ProgrammplanungComponent implements OnInit {
               zwiprodukt.vertriebswunsch = 0;
               ver!.produktionsauftraege = 0;
             }
-            zwiprodukt.vertriebswunsch = zwiprodukt.vertriebswunsch + ver!.produktionsauftraege;
+            zwiprodukt.vertriebswunsch = addVertrieb2 + ver!.produktionsauftraege;
+            addVertrieb2 = zwiprodukt.vertriebswunsch;
           }
         })
       }
@@ -609,7 +613,7 @@ export class ProgrammplanungComponent implements OnInit {
 
         artikelZuordnung.get(artikelnummer)![0] != 1 &&  artikelZuordnung.get(artikelnummer)![0] != 2 && artikelZuordnung.get(artikelnummer)![0] != 3 
         ? nummern = nummern + ' (Anzahl: ' + `${zwischenprodukt_daten_sort.find(zwischenprodukt => zwischenprodukt.artikelnummer == element)?.produktionsauftraege})`
-        : nummern = nummern + ' ' + endprodukt_daten.find(endprodukt => endprodukt.artikelnummer == element)?.produktionsauftraege;
+        : nummern = nummern + ' (Anzahl: ' + endprodukt_daten.find(endprodukt => endprodukt.artikelnummer == element)?.produktionsauftraege + ')';
 
         (index < (länge - 2) && länge > 1) ? nummern = nummern + ',' : nummern = nummern;
       })
@@ -631,7 +635,7 @@ export class ProgrammplanungComponent implements OnInit {
 
         artikelZuordnung.get(artikelnummer)![0] != 1 &&  artikelZuordnung.get(artikelnummer)![0] != 2 && artikelZuordnung.get(artikelnummer)![0] != 3 
         ? bedarfsmenge = bedarfsmenge + ' (Anzahl: ' + `${zwischenprodukt_daten_sort.find(zwischenprodukt => zwischenprodukt.artikelnummer == element)?.in_warteschlange})`
-        : bedarfsmenge = bedarfsmenge + ' ' + endprodukt_daten.find(endprodukt => endprodukt.artikelnummer == element)?.in_warteschlange;
+        : bedarfsmenge = bedarfsmenge + ' (Anzahl: ' + endprodukt_daten.find(endprodukt => endprodukt.artikelnummer == element)?.in_warteschlange + ')';
 
         (index < (länge - 2) && länge > 1) ? bedarfsmenge = bedarfsmenge + ',' : bedarfsmenge = bedarfsmenge;
       })
